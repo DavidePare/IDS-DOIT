@@ -6,7 +6,7 @@ public class Team {
 
     private List<Progettista> progettistiTeam;
 
-    private Progetto progetto;
+    private int progettoID;
 
     public Team(){ }
 
@@ -25,16 +25,16 @@ public class Team {
         return progettistiTeam;
     }
 
-    public Progetto getProgetto(){
-        return progetto;
+    public int getProgetto(){
+        return progettoID;
     }
 
     public void addProgetto(Progetto p){
-        progetto = p;
+        progettoID = p.getID();
     }
 
     public void removeProgetto(){
-        progetto = null;
+        progettoID = -1;
     }
 
     public void removeProgettista(Progettista p){

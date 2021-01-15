@@ -12,7 +12,7 @@ public class Progetto {
 
     private Team team;
 
-    // private String date   CHE TIPO DEVE ESSERE?
+    // private String scadenza   CHE TIPO DEVE ESSERE?
 
     private ProponenteProgetto proponenteProgetto;
 
@@ -28,7 +28,7 @@ public class Progetto {
         return proponenteProgetto;
     }
 
-    public boolean state(){
+    public boolean getState(){
         return state;
     }
 
@@ -40,7 +40,7 @@ public class Progetto {
         state = false;
     }
 
-    public Team team(){
+    public Team getTeam(){
         return team;
     }
 
@@ -59,10 +59,6 @@ public class Progetto {
 
     public List<Progettista> getCandidati(){
         return candidati;
-    }
-
-    public Team getTeam(){
-        return team;
     }
 
     public void incrementAmount(double a){

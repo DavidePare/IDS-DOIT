@@ -1,11 +1,15 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Progettista {
+
+    //private GestoreProgetto gestoreProgetto;
 
     private int id;
     private String name;
     private String surname;
     // private curriculum; pensato di utilizzare il design pattern state
+
     private List<Progetto> inviti;
     private List<Team> teams;
 
@@ -34,7 +38,7 @@ public class Progettista {
                 .orElse(null);
     }*/
 
-    public List<Team> getTeams() {
+    public List<Team> getTeamsProgettista() {
         return teams;
     }
 
@@ -59,7 +63,7 @@ public class Progettista {
         inviti.remove(p);
     }
 
-    public void deleteInvito(Progetto p){
+    public void refuseInvito(Progetto p){
         inviti.remove(p);
     }
 

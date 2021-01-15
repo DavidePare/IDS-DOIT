@@ -21,7 +21,7 @@ public class GestoreProgettista {
         progettisti.add(p);
     }
 
-    public void removeProgettista(int ID){
-        progettisti.remove(getSingleProgettista(ID));
+    public void removeProgettista(Progettista p){
+        progettisti.remove(p);
     }
 }
