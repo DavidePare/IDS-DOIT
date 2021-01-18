@@ -1,16 +1,35 @@
+import java.util.Map;
+
 public class Sponsor {
 
     private int id;
 
     private String name;
 
+    private Map<Progetto,Double> progettiInv;
+
     public Sponsor(){ }
 
-    public void addAmount(Progetto p, double amount){
-        p.incrementAmount(amount);
+    public int getID(){
+        return id;
     }
 
-    public void decrementAmount(Progetto p, double amount){
-        p.decrementAmount(amount);
+    public Map<Progetto,Double> getProgettiInv(){
+        return progettiInv;
     }
+
+    public void addAmountProgetto(Progetto p, double amount){
+        if(progettiInv.containsKey(p)){
+            progettiInv.replace(p,progettiInv.get(p)+amount);
+        } else{
+            progettiInv.put(p,amount);
+        }
+    }
+
+    public void decrementAmountProgetto(Progetto p, double amount){
+        if(progettiInv.containsKey(p)){
+            progettiInv.replace(p,progettiInv.get(p)-amount);
+        }
+    }
+
 }

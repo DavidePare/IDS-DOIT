@@ -14,12 +14,12 @@ public class Team {
         return id;
     }
 
-    public Progettista getProgettistaTeam(int ID){
+    /*public Progettista getProgettistaTeam(int ID){
         return progettistiTeam.stream()
                 .filter(p -> p.getID() == ID)
                 .findFirst()
                 .orElse(null);
-    }
+    }*/
 
     public List<Progettista> getProgettisti(){
         return progettistiTeam;

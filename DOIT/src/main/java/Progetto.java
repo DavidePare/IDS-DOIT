@@ -1,8 +1,13 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Progetto {
 
+    //private GestoreProgettista gestoreProgettista;
+
     private int id;
+
+    private int nMaxProgettisti;
 
     private boolean state;
 
@@ -14,9 +19,11 @@ public class Progetto {
 
     // private String scadenza   CHE TIPO DEVE ESSERE?
 
-    private ProponenteProgetto proponenteProgetto;
+    private int proponenteProgettoID;
 
-    private List<Progettista> candidati;
+    private List<Integer> candidati;
+
+    private List<Integer> sponsors;
 
     public Progetto(){ }
 
@@ -24,19 +31,19 @@ public class Progetto {
         return id;
     }
 
-    public ProponenteProgetto getProponenteProgetto() {
-        return proponenteProgetto;
+    public int getProponenteProgetto() {
+        return proponenteProgettoID;
     }
 
     public boolean getState(){
         return state;
     }
 
-    public void confirmProgetto() {
+    public void confirm() {
         state = true;
     }
 
-    public void declineProgetto() {
+    public void decline() {
         state = false;
     }
 
@@ -45,20 +52,30 @@ public class Progetto {
     }
 
     public void addCandidato(Progettista p){
-        candidati.add(p);
+        candidati.add(p.getID());
     }
 
-    public void removeCandidato(Progettista p) { candidati.remove(p); }
+    public void removeCandidato(Progettista p) {
+        candidati.remove(p.getID());
+    }
 
-    public Progettista getSingleCandidato(int ID){
+    /*public Progettista getSingleCandidato(int ID){
         return candidati.stream()
                 .filter(p -> p.getID() == ID)
                 .findFirst()
                 .orElse(null);
+    }*/
+
+    public List<Integer> getCandidati(){
+        return candidati;
     }
 
-    public List<Progettista> getCandidati(){
-        return candidati;
+    public void addSponsor(Sponsor s){
+        sponsors.add(s.getID());
+    }
+
+    public void removeSponsor(Sponsor s){
+        sponsors.remove(s.getID());
     }
 
     public void incrementAmount(double a){

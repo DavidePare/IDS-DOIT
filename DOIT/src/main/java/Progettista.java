@@ -8,10 +8,9 @@ public class Progettista {
     private int id;
     private String name;
     private String surname;
-    // private curriculum; pensato di utilizzare il design pattern state
-
+    private List<Progetto> progettiProgettista;
     private List<Progetto> inviti;
-    private List<Team> teams;
+    private List<Integer> progettiCandidati;
 
     public Progettista(){ }
 
@@ -27,30 +26,20 @@ public class Progettista {
         return surname;
     }
 
+    public List<Progetto> getProgettiProgettista(){
+        return progettiProgettista;
+    }
+
+    public void addProgetto(Progetto p){
+        progettiProgettista.add(p);
+    }
+
+    public void removeProgetto(Progetto p){
+        progettiProgettista.remove(p);
+    }
+
     public List<Progetto> getInviti(){
         return inviti;
-    }
-
-    /*public Progetto getSingleInvito(int ID){
-        return inviti.stream()
-                .filter(i -> i.getID() == ID)
-                .findFirst()
-                .orElse(null);
-    }*/
-
-    public List<Team> getTeamsProgettista() {
-        return teams;
-    }
-
-    public Team getSingleTeam(int ID){
-        return teams.stream()
-                .filter(t -> t.getID() == ID)
-                .findFirst()
-                .orElse(null);
-    }
-
-    public void sendCandidatura(Progetto p){ // non so se è corretto passare direttamente l'oggetto
-        p.addCandidato(this);
     }
 
     public void addInvito(Progetto p){
@@ -59,7 +48,6 @@ public class Progettista {
 
     public void acceptInvito(Progetto p){
         p.getTeam().addProgettista(this);
-        teams.add(p.getTeam());
         inviti.remove(p);
     }
 
@@ -67,5 +55,27 @@ public class Progettista {
         inviti.remove(p);
     }
 
+    public List<Integer> getprogettiCandidati(){
+        return progettiCandidati;
+    }
+
+    public void addprogettoCandidato(Progetto p){
+        progettiCandidati.add(p.getID());
+    }
+
+    public void removeprogettoCandidato(Progetto p){
+        progettiCandidati.remove(p.getID());
+    }
+
+    public List<Team> getTeamsProgettista() {
+        List<Team> teams = new ArrayList<>();
+        getProgettiProgettista().stream().forEach(p -> teams.add(p.getTeam()));
+        return teams;
+    }
+
+    public void sendCandidatura(Progetto p){
+        p.addCandidato(this);
+        addprogettoCandidato(p);
+    }
 
 }

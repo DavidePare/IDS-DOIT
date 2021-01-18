@@ -22,12 +22,19 @@ public class ProponenteProgetto extends Progettista {
     }
 
     public void acceptCandidatura(Progetto progetto, Progettista progettista){
-        progetto.getTeam().addProgettista(progettista);
-        progetto.removeCandidato(progetto.getSingleCandidato(progettista.getID()));
+        if(progettiGestiti.contains(progetto)&&progetto.getCandidati().contains(progettista)){
+            progetto.getTeam().addProgettista(progettista);
+            progetto.removeCandidato(progettista);
+            progettista.removeprogettoCandidato(progetto);
+        }
+
     }
 
     public void declineCandidatura(Progetto progetto, Progettista progettista){
-        progetto.removeCandidato(progetto.getSingleCandidato(progettista.getID()));
+        if(progettiGestiti.contains(progetto)&&progetto.getCandidati().contains(progettista)){
+            progetto.removeCandidato(progettista);
+            progettista.removeprogettoCandidato(progetto);
+        }
     }
 
     public void inviteProgettista(Progettista progettista, Progetto progetto){
