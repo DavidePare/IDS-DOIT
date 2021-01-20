@@ -31,5 +31,4 @@ public class Sponsor {
             progettiInv.replace(p,progettiInv.get(p)-amount);
         }
     }
-
 }

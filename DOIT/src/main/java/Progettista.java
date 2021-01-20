@@ -77,5 +77,4 @@ public class Progettista {
         p.addCandidato(this);
         addprogettoCandidato(p);
     }
-
 }

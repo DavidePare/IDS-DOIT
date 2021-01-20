@@ -3,13 +3,11 @@ import java.util.List;
 
 public class Progetto {
 
-    //private GestoreProgettista gestoreProgettista;
-
     private int id;
 
     private int nMaxProgettisti;
 
-    private boolean state;
+    private IState state;
 
     private double amount;
 
@@ -25,7 +23,10 @@ public class Progetto {
 
     private List<Integer> sponsors;
 
-    public Progetto(){ }
+    public Progetto(){
+        state = new Waiting(this);
+        candidati = new ArrayList<Integer>();
+    }
 
     public int getID(){
         return id;
@@ -35,16 +36,18 @@ public class Progetto {
         return proponenteProgettoID;
     }
 
-    public boolean getState(){
+    public IState getState(){
         return state;
     }
 
-    public void confirm() {
-        state = true;
+    public void confirmProgetto() {
+        /*state = true;*/
+        state.confirm();
     }
 
-    public void decline() {
-        state = false;
+    public void declineProgetto() {
+        /*state = false;*/
+        state.decline();
     }
 
     public Team getTeam(){
@@ -52,11 +55,13 @@ public class Progetto {
     }
 
     public void addCandidato(Progettista p){
-        candidati.add(p.getID());
+        //candidati.add(p);
+        state.addCandidato(p);
     }
 
     public void removeCandidato(Progettista p) {
-        candidati.remove(p.getID());
+        //candidati.remove(p);
+        state.removeCandidato(p);
     }
 
     /*public Progettista getSingleCandidato(int ID){
@@ -78,14 +83,17 @@ public class Progetto {
         sponsors.remove(s.getID());
     }
 
+    public void setState(IState state){ this.state=state;}
+
+    public void setAmount(double amount){ this.amount=amount;}
+
+    public double getAmount(){ return this.amount;}
+
     public void incrementAmount(double a){
-        amount = amount + a;
+        state.incrementAmount(a);
     }
 
     public void decrementAmount(double a){
-        amount = amount - a;
+        state.decrementAmount(a);
     }
-
-
-
 }

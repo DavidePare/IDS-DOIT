@@ -2,9 +2,11 @@ import java.util.List;
 
 public class GestoreProgettista {
 
+    private static GestoreProgettista instance = null;
+
     private List<Progettista> progettisti;
 
-    public GestoreProgettista(){ }
+    private GestoreProgettista(){ }
 
     public List<Progettista> getProgettisti(){
         return progettisti;
@@ -23,5 +25,12 @@ public class GestoreProgettista {
 
     public void removeProgettista(Progettista p){
         progettisti.remove(p);
+    }
+
+    public static GestoreProgettista getInstance(){
+        if(instance == null){
+            instance = new GestoreProgettista();
+        }
+        return instance;
     }
 }

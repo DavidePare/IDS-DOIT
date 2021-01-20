@@ -2,9 +2,11 @@ import java.util.List;
 
 public class GestoreTeam {
 
+    private static GestoreTeam instance = null;
+
     private List<Team> teams;
 
-    public GestoreTeam(){ }
+    private GestoreTeam(){ }
 
     public Team getSingleTeam(int ID){
         return teams.stream()
@@ -23,5 +25,12 @@ public class GestoreTeam {
 
     public void removeTeam(Team t){
         teams.remove(t);
+    }
+
+    public static GestoreTeam getInstance(){
+        if(instance == null){
+            instance = new GestoreTeam();
+        }
+        return instance;
     }
 }

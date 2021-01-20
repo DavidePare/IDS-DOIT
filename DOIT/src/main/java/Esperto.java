@@ -21,11 +21,10 @@ public class Esperto {
     }
 
     public void confirmProgetto(Progetto p){
-        p.confirm();
+        p.confirmProgetto();
     }
 
-    public void declineProgetto(Progetto p){
-        p.decline();
-    }
+    public void declineProgetto(Progetto p){ p.declineProgetto(); }
+
 
 }

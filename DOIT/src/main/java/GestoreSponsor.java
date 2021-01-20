@@ -2,9 +2,11 @@ import java.util.List;
 
 public class GestoreSponsor {
 
+    private static GestoreSponsor instance = null;
+
     private List<Sponsor> sponsors;
 
-    public GestoreSponsor(){ }
+    private GestoreSponsor(){ }
 
     public Sponsor getSingleSponsor(int ID){
         return sponsors.stream()
@@ -23,5 +25,12 @@ public class GestoreSponsor {
 
     public void removeSponsor(Sponsor s){
         sponsors.remove(s);
+    }
+
+    public static GestoreSponsor getInstance(){
+        if(instance == null){
+            instance = new GestoreSponsor();
+        }
+        return instance;
     }
 }

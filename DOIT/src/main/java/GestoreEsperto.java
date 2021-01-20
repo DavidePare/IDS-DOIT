@@ -2,9 +2,11 @@ import java.util.List;
 
 public class GestoreEsperto {
 
+    private static GestoreEsperto instance = null;
+
     private List<Esperto> esperti;
 
-    public GestoreEsperto(){ }
+    private GestoreEsperto(){ }
 
     public Esperto getSingleEsperto(int ID){
         return esperti.stream()
@@ -23,5 +25,12 @@ public class GestoreEsperto {
 
     public void removeEsperto(Esperto e){
         esperti.remove(e);
+    }
+
+    public static GestoreEsperto getInstance(){
+        if(instance == null){
+            instance = new GestoreEsperto();
+        }
+        return instance;
     }
 }

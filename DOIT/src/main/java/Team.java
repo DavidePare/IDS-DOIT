@@ -44,6 +44,4 @@ public class Team {
     public void addProgettista(Progettista p){
         progettistiTeam.add(p);
     }
-
-
 }
