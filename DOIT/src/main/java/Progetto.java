@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Progetto {
@@ -15,7 +16,7 @@ public class Progetto {
 
     private Team team;
 
-    // private String scadenza   CHE TIPO DEVE ESSERE?
+    private Date scadenza;
 
     private int proponenteProgettoID;
 
@@ -52,6 +53,10 @@ public class Progetto {
 
     public Team getTeam(){
         return team;
+    }
+
+    public Date getScadenza(){
+        return scadenza;
     }
 
     public void addCandidato(Progettista p){

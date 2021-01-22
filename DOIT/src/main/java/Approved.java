@@ -1,12 +1,13 @@
 public class Approved extends AbstractState{
     Progetto progetto;
-    @Override
-    public void changeState(IState newState) {
-
-    }
 
     public Approved(Progetto p){
         this.progetto=p;
+    }
+
+    @Override
+    public void changeState(IState newState) {
+        progetto.setState(newState);
     }
 
     /**

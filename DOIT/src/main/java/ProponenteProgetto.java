@@ -12,9 +12,14 @@ public class ProponenteProgetto extends Progettista {
         progettiGestiti.add(p);
     }
 
+    public void removeProgettoGestito(Progetto p){
+        progettiGestiti.remove(p);
+    }
+
     public void createProgetto(){
         Progetto p = new Progetto(); // MANCANO ANCORA I PARAMETRI E POI CI SARA UN FACTORY METHOD
-        progettiGestiti.add(p);
+        addProgettoGestito(p);
+        //il controller farà l aggiunta al gestore dei progetti
     }
 
     public List<Progetto> getProgettiGestiti(){
