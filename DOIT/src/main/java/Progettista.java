@@ -3,16 +3,23 @@ import java.util.List;
 
 public class Progettista {
 
-    //private GestoreProgetto gestoreProgetto;
 
     private int id;
     private String name;
     private String surname;
+    private Curriculum curriculum;
     private List<Progetto> progettiProgettista;
     private List<Progetto> inviti;
     private List<Integer> progettiCandidati;
 
-    public Progettista(){ }
+    public Progettista(String name, String surname, Curriculum curriculum){
+        this.name=name;
+        this.surname=surname;
+        this.curriculum=curriculum;
+        progettiProgettista = new ArrayList<>();
+        inviti= new ArrayList<>();
+        progettiCandidati= new ArrayList<>();
+    }
 
     public int getID(){
         return id;
@@ -28,6 +35,10 @@ public class Progettista {
 
     public List<Progetto> getProgettiProgettista(){
         return progettiProgettista;
+    }
+
+    public Curriculum getCurriculum(){
+        return curriculum;
     }
 
     public void addProgetto(Progetto p){
