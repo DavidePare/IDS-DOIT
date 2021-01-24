@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Map;
 
 public class Sponsor {
@@ -8,7 +9,10 @@ public class Sponsor {
 
     private Map<Progetto,Double> progettiInv;
 
-    public Sponsor(){ }
+    public Sponsor(String name){
+        this.name=name;
+        progettiInv= new HashMap<>();
+    }
 
     public int getID(){
         return id;

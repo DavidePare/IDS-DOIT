@@ -6,7 +6,10 @@ public class Esperto {
 
     private String surname;
 
-    public Esperto(){ }
+    public Esperto(String name, String surname){
+        this.name= name;
+        this.surname= surname;
+    }
 
     public int getID(){
         return id;
