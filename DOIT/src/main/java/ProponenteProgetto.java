@@ -4,8 +4,8 @@ public class ProponenteProgetto extends Progettista {
 
     private List<Progetto> progettiGestiti;
 
-    public ProponenteProgetto(){
-        super();
+    public ProponenteProgetto(String name, String surname, Curriculum curriculum){
+        super(name, surname,curriculum);
     }
 
     public void addProgettoGestito(Progetto p){
@@ -16,8 +16,8 @@ public class ProponenteProgetto extends Progettista {
         progettiGestiti.remove(p);
     }
 
-    public void createProgetto(){
-        Progetto p = new Progetto(); // MANCANO ANCORA I PARAMETRI E POI CI SARA UN FACTORY METHOD
+    public void createProgetto(String name,int nMax){
+        Progetto p = new Progetto(this.getID(),name,nMax); // MANCANO ANCORA I PARAMETRI E POI CI SARA UN FACTORY METHOD
         addProgettoGestito(p);
         //il controller farà l aggiunta al gestore dei progetti
     }

@@ -23,10 +23,16 @@ public class Progetto {
     private List<Integer> candidati;
 
     private List<Integer> sponsors;
-
-    public Progetto(){
-        state = new Waiting(this);
-        candidati = new ArrayList<Integer>();
+    public Progetto(int proponenteProgettoID,String name,int nMaxProgettisti){
+        this.name=name;
+        this.state = new Waiting(this);
+        this.candidati = new ArrayList<Integer>();
+        this.team = new Team();
+        this.sponsors= new ArrayList<>();
+        this.amount=0;
+        this.proponenteProgettoID=proponenteProgettoID;
+        this.nMaxProgettisti=nMaxProgettisti;
+        this.scadenza= new Date();
     }
 
     public int getID(){

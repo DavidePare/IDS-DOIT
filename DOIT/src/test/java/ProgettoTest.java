@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProgettoTest {
-    Progetto p,pr,progetto;
+   /* Progetto p,pr,progetto;
     Progettista progettista,progettista2;
     @BeforeEach
     void createProject(){
@@ -62,6 +62,15 @@ class ProgettoTest {
 
     @Test
     void removeCandidato() {
+        p.confirmProgetto();
+        p.addCandidato(progettista);
+        p.addCandidato(progettista2);
+        System.out.println(p.getCandidati().size());
+        assertTrue(p.getCandidati().size()==2);
+        p.removeCandidato(progettista2);
+       // assertTrue(p.getCandidati().size()==1);
+        p.removeCandidato(progettista);
+        assertTrue(p.getCandidati().isEmpty());
     }
 
     @Test
@@ -84,6 +93,8 @@ class ProgettoTest {
     void setState() {
         p.confirmProgetto();
         assertTrue(p.getState() instanceof Approved);
+        pr.declineProgetto();
+        assertFalse(p.getState() instanceof Waiting);
     }
 
     @Test
@@ -92,5 +103,5 @@ class ProgettoTest {
 
     @Test
     void getAmount() {
-    }
+    }*/
 }

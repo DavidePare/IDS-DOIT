@@ -12,7 +12,14 @@ public class Progettista {
     private List<Progetto> inviti;
     private List<Integer> progettiCandidati;
 
-    public Progettista(){ }
+    public Progettista(String name, String surname, Curriculum curriculum){
+        this.name=name;
+        this.surname=surname;
+        this.curriculum=curriculum;
+        progettiProgettista = new ArrayList<>();
+        inviti= new ArrayList<>();
+        progettiCandidati= new ArrayList<>();
+    }
 
     public int getID(){
         return id;
