@@ -1,20 +1,27 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProponenteProgetto extends Progettista {
 
     private List<Progetto> progettiGestiti;
 
-    public ProponenteProgetto(){
-        super();
+    public ProponenteProgetto(String name, String surname, Curriculum curriculum){
+        super(name, surname,curriculum);
+        progettiGestiti = new ArrayList<>();
     }
 
     public void addProgettoGestito(Progetto p){
         progettiGestiti.add(p);
     }
 
-    public void createProgetto(){
-        Progetto p = new Progetto(); // MANCANO ANCORA I PARAMETRI E POI CI SARA UN FACTORY METHOD
-        progettiGestiti.add(p);
+    public void removeProgettoGestito(Progetto p){
+        progettiGestiti.remove(p);
+    }
+
+    public void createProgetto(String name,int nMax){
+        Progetto p = new Progetto(this.getID(),name,nMax); // MANCANO ANCORA I PARAMETRI E POI CI SARA UN FACTORY METHOD
+        addProgettoGestito(p);
+        //il controller farà l aggiunta al gestore dei progetti
     }
 
     public List<Progetto> getProgettiGestiti(){
@@ -22,7 +29,7 @@ public class ProponenteProgetto extends Progettista {
     }
 
     public void acceptCandidatura(Progetto progetto, Progettista progettista){
-        if(progettiGestiti.contains(progetto)&&progetto.getCandidati().contains(progettista)){
+        if(progettiGestiti.contains(progetto)&&progetto.getCandidati().contains(progettista.getID())){
             progetto.getTeam().addProgettista(progettista);
             progetto.removeCandidato(progettista);
             progettista.removeprogettoCandidato(progetto);
@@ -31,7 +38,7 @@ public class ProponenteProgetto extends Progettista {
     }
 
     public void declineCandidatura(Progetto progetto, Progettista progettista){
-        if(progettiGestiti.contains(progetto)&&progetto.getCandidati().contains(progettista)){
+        if(progettiGestiti.contains(progetto) && progetto.getCandidati().contains(progettista.getID())){
             progetto.removeCandidato(progettista);
             progettista.removeprogettoCandidato(progetto);
         }

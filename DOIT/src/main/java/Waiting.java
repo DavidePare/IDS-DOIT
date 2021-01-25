@@ -1,5 +1,7 @@
 public class Waiting extends AbstractState {
+
     Progetto progetto;
+
     public Waiting(Progetto p){
         this.progetto=p;
     }

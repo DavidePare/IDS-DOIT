@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Team {
@@ -8,7 +9,9 @@ public class Team {
 
     private int progettoID;
 
-    public Team(){ }
+    public Team(){
+        progettistiTeam=new ArrayList<>();
+    }
 
     public int getID(){
         return id;

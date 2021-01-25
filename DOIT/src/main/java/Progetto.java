@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Progetto {
@@ -15,17 +16,23 @@ public class Progetto {
 
     private Team team;
 
-    // private String scadenza   CHE TIPO DEVE ESSERE?
+    private Date scadenza;
 
     private int proponenteProgettoID;
 
     private List<Integer> candidati;
 
     private List<Integer> sponsors;
-
-    public Progetto(){
-        state = new Waiting(this);
-        candidati = new ArrayList<Integer>();
+    public Progetto(int proponenteProgettoID,String name,int nMaxProgettisti){
+        this.name=name;
+        this.state = new Waiting(this);
+        this.candidati = new ArrayList<Integer>();
+        this.team = new Team();
+        this.sponsors= new ArrayList<>();
+        this.amount=0;
+        this.proponenteProgettoID=proponenteProgettoID;
+        this.nMaxProgettisti=nMaxProgettisti;
+        this.scadenza= new Date();
     }
 
     public int getID(){
@@ -52,6 +59,10 @@ public class Progetto {
 
     public Team getTeam(){
         return team;
+    }
+
+    public Date getScadenza(){
+        return scadenza;
     }
 
     public void addCandidato(Progettista p){

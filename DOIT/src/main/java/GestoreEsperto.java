@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class GestoreEsperto {
@@ -6,7 +7,9 @@ public class GestoreEsperto {
 
     private List<Esperto> esperti;
 
-    private GestoreEsperto(){ }
+    private GestoreEsperto(){
+        esperti = new ArrayList<Esperto>();
+    }
 
     public Esperto getSingleEsperto(int ID){
         return esperti.stream()
