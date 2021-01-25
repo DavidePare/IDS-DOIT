@@ -43,7 +43,7 @@ public class Approved extends AbstractState{
      */
     @Override
     public void removeCandidato(Progettista progettista){
-        progetto.getCandidati().remove(progettista);
+        progetto.getCandidati().remove(progettista.getID());
     }
 
 

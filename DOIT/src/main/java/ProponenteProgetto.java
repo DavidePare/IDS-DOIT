@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProponenteProgetto extends Progettista {
@@ -6,6 +7,7 @@ public class ProponenteProgetto extends Progettista {
 
     public ProponenteProgetto(String name, String surname, Curriculum curriculum){
         super(name, surname,curriculum);
+        progettiGestiti = new ArrayList<>();
     }
 
     public void addProgettoGestito(Progetto p){
@@ -27,7 +29,7 @@ public class ProponenteProgetto extends Progettista {
     }
 
     public void acceptCandidatura(Progetto progetto, Progettista progettista){
-        if(progettiGestiti.contains(progetto)&&progetto.getCandidati().contains(progettista)){
+        if(progettiGestiti.contains(progetto)&&progetto.getCandidati().contains(progettista.getID())){
             progetto.getTeam().addProgettista(progettista);
             progetto.removeCandidato(progettista);
             progettista.removeprogettoCandidato(progetto);
@@ -36,7 +38,7 @@ public class ProponenteProgetto extends Progettista {
     }
 
     public void declineCandidatura(Progetto progetto, Progettista progettista){
-        if(progettiGestiti.contains(progetto)&&progetto.getCandidati().contains(progettista)){
+        if(progettiGestiti.contains(progetto) && progetto.getCandidati().contains(progettista.getID())){
             progetto.removeCandidato(progettista);
             progettista.removeprogettoCandidato(progetto);
         }
