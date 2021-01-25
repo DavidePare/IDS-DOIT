@@ -10,7 +10,7 @@ public class Team {
     private int progettoID;
 
     public Team(){
-        progettistiTeam = new ArrayList<>();
+        progettistiTeam=new ArrayList<>();
     }
 
     public int getID(){

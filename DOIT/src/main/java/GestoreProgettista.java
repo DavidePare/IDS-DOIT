@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class GestoreProgettista {
@@ -6,7 +7,9 @@ public class GestoreProgettista {
 
     private List<Progettista> progettisti;
 
-    private GestoreProgettista(){ }
+    private GestoreProgettista(){
+        progettisti= new ArrayList<>();
+    }
 
     public List<Progettista> getProgettisti(){
         return progettisti;
