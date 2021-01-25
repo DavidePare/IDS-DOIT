@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GestoreProgettoTest {
     GestoreProgetto p;
-    //IState s;
     Progetto p1,p2,p3,p4,p5;
     @BeforeEach
     void createproject(){

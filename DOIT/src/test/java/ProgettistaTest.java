@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProgettistaTest {
-    GestoreProgetto gestoreProgetto= GestoreProgetto.getInstance();
     Progetto progettoA,progettoB;
     Progettista p1,p2,p3;
     Curriculum c;
@@ -19,10 +18,6 @@ class ProgettistaTest {
         progettoB = new Progetto(1,"Data analysis",5);
         proponenteProgetto= new ProponenteProgetto("Michele","Raimondi",c);
 
-    }
-
-    @Test
-    void getProgettiProgettista() {
     }
 
     @Test
@@ -48,19 +43,9 @@ class ProgettistaTest {
     }
 
     @Test
-    void getInviti() {
-    }
-
-    @Test
-    void addInvito() {
-
-    }
-
-    @Test
     void acceptInvito() {
         assertTrue(p1.getProgettiProgettista().isEmpty());
         proponenteProgetto.inviteProgettista(p1,progettoA);
-
         assertEquals(p1.getInviti().size(),1);
         progettoA.confirmProgetto();
         p1.acceptInvito(progettoA);
