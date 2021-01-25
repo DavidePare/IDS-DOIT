@@ -60,6 +60,7 @@ public class Progettista {
     public void acceptInvito(Progetto p){
         p.getTeam().addProgettista(this);
         inviti.remove(p);
+        progettiProgettista.add(p);
     }
 
     public void refuseInvito(Progetto p){
