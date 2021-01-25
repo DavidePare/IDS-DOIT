@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class GestoreSponsor {
@@ -6,7 +7,9 @@ public class GestoreSponsor {
 
     private List<Sponsor> sponsors;
 
-    private GestoreSponsor(){ }
+    private GestoreSponsor(){
+        sponsors = new ArrayList<>();
+    }
 
     public Sponsor getSingleSponsor(int ID){
         return sponsors.stream()
@@ -15,7 +18,7 @@ public class GestoreSponsor {
                 .orElse(null);
     }
 
-    public List<Sponsor> getSponpors(){
+    public List<Sponsor> getSponsors(){
         return sponsors;
     }
 
