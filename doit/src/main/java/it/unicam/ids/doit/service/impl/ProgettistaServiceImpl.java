@@ -1,116 +1,120 @@
 package it.unicam.ids.doit.service.impl;
 
+import it.unicam.ids.doit.dao.CurriculumRepository;
+import it.unicam.ids.doit.dao.ProgettistaRepository;
+import it.unicam.ids.doit.dao.ProgettoRepository;
+import it.unicam.ids.doit.dao.TeamRepository;
+import it.unicam.ids.doit.entity.Curriculum;
+import it.unicam.ids.doit.entity.Progettista;
+import it.unicam.ids.doit.entity.Progetto;
+import it.unicam.ids.doit.entity.Team;
 import it.unicam.ids.doit.service.ProgettistaService;
 import it.unicam.ids.doit.service.ProgettoService;
 import it.unicam.ids.doit.service.TeamService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ProgettistaServiceImpl implements ProgettistaService {
 
+    @Autowired
+    ProgettistaRepository progettistaRepository;
 
-    private int id;
-    private String name;
-    private String surname;
-    private CurriculumServiceImpl curriculum;
-    private List<ProgettoService> progettiProgettista;
-    private List<ProgettoService> inviti;
-    private List<Integer> progettiCandidati;
+    @Autowired
+    ProgettoRepository progettoRepository;
 
-    public ProgettistaServiceImpl(String name, String surname, CurriculumServiceImpl curriculum){
-        this.name=name;
-        this.surname=surname;
-        this.curriculum = curriculum;
-        progettiProgettista = new ArrayList<>();
-        inviti= new ArrayList<>();
-        progettiCandidati= new ArrayList<>();
+    @Autowired
+    CurriculumRepository curriculumRepository;
+
+    @Autowired
+    TeamRepository teamRepository;
+
+    @Override
+    public Progettista getProgettista(Long id){
+        return progettistaRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
     @Override
-    public int getID(){
-        return id;
+    public List<Progettista> getAllProgettisti() {
+        return progettistaRepository.findAll();
     }
 
     @Override
-    public String getName(){
-        return name;
+    public List<Curriculum> getCurriculum(){
+        return curriculumRepository.findAll();
     }
 
     @Override
-    public String getSurname(){
-        return surname;
+    public void addProgetto(Long idProgetto, Long idProgettista){
+        Progetto progetto = progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
+        Progettista progettista = getProgettista(idProgettista);
+        progettista.getProgettiProgettista().add(progetto);
+        progettistaRepository.save(progettista);
+
     }
 
     @Override
-    public List<ProgettoService> getProgettiProgettista(){
-        return progettiProgettista;
+    public void removeProgetto(Long idProgetto, Long idProgettista){
+        Progetto progetto = progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
+        Progettista progettista = getProgettista(idProgettista);
+        progettista.getProgettiProgettista().remove(progetto);
+        progettistaRepository.save(progettista);
     }
 
     @Override
-    public CurriculumServiceImpl getCurriculum(){
-        return curriculum;
+    public void addInvito(Long idProgetto, Long idProgettista){
+        Progetto progetto = progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
+        Progettista progettista = getProgettista(idProgettista);
+        progettista.getInviti().add(progetto);
+        progettistaRepository.save(progettista);
     }
 
     @Override
-    public void addProgetto(ProgettoService p){
-        progettiProgettista.add(p);
+    public void acceptInvito(Long idProgetto, Long idProgettista){
+        Progetto progetto = progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
+        Progettista progettista = getProgettista(idProgettista);
+        Team team = teamRepository.findById(progetto.getTeam().getId()).orElseThrow(NoSuchElementException::new);
+        team.getProgettistiTeam().add(progettista);
+        //p.getTeam().addProgettista(this);
+        progettista.getInviti().remove(progetto);
+        //inviti.remove(p);
+        progettista.getProgettiProgettista().add(progetto);
+        //progettiProgettista.add(p);
     }
 
     @Override
-    public void removeProgetto(ProgettoService p){
-        progettiProgettista.remove(p);
+    public void refuseInvito(Long idProgetto, Long idProgettista){
+        Progetto progetto = progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
+        Progettista progettista = getProgettista(idProgettista);
+        progettista.getInviti().remove(progetto);
+        //inviti.remove(p);
     }
 
     @Override
-    public List<ProgettoService> getInviti(){
-        return inviti;
+    public void addprogettoCandidato(Long idProgetto, Long idProgettista){
+        Progetto progetto = progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
+        Progettista progettista = getProgettista(idProgettista);
+        progettista.getProgettiCandidati().add(progetto.getId());
+        //progettiCandidati.add(p.getID());
     }
 
     @Override
-    public void addInvito(ProgettoService p){
-        inviti.add(p);
+    public void removeprogettoCandidato(Long idProgetto, Long idProgettista){
+        Progetto progetto = progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
+        Progettista progettista = getProgettista(idProgettista);
+        progettista.getProgettiCandidati().remove(progetto.getId());
+        //progettiCandidati.remove(p.getID());
     }
 
     @Override
-    public void acceptInvito(ProgettoService p){
-        p.getTeam().addProgettista(this);
-        inviti.remove(p);
-        progettiProgettista.add(p);
-    }
-
-    @Override
-    public void refuseInvito(ProgettoService p){
-        inviti.remove(p);
-    }
-
-    @Override
-    public List<Integer> getprogettiCandidati(){
-        return progettiCandidati;
-    }
-
-    @Override
-    public void addprogettoCandidato(ProgettoService p){
-        progettiCandidati.add(p.getID());
-    }
-
-    @Override
-    public void removeprogettoCandidato(ProgettoService p){
-        progettiCandidati.remove(p.getID());
-    }
-
-    @Override
-    public List<TeamService> getTeamsProgettista() {
-        List<TeamService> teams = new ArrayList<>();
-        getProgettiProgettista().stream().forEach(p -> teams.add(p.getTeam()));
-        return teams;
-    }
-
-    @Override
-    public void sendCandidatura(ProgettoService p){
-        p.addCandidato(this);
-        addprogettoCandidato(p);
+    public void sendCandidatura(Long idProgetto, Long idProgettista){
+        Progetto progetto = progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
+        Progettista progettista = getProgettista(idProgettista);
+        progetto.getCandidati().add(progettista.getId());
+        //p.addCandidato(this);
+        progettista.getProgettiCandidati().add(progetto.getId());
+        //addprogettoCandidato(p);
     }
 }

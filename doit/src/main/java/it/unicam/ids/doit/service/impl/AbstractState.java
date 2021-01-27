@@ -1,5 +1,6 @@
 package it.unicam.ids.doit.service.impl;
 
+import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.service.IState;
 import it.unicam.ids.doit.service.ProgettistaService;
 import it.unicam.ids.doit.service.impl.ProgettistaServiceImpl;
@@ -19,10 +20,10 @@ public abstract class AbstractState implements IState {
     public void decrementAmount(double amount){
 
     }
-    public void addCandidato(ProgettistaService progettista){
+    public void addCandidato(Progettista progettista){
 
     }
-    public void removeCandidato(ProgettistaService progettista){
+    public void removeCandidato(Progettista progettista){
 
     }
     public abstract void changeState(IState newState);

@@ -1,44 +1,38 @@
 package it.unicam.ids.doit.service;
 
-import it.unicam.ids.doit.service.impl.CurriculumServiceImpl;
-import it.unicam.ids.doit.service.impl.ProgettoServiceImpl;
-import it.unicam.ids.doit.service.impl.TeamServiceImpl;
+import it.unicam.ids.doit.entity.Curriculum;
+import it.unicam.ids.doit.entity.Progettista;
+import it.unicam.ids.doit.entity.Progetto;
+import it.unicam.ids.doit.entity.Team;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public interface ProgettistaService {
 
-    int getID();
+    Progettista getProgettista(Long id);
 
-    String getName();
+    List<Progettista> getAllProgettisti();
 
-    String getSurname();
 
-    List<ProgettoService> getProgettiProgettista();
+    List<Curriculum> getCurriculum();
 
-    CurriculumServiceImpl getCurriculum();
 
-    void addProgetto(ProgettoService p);
+    void addProgetto(Long idProgetto, Long idProgettista);
 
-    void removeProgetto(ProgettoService p);
+    void removeProgetto(Long idProgetto, Long idProgettista);
 
-    List<ProgettoService> getInviti();
+    void addInvito(Long idProgetto, Long idProgettista);
 
-    void addInvito(ProgettoService p);
+    void acceptInvito(Long idProgetto, Long idProgettista);
 
-    void acceptInvito(ProgettoService p);
 
-    void refuseInvito(ProgettoService p);
+    void refuseInvito(Long idProgetto, Long idProgettista);
 
-    List<Integer> getprogettiCandidati();
+    void addprogettoCandidato(Long idProgetto, Long idProgettista);
 
-    void addprogettoCandidato(ProgettoService p);
+    void removeprogettoCandidato(Long idProgetto, Long idProgettista);
 
-    void removeprogettoCandidato(ProgettoService p);
-
-    List<TeamService> getTeamsProgettista();
-
-    void sendCandidatura(ProgettoService p);
-
+    void sendCandidatura(Long idProgetto, Long idProgettista);
 }

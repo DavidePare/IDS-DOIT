@@ -3,9 +3,6 @@ package it.unicam.ids.doit.service.impl;
 import it.unicam.ids.doit.service.ProgettistaService;
 import it.unicam.ids.doit.service.ProgettoService;
 import it.unicam.ids.doit.service.ProponenteProgettoService;
-import it.unicam.ids.doit.service.impl.CurriculumServiceImpl;
-import it.unicam.ids.doit.service.impl.ProgettistaServiceImpl;
-import it.unicam.ids.doit.service.impl.ProgettoServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

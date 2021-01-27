@@ -1,5 +1,7 @@
 package it.unicam.ids.doit.service.impl;
 
+import it.unicam.ids.doit.entity.Progettista;
+import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.service.IState;
 import it.unicam.ids.doit.service.ProgettistaService;
 import it.unicam.ids.doit.service.ProgettoService;
@@ -7,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class Approved extends AbstractState {
-    ProgettoService progetto;
+    Progetto progetto;
 
-    public Approved(ProgettoService p){
+    public Approved(Progetto p){
         this.progetto=p;
     }
 
@@ -41,7 +43,7 @@ public class Approved extends AbstractState {
      * @param progettista
      */
     @Override
-    public void addCandidato(ProgettistaService progettista){
+    public void addCandidato(Progettista progettista){
         progetto.getCandidati().add(progettista.getID());
     }
 
@@ -50,7 +52,7 @@ public class Approved extends AbstractState {
      * @param progettista
      */
     @Override
-    public void removeCandidato(ProgettistaService progettista){
+    public void removeCandidato(Progettista progettista){
         progetto.getCandidati().remove(progettista.getID());
     }
 

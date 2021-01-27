@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="797da87d-5f8c-4bbe-94d4-a046f658b57f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/DoitApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/dao/CurriculumRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/dao/EspertoRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/dao/ProgettoRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/dao/ProponenteProgettoRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/dao/SponsorRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/dao/TeamRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/entity/Curriculum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/entity/Esperto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/entity/GestoreEsperto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/entity/GestoreProgettista.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/entity/GestoreProgetto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/entity/GestoreSponsor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/entity/GestoreTeam.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/entity/Progetto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/entity/ProponenteProgetto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/entity/Sponsor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/entity/Team.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/IState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/controller/ProgettistaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/controller/ProgettistaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/dao/ProgettistaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/dao/ProgettistaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/entity/Progettista.java" beforeDir="false" afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/entity/Progettista.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/ProgettistaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/ProgettistaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/ProponenteProgettoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/ProponenteProgettoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/impl/AbstractState.java" beforeDir="false" afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/impl/AbstractState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/impl/Approved.java" beforeDir="false" afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/impl/Approved.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/impl/Blocked.java" beforeDir="false" afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/impl/Blocked.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/impl/CurriculumServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/impl/ProgettistaServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/impl/ProgettistaServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/impl/ProponenteProgettoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/impl/ProponenteProgettoServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/impl/TeamServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/impl/TeamServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/impl/Waiting.java" beforeDir="false" afterPath="$PROJECT_DIR$/../doit/src/main/java/it/unicam/ids/doit/service/impl/Waiting.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1neNZvi9an1QPNTdWMFwiw6Mw9Y" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="797da87d-5f8c-4bbe-94d4-a046f658b57f" name="Default Changelist" comment="" />
+      <created>1611746655936</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1611746655936</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
