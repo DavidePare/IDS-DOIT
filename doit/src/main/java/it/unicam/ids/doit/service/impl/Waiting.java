@@ -1,15 +1,14 @@
 package it.unicam.ids.doit.service.impl;
 
 import it.unicam.ids.doit.service.IState;
-import it.unicam.ids.doit.service.ProgettoService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class Waiting extends AbstractState {
 
-    ProgettoService progetto;
+    ProgettoServiceImpl progetto;
 
-    public Waiting(ProgettoService p){
+    public Waiting(ProgettoServiceImpl p){
         this.progetto=p;
     }
 
