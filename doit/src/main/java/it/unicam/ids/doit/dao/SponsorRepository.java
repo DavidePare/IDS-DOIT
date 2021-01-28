@@ -1,7 +1,9 @@
 package it.unicam.ids.doit.dao;
 
-import it.unicam.ids.doit.service.SponsorService;
+import it.unicam.ids.doit.entity.Sponsor;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface SponsorRepository extends JpaRepository<SponsorService,Long> {
+@Repository
+public interface SponsorRepository extends JpaRepository<Sponsor,Long> {
 }

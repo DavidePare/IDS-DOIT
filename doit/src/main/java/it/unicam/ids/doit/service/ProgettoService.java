@@ -1,5 +1,6 @@
 package it.unicam.ids.doit.service;
 
+import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.service.impl.ProgettistaServiceImpl;
 import it.unicam.ids.doit.service.impl.SponsorServiceImpl;
 import it.unicam.ids.doit.service.impl.TeamServiceImpl;
@@ -9,38 +10,24 @@ import java.util.List;
 
 public interface ProgettoService {
 
-    int getID();
+    Progetto getProgetto(Long id);
 
-    int getProponenteProgetto();
+    List<Progetto> getAllProgetti();
 
-    IState getState();
+    void confirmProgetto(Long idProgetto);
 
-    void confirmProgetto();
+    void declineProgetto(Long idProgetto);
 
-    void declineProgetto();
+    void addCandidato(Long idProgetto, Long idProgettista);
 
-    TeamService getTeam();
+    void removeCandidato(Long idProgetto, Long idProgettista);
 
-    Date getScadenza();
+    void addSponsor(Long idProgetto, Long idSponsor);
 
-    void addCandidato(ProgettistaService p);
+    void removeSponsor(Long idProgetto, Long idSponsor);
 
-    void removeCandidato(ProgettistaService p);
+    void incrementAmount(Long idProgetto, double amount);
 
-    List<Integer> getCandidati();
-
-    void addSponsor(SponsorService s);
-
-    void removeSponsor(SponsorService s);
-
-    void setState(IState state);
-
-    void setAmount(double amount);
-
-    double getAmount();
-
-    void incrementAmount(double a);
-
-    void decrementAmount(double a);
+    void decrementAmount(Long idProgetto, double amount);
 
 }

@@ -1,58 +1,56 @@
 package it.unicam.ids.doit.service.impl;
 
+import it.unicam.ids.doit.dao.SponsorRepository;
+import it.unicam.ids.doit.entity.Progetto;
+import it.unicam.ids.doit.entity.Sponsor;
 import it.unicam.ids.doit.service.ProgettoService;
 import it.unicam.ids.doit.service.SponsorService;
-import it.unicam.ids.doit.service.impl.ProgettoServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class SponsorServiceImpl implements SponsorService {
 
-    private int id;
+    @Autowired
+    private SponsorRepository sponsorRepository;
 
-    private String name;
+    @Autowired
+    private ProgettoService progettoService;
 
-    private Map<ProgettoService,Double> progettiInv;
-
-    public SponsorServiceImpl(String name){
-        this.name=name;
-        progettiInv= new HashMap<>();
+    @Override
+    public Sponsor getSponsor(Long id){
+        return sponsorRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
     @Override
-    public int getID(){
-        return id;
+    public List<Sponsor> getAllSponsors() {
+        return sponsorRepository.findAll();
     }
 
     @Override
-    public String getName(){
-        return name;
-    }
-
-    @Override
-    public Map<ProgettoService,Double> getProgettiInv(){
-        return progettiInv;
-    }
-
-    @Override
-    public void addAmountProgetto(ProgettoService p, double amount){
-        if(progettiInv.containsKey(p)){
-            progettiInv.replace(p,progettiInv.get(p)+amount);
-            p.incrementAmount(amount);
+    public void addAmountProgetto(Long idProgetto, Long idSponsor, double amount){
+        Sponsor sponsor = getSponsor(idSponsor);
+        Progetto progetto = progettoService.getProgetto(idProgetto);
+        if(sponsor.getProgettiInv().containsKey(progetto)){
+            sponsor.getProgettiInv().replace(progetto,sponsor.getProgettiInv().get(progetto)+amount);
         } else{
-            p.incrementAmount(amount);
-            progettiInv.put(p,amount);
+            sponsor.getProgettiInv().put(progetto,amount);
         }
+        progettoService.incrementAmount(idProgetto,amount);
+        sponsorRepository.save(sponsor);
     }
 
-    @Override
-    public void decrementAmountProgetto(ProgettoService p, double amount){
-        if(progettiInv.containsKey(p)){
-            progettiInv.replace(p,progettiInv.get(p)-amount);
-            p.decrementAmount(amount);
+    @Override // QUI SI DEVE GESTIRE IL CONTROLLO DELL'INVESTITO VS QUANTO SI DECREMENTA !!!!!!!!!!!!!!!!!!!!!!
+    public void decrementAmountProgetto(Long idProgetto, Long idSponsor, double amount){
+        Sponsor sponsor = getSponsor(idSponsor);
+        Progetto progetto = progettoService.getProgetto(idProgetto);
+        if(sponsor.getProgettiInv().containsKey(progetto)){
+            sponsor.getProgettiInv().replace(progetto,sponsor.getProgettiInv().get(progetto)-amount);
+            progettoService.decrementAmount(idProgetto,amount);
+            sponsorRepository.save(sponsor);
         }
     }
 }

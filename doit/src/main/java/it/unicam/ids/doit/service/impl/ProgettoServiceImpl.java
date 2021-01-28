@@ -1,132 +1,103 @@
 package it.unicam.ids.doit.service.impl;
 
+import it.unicam.ids.doit.dao.ProgettistaRepository;
+import it.unicam.ids.doit.dao.ProgettoRepository;
+import it.unicam.ids.doit.entity.Progettista;
+import it.unicam.ids.doit.entity.Progetto;
+import it.unicam.ids.doit.entity.Sponsor;
 import it.unicam.ids.doit.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ProgettoServiceImpl implements ProgettoService {
 
-    private int id;
+    @Autowired
+    private ProgettoRepository progettoRepository;
 
-    private int nMaxProgettisti;
+    //private ProgettistaService progettistaService;
 
-    private IState state;
-
-    private double amount;
-
-    private String name;
-
-    private TeamService team;
-
-    private Date scadenza;
-
-    private int proponenteProgettoID;
-
-    private List<Integer> candidati;
-
-    private List<Integer> sponsors;
-    public ProgettoServiceImpl(int proponenteProgettoID, String name, int nMaxProgettisti){
-        this.name=name;
-        this.state = new Waiting(this);
-        this.candidati = new ArrayList<Integer>();
-        this.team = new TeamServiceImpl();
-        this.sponsors= new ArrayList<>();
-        this.amount=0;
-        this.proponenteProgettoID=proponenteProgettoID;
-        this.nMaxProgettisti=nMaxProgettisti;
-        this.scadenza= new Date();
+    @Override
+    public Progetto getProgetto(Long id){
+        return progettoRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
     @Override
-    public int getID(){
-        return id;
+    public List<Progetto> getAllProgetti() {
+        return progettoRepository.findAll();
     }
 
     @Override
-    public int getProponenteProgetto() {
-        return proponenteProgettoID;
+    public void confirmProgetto(Long idProgetto) {
+        Progetto progetto = getProgetto(idProgetto);
+        progetto.getState().confirm();
+        //state.confirm();
+        progettoRepository.save(progetto);
     }
 
     @Override
-    public IState getState(){
-        return state;
+    public void declineProgetto(Long idProgetto) {
+        Progetto progetto = getProgetto(idProgetto);
+        progetto.getState().decline();
+        //state.decline();
+        progettoRepository.save(progetto);
+
     }
 
     @Override
-    public void confirmProgetto() {
-        /*state = true;*/
-        state.confirm();
+    public void addCandidato(Long idProgetto, Long idProgettista){
+        Progetto progetto = getProgetto(idProgetto);
+        //Progettista progettista = progettistaService.getProgettista(idProgettista);
+        progetto.getState().addCandidato(idProgetto, idProgettista);
+        //state.addCandidato(progettista);
+        progettoRepository.save(progetto);
+
     }
 
     @Override
-    public void declineProgetto() {
-        /*state = false;*/
-        state.decline();
+    public void removeCandidato(Long idProgetto, Long idProgettista) {
+        Progetto progetto = getProgetto(idProgetto);
+        //Progettista progettista = progettistaService.getProgettista(idProgettista);
+        progetto.getState().removeCandidato(idProgetto, idProgettista);
+        //state.removeCandidato(p);
+        progettoRepository.save(progetto);
+
     }
 
     @Override
-    public TeamService getTeam(){
-        return team;
+    public void addSponsor(Long idProgetto, Long idSponsor){
+        Progetto progetto = getProgetto(idProgetto);
+        progetto.getSponsors().add(idSponsor);
+        //sponsors.add(s.getID());
+        progettoRepository.save(progetto);
     }
 
     @Override
-    public Date getScadenza(){
-        return scadenza;
+    public void removeSponsor(Long idProgetto, Long idSponsor){
+        Progetto progetto = getProgetto(idProgetto);
+        progetto.getSponsors().remove(idSponsor);
+        //sponsors.remove(s.getID());
+        progettoRepository.save(progetto);
     }
 
     @Override
-    public void addCandidato(ProgettistaService p){
-        //candidati.add(p);
-        state.addCandidato(p);
+    public void incrementAmount(Long idProgetto, double amount){
+        Progetto progetto = getProgetto(idProgetto);
+        progetto.getState().incrementAmount(idProgetto, amount);
+        //state.incrementAmount(a);
+        progettoRepository.save(progetto);
     }
 
     @Override
-    public void removeCandidato(ProgettistaService p) {
-        //candidati.remove(p);
-        state.removeCandidato(p);
-    }
-
-    /*public Progettista getSingleCandidato(int ID){
-        return candidati.stream()
-                .filter(p -> p.getID() == ID)
-                .findFirst()
-                .orElse(null);
-    }*/
-    @Override
-    public List<Integer> getCandidati(){
-        return candidati;
-    }
-
-    @Override
-    public void addSponsor(SponsorService s){
-        sponsors.add(s.getID());
-    }
-
-    @Override
-    public void removeSponsor(SponsorService s){
-        sponsors.remove(s.getID());
-    }
-
-    @Override
-    public void setState(IState state){ this.state=state;}
-
-    @Override
-    public void setAmount(double amount){ this.amount=amount;}
-
-    @Override
-    public double getAmount(){ return this.amount;}
-
-    @Override
-    public void incrementAmount(double a){
-        state.incrementAmount(a);
-    }
-
-    @Override
-    public void decrementAmount(double a){
-        state.decrementAmount(a);
+    public void decrementAmount(Long idProgetto, double amount){
+        Progetto progetto = getProgetto(idProgetto);
+        progetto.getState().decrementAmount(idProgetto, amount);
+        //state.decrementAmount(a);
+        progettoRepository.save(progetto);
     }
 }

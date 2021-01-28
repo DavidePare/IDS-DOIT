@@ -1,12 +1,14 @@
 package it.unicam.ids.doit.service;
 
+import it.unicam.ids.doit.entity.Progettista;
+
 public interface IState {
 
     void confirm();
     void decline();
-    void incrementAmount(double amount);
-    void decrementAmount(double amount);
-    void addCandidato(ProgettistaService progettista);
-    void removeCandidato(ProgettistaService progettista);
+    void incrementAmount(Long idProgetto, double amount);
+    void decrementAmount(Long idProgetto, double amount);
+    void addCandidato(Long idProgetto,Long idProgettista);
+    void removeCandidato(Long idProgetto,Long idProgettista);
 
 }

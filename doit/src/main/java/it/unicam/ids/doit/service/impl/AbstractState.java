@@ -8,23 +8,24 @@ import org.springframework.stereotype.Service;
 
 @Service
 public abstract class AbstractState implements IState {
-    public void confirm(){
 
-    }
-    public void decline(){
+    @Override
+    public void confirm(){ }
 
-    }
-    public void incrementAmount(double amount){
+    @Override
+    public void decline(){ }
 
-    }
-    public void decrementAmount(double amount){
+    @Override
+    public void incrementAmount(Long idProgetto, double amount){ }
 
-    }
-    public void addCandidato(Progettista progettista){
+    @Override
+    public void decrementAmount(Long idProgetto, double amount){ }
 
-    }
-    public void removeCandidato(Progettista progettista){
+    @Override
+    public void addCandidato(Long idProgetto,Long idProgettista){ }
 
-    }
-    public abstract void changeState(IState newState);
+    @Override
+    public void removeCandidato(Long idProgetto,Long idProgettista){ }
+
+    public abstract void changeState(Long idProgetto, IState newState);
 }

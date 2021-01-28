@@ -20,16 +20,16 @@ import java.util.*;
 public class ProgettistaServiceImpl implements ProgettistaService {
 
     @Autowired
-    ProgettistaRepository progettistaRepository;
+    private ProgettistaRepository progettistaRepository;
 
     @Autowired
-    ProgettoRepository progettoRepository;
+    private CurriculumRepository curriculumRepository;
 
     @Autowired
-    CurriculumRepository curriculumRepository;
+    private TeamService teamService;
 
     @Autowired
-    TeamRepository teamRepository;
+    private ProgettoService progettoService;
 
     @Override
     public Progettista getProgettista(Long id){
@@ -48,7 +48,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
 
     @Override
     public void addProgetto(Long idProgetto, Long idProgettista){
-        Progetto progetto = progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
+        Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
         progettista.getProgettiProgettista().add(progetto);
         progettistaRepository.save(progettista);
@@ -57,7 +57,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
 
     @Override
     public void removeProgetto(Long idProgetto, Long idProgettista){
-        Progetto progetto = progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
+        Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
         progettista.getProgettiProgettista().remove(progetto);
         progettistaRepository.save(progettista);
@@ -65,7 +65,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
 
     @Override
     public void addInvito(Long idProgetto, Long idProgettista){
-        Progetto progetto = progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
+        Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
         progettista.getInviti().add(progetto);
         progettistaRepository.save(progettista);
@@ -73,48 +73,54 @@ public class ProgettistaServiceImpl implements ProgettistaService {
 
     @Override
     public void acceptInvito(Long idProgetto, Long idProgettista){
-        Progetto progetto = progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
+        Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
-        Team team = teamRepository.findById(progetto.getTeam().getId()).orElseThrow(NoSuchElementException::new);
-        team.getProgettistiTeam().add(progettista);
+        teamService.addProgettista(progetto.getTeam().getId(),idProgettista);
         //p.getTeam().addProgettista(this);
         progettista.getInviti().remove(progetto);
         //inviti.remove(p);
         progettista.getProgettiProgettista().add(progetto);
         //progettiProgettista.add(p);
+        progettistaRepository.save(progettista);
+
     }
 
     @Override
     public void refuseInvito(Long idProgetto, Long idProgettista){
-        Progetto progetto = progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
+        Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
         progettista.getInviti().remove(progetto);
         //inviti.remove(p);
+        progettistaRepository.save(progettista);
     }
 
     @Override
     public void addprogettoCandidato(Long idProgetto, Long idProgettista){
-        Progetto progetto = progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
+        Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
         progettista.getProgettiCandidati().add(progetto.getId());
         //progettiCandidati.add(p.getID());
+        progettistaRepository.save(progettista);
     }
 
     @Override
     public void removeprogettoCandidato(Long idProgetto, Long idProgettista){
-        Progetto progetto = progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
+        Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
         progettista.getProgettiCandidati().remove(progetto.getId());
         //progettiCandidati.remove(p.getID());
+        progettistaRepository.save(progettista);
     }
 
     @Override
     public void sendCandidatura(Long idProgetto, Long idProgettista){
-        Progetto progetto = progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
+        Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
-        progetto.getCandidati().add(progettista.getId());
-        //p.addCandidato(this);
+        progettoService.addCandidato(idProgetto, idProgettista);
+        //progetto.getCandidati().add(progettista.getId());
         progettista.getProgettiCandidati().add(progetto.getId());
         //addprogettoCandidato(p);
+        //progettoRepository.save(progetto);
+        progettistaRepository.save(progettista);
     }
 }

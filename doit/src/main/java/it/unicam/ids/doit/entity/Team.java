@@ -2,16 +2,20 @@ package it.unicam.ids.doit.entity;
 
 import it.unicam.ids.doit.service.ProgettistaService;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Team {
 
+    @Id
+    @GeneratedValue
     private Long id;
 
-    private List<Progettista> progettistiTeam;
+    private List<Long> progettistiTeam;
 
-    private int progettoID;
+    private Long progettoID;
 
     public Team(){
         progettistiTeam = new ArrayList<>();
@@ -21,19 +25,19 @@ public class Team {
         return id;
     }
 
-    public List<Progettista> getProgettistiTeam() {
+    public List<Long> getProgettistiTeam() {
         return progettistiTeam;
     }
 
-    public void setProgettistiTeam(List<Progettista> progettistiTeam) {
+    public void setProgettistiTeam(List<Long> progettistiTeam) {
         this.progettistiTeam = progettistiTeam;
     }
 
-    public int getProgettoID() {
+    public Long getProgettoID() {
         return progettoID;
     }
 
-    public void setProgettoID(int progettoID) {
+    public void setProgettoID(Long progettoID) {
         this.progettoID = progettoID;
     }
 }
