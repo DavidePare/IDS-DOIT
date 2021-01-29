@@ -20,8 +20,6 @@ public class ProgettoServiceImpl implements ProgettoService {
     @Autowired
     private ProgettoRepository progettoRepository;
 
-    //private ProgettistaService progettistaService;
-
     @Override
     public Progetto getProgetto(Long id){
         return progettoRepository.findById(id).orElseThrow(NoSuchElementException::new);

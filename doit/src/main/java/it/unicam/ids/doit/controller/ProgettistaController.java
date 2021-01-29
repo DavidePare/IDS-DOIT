@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProgettistaController {
 
-    @Autowired
-    ProgettistaService progettistaService;
+    //@Autowired
+    //ProgettistaService progettistaService;
 
 }

@@ -35,11 +35,12 @@ public class EspertoServiceImpl implements EspertoService {
 
     @Override
     public void confirmProgetto(ProgettoService p){
-        p.confirmProgetto();
+        //p.confirmProgetto();
     }
 
     @Override
-    public void declineProgetto(ProgettoService p){ p.declineProgetto(); }
+    public void declineProgetto(ProgettoService p){ //p.declineProgetto();
+    }
 
 
 }

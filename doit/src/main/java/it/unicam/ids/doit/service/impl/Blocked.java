@@ -9,12 +9,17 @@ import org.springframework.stereotype.Service;
 public class Blocked extends AbstractState {
     Progetto progetto;
 
-    public Blocked(Progetto p){
+    @Override
+    public void changeState(Long idProgetto, IState newState) {
+
+    }
+
+    /*public Blocked(Progetto p){
         this.progetto=p;
     }
 
     @Override
     public void changeState(IState newState) {
         progetto.setState(newState);
-    }
+    }*/
 }

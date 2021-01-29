@@ -1,5 +1,6 @@
 package it.unicam.ids.doit.service.impl;
 
+import it.unicam.ids.doit.entity.Curriculum;
 import it.unicam.ids.doit.service.ProgettistaService;
 import it.unicam.ids.doit.service.ProgettoService;
 import it.unicam.ids.doit.service.ProponenteProgettoService;
@@ -13,12 +14,48 @@ public class ProponenteProgettoServiceImpl extends ProgettistaServiceImpl implem
 
     private List<ProgettoService> progettiGestiti;
 
-    public ProponenteProgettoServiceImpl(String name, String surname, CurriculumServiceImpl curriculum){
-        super(name, surname, curriculum);
+    public ProponenteProgettoServiceImpl(String name, String surname, Curriculum curriculum){
+        //super(name, surname, curriculum);
         progettiGestiti = new ArrayList<>();
+    }
+    // da qui
+    @Override
+    public void addProgettoGestito(ProgettoService p) {
+
     }
 
     @Override
+    public void removeProgettoGestito(ProgettoService p) {
+
+    }
+
+    @Override
+    public void createProgetto(String name, int nMax) {
+
+    }
+
+    @Override
+    public List<ProgettoService> getProgettiGestiti() {
+        return null;
+    }
+
+    @Override
+    public void acceptCandidatura(ProgettoService progetto, ProgettistaService progettista) {
+
+    }
+
+    @Override
+    public void declineCandidatura(ProgettoService progetto, ProgettistaService progettista) {
+
+    }
+
+    @Override
+    public void inviteProgettista(ProgettistaService progettista, ProgettoService progetto) {
+
+    }
+    // a qui
+
+    /*@Override
     public void addProgettoGestito(ProgettoService p){
         progettiGestiti.add(p);
     }
@@ -32,7 +69,7 @@ public class ProponenteProgettoServiceImpl extends ProgettistaServiceImpl implem
     public void createProgetto(String name,int nMax){
         ProgettoService p = new ProgettoServiceImpl(this.getID(),name,nMax);
         addProgettoGestito(p);
-        //il controller farà l aggiunta al gestore dei progetti
+
     }
 
     @Override
@@ -61,5 +98,5 @@ public class ProponenteProgettoServiceImpl extends ProgettistaServiceImpl implem
     @Override
     public void inviteProgettista(ProgettistaService progettista, ProgettoService progetto){
         progettista.addInvito(progetto);
-    }
+    }*/
 }
