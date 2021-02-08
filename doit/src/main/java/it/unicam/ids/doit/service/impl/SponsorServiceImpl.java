@@ -8,6 +8,7 @@ import it.unicam.ids.doit.service.SponsorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -76,5 +77,14 @@ public class SponsorServiceImpl implements SponsorService {
             progettoService.decrementAmount(idProgetto,amount);
             sponsorRepository.save(sponsor);
         }
+    }
+
+    @Override
+    public List<Progetto> getProgetti(Long idSponsor){
+        List<Progetto> lProgetti =new ArrayList<>();
+        for(Long idProgetto : getSponsor(idSponsor).getProgettiInv().keySet()){
+            lProgetti.add(progettoService.getProgetto(idProgetto));
+        }
+        return lProgetti;
     }
 }

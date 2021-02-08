@@ -1,5 +1,6 @@
 package it.unicam.ids.doit.service;
 
+import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
 
 import java.util.List;
@@ -39,4 +40,9 @@ public interface ProgettoService {
     void incrementAmount(Long idProgetto, double amount);
 
     void decrementAmount(Long idProgetto, double amount);
+
+    List<Progetto> getAllProgettiValutare();
+
+
+    List<Progettista> getCandidati(Long idProgetto);
 }

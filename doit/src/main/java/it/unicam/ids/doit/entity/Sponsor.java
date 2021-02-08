@@ -16,6 +16,8 @@ public class Sponsor {
     @ElementCollection
     private Map<Long,Double> progettiInv;
 
+    public Sponsor(){ }
+
     public Sponsor(String name){
         this.name=name;
         progettiInv= new HashMap<>();

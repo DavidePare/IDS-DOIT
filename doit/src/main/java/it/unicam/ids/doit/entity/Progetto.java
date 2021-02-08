@@ -13,14 +13,15 @@ public class Progetto {
 
     private int nMaxProgettisti;
 
-    @Transient
+    @OneToOne(targetEntity = AbstractState.class,
+                cascade= {CascadeType.ALL})
     private IState state;
 
     private double amount;
 
     private String name;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Team team;
 
     private Long espertoId;
@@ -32,6 +33,7 @@ public class Progetto {
     @ElementCollection
     private List<Long> progettistiInvitati;
 
+    //metterei Progettisti invece di Long perchè al ritorno fa comodo vederli
     @ElementCollection
     private List<Long> candidati;
 

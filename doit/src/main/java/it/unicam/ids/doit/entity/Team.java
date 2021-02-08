@@ -1,5 +1,6 @@
 package it.unicam.ids.doit.entity;
 
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 public class Team {
 
     @Id
+    @Column(name= "idTeam")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 

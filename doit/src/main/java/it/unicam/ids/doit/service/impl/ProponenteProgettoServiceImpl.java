@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -106,5 +107,34 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
         if(prop.getProgettiGestiti().contains(idProgetto)){
             progettistaService.addInvito(idProgetto,idProgettista);
         }
+    }
+
+    @Override
+    public List<Progetto> getProgettiGestiti(Long idPropProgetto){
+        ProponenteProgetto prop= propProgRepository.findAllById(Collections.singleton(idPropProgetto)).get(0);
+        List<Progetto> listaProgetti=new ArrayList<>();
+        prop.getProgettiGestiti().stream().forEach(p -> listaProgetti.add(progettoService.getProgetto(p)));
+        return listaProgetti;
+    }
+
+    @Override
+    public void removeProgettistaFromProgetto(Long idPropProgetto,Long idProgetto, Long idProgettista){
+        ProponenteProgetto prop = getProponenteProgetto(idPropProgetto);
+        Progetto p = progettoService.getProgetto(idProgetto);
+        teamService.removeProgettista(p.getTeam().getId(), idProgettista);
+    }
+
+    @Override
+    public List<Progettista> getComponentOfTeam(Long id,Long idProponente){
+        ProponenteProgetto prop = getProponenteProgetto(idProponente);
+        Progetto p = progettoService.getProgetto(id);
+        if(p.getProponenteProgettoID().equals(idProponente) && p.getTeam()!=null){
+            List<Progettista> progettisti= new ArrayList<>();
+            for(Long idProgettista : p.getTeam().getProgettistiTeam()){
+                progettisti.add(progettistaService.getProgettista(idProgettista));
+            }
+            return progettisti;
+        }
+        return null; //TODO ritornare eccezione
     }
 }

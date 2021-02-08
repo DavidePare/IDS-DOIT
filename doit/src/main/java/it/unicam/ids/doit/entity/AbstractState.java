@@ -1,6 +1,14 @@
 package it.unicam.ids.doit.entity;
 
-public abstract class AbstractState implements IState {
+
+import javax.persistence.*;
+
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class AbstractState implements IState{
+    @Id @GeneratedValue(strategy = GenerationType.TABLE)
+    private Long id;
+
 
     @Override
     public void confirm(Long idProgetto){ }

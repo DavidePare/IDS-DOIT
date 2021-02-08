@@ -1,11 +1,17 @@
 package it.unicam.ids.doit.entity;
 
 import it.unicam.ids.doit.service.ProgettoService;
+import it.unicam.ids.doit.service.impl.ProgettoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
 public class Waiting extends AbstractState {
 
     @Autowired
+    @Transient
     private ProgettoService progettoService;
 
     public Waiting(){ }
@@ -26,4 +32,8 @@ public class Waiting extends AbstractState {
         this.changeState(idProgetto,new Blocked());
     }
 
+    @Override
+    public String toString() {
+        return "Waiting";
+    }
 }

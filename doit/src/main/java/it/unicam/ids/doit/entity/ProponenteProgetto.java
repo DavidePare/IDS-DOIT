@@ -9,7 +9,9 @@ public class ProponenteProgetto extends  Progettista{
 
     @ElementCollection
     private List<Long> progettiGestiti;
-
+    public ProponenteProgetto(){
+        super();
+    }
     public ProponenteProgetto(String name, String surname){
         super(name, surname);
         progettiGestiti = new ArrayList<>();

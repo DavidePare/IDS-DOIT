@@ -1,5 +1,6 @@
 package it.unicam.ids.doit.service;
 
+import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.entity.Sponsor;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface SponsorService {
     void addAmountProgetto(Long idProgetto, Long idSponsor, double amount);
 
     void decrementAmountProgetto(Long idProgetto, Long idSponsor, double amount);
+
+    List<Progetto> getProgetti(Long idSponsor);
 }

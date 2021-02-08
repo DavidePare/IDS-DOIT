@@ -3,14 +3,21 @@ package it.unicam.ids.doit.entity;
 import it.unicam.ids.doit.dao.ProgettoRepository;
 import it.unicam.ids.doit.service.ProgettistaService;
 import it.unicam.ids.doit.service.ProgettoService;
+import it.unicam.ids.doit.service.impl.ProgettoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
 public class Approved extends AbstractState {
 
     @Autowired
+    @Transient
     private ProgettoService progettoService;
 
     @Autowired
+    @Transient
     private ProgettistaService progettistaService;
 
     @Override
@@ -85,4 +92,8 @@ public class Approved extends AbstractState {
     }
 
 
+    @Override
+    public String toString() {
+        return "Accepted";
+    }
 }

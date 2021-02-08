@@ -1,11 +1,14 @@
 package it.unicam.ids.doit.service.impl;
 
 import it.unicam.ids.doit.dao.ProgettoRepository;
+import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
+import it.unicam.ids.doit.entity.Waiting;
 import it.unicam.ids.doit.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -29,6 +32,7 @@ public class ProgettoServiceImpl implements ProgettoService {
 
     @Autowired
     private ProponenteProgettoService propProgService;
+
 
     @Override
     public Progetto createProgetto(Long proponenteProgettoID, String name, int nMaxProgettisti){
@@ -165,5 +169,25 @@ public class ProgettoServiceImpl implements ProgettoService {
         progetto.getState().decrementAmount(idProgetto, amount);
         //state.decrementAmount(a);
         progettoRepository.save(progetto);
+    }
+
+    @Override
+    public List<Progetto> getAllProgettiValutare(){
+        List<Progetto> progettidavalutare= progettoRepository.findAll();
+        List<Progetto> app=new ArrayList<>();
+        for(Progetto p : progettidavalutare){
+            if(p.getState() instanceof Waiting) app.add(p);
+        }
+        return app;
+    }
+
+    @Override
+    public List<Progettista> getCandidati(Long idProgetto){
+        Progetto p=progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
+        List<Progettista> lProgettisti = new ArrayList<>();
+        for(Long idProgettista : p.getCandidati()){
+            lProgettisti.add(progettistaService.getProgettista(idProgettista));
+        }
+        return lProgettisti;
     }
 }

@@ -1,5 +1,7 @@
 package it.unicam.ids.doit.service;
 
+import it.unicam.ids.doit.entity.Progettista;
+import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.entity.ProponenteProgetto;
 
 import java.util.List;
@@ -25,4 +27,10 @@ public interface ProponenteProgettoService {
     void declineCandidatura(Long idPropProgetto,Long idProgetto,Long idProgettista);
 
     void inviteProgettista(Long idPropProgetto,Long idProgetto,Long idProgettista);
+
+    List<Progetto> getProgettiGestiti(Long idPropProgetto);
+
+    void removeProgettistaFromProgetto(Long idPropProgetto,Long idProgetto, Long idProgettista);
+
+    List<Progettista> getComponentOfTeam(Long id, Long idProponente);
 }
