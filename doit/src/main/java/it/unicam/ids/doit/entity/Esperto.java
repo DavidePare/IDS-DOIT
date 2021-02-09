@@ -18,6 +18,9 @@ public class Esperto {
     @ElementCollection
     private List<Long> progettiEsperto;
 
+    public Esperto(){
+
+    }
     public Esperto(String name, String surname){
         this.name= name;
         this.surname= surname;
