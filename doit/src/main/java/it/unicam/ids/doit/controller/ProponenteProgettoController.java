@@ -130,6 +130,12 @@ public class ProponenteProgettoController {
         }
     }
 
+    /**
+     * Visualizzazione di tutti i componenti del team di quel progetot
+     * @param id Progetto
+     * @param idProponente gestore del progetto
+     * @return componenti del team del progetto
+     */
     @GetMapping(value="/progettigestiti/{id}/getTeam/")
     @ResponseBody
     public List<Progettista> getTeam(@PathVariable Long id, @RequestParam @NotNull Long idProponente ){
@@ -140,6 +146,13 @@ public class ProponenteProgettoController {
         }
     }
 
+    /**
+     * Visualizzazione di un progettista nello specifico del team
+     * @param idProgettista progettista da visualizzare
+     * @param idProponente pgestore del progetto
+     * @param id progetto
+     * @return Progettista
+     */
     @GetMapping(value="/progettigestiti/{id}/getTeam/{idProgettista}")
     @ResponseBody
     public Progettista getProgettista(@PathVariable Long idProgettista,@RequestParam @NotNull Long idProponente, @PathVariable Long id){
@@ -150,6 +163,13 @@ public class ProponenteProgettoController {
         }
     }
 
+    /**
+     * Rimozione di un componente del team dal progetto
+     * @param id Progetto
+     * @param idProponente gestore del progetto
+     * @param idProgettista progettista che subisce la rimozione
+     * @return messaggio di corretta esecuzione o di errore
+     */
     @DeleteMapping(value="/progettigestiti/{id}/getTeam/{idProgettista}/remove")
     @ResponseBody
     public String removeProgettistaFromProgetto(@PathVariable Long id,@RequestParam @NotNull Long idProponente, @PathVariable Long idProgettista){

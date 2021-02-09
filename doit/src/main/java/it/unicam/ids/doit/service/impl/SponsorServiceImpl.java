@@ -28,6 +28,10 @@ public class SponsorServiceImpl implements SponsorService {
         return sponsor;
     }
 
+    /**
+     * Rimozione dello sponsor
+     * @param idSponsor sponsor da rimuovere
+     */
     @Override
     public void deleteSponsor(Long idSponsor){
         Sponsor sponsor = getSponsor(idSponsor);

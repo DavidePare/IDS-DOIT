@@ -1,5 +1,6 @@
 package it.unicam.ids.doit.service;
 
+import it.unicam.ids.doit.entity.Curriculum;
 import it.unicam.ids.doit.entity.Progettista;
 
 import it.unicam.ids.doit.entity.Progetto;
@@ -43,4 +44,10 @@ public interface ProgettistaService {
     void removeprogettoCandidato(Long idProgetto, Long idProgettista);
 
     void sendCandidatura(Long idProgetto, Long idProgettista);
+
+    Curriculum getCurriculum(Long id);
+
+    List<Progetto> getInviti(Long idProgettista);
+
+    List<Progetto> getProgettiAttivi(Long idProgettista);
 }
