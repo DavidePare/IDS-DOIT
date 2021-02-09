@@ -25,7 +25,7 @@ public class EspertoController {
      */
     @GetMapping(value="/getprogettidavalutare/")
     @ResponseBody
-    public List<Progetto> getprogettidavalutare(){
+    public List<Progetto> getprogettidavalutare(/*@RequestParam Long idEsperto*/){
         return progettoService.getAllProgettiValutare();
     }
 

@@ -171,6 +171,10 @@ public class ProgettoServiceImpl implements ProgettoService {
         progettoRepository.save(progetto);
     }
 
+    /**
+     * Metodo usato dall'esperto per ricevere tutti i progetti in stato di Waiting
+     * @return tutti i progetti in stato di Waiting
+     */
     @Override
     public List<Progetto> getAllProgettiValutare(){
         List<Progetto> progettidavalutare= progettoRepository.findAll();
