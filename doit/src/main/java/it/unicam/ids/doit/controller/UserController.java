@@ -18,18 +18,32 @@ public class UserController {
     @Autowired
     private ProponenteProgettoServiceImpl proponenteProgettoService;
 
+    /**
+     * Visualizzazione di tutti i progetti
+     * @return tutti i progetti
+     */
     @GetMapping(value="/getprogetti/")
     @ResponseBody
     public List<Progetto> getProgetto(){
         return userService.getProgetti();
     }
 
+    /**
+     * Visualizzazione tutti i progettisti
+     * @return tutti i progettisti
+     */
     @GetMapping(value="/getprogettisti/")
     @ResponseBody
     public List<Progettista> getProgettisti(){
         return userService.getProgettisti();
     }
 
+    /**
+     * Login dell'utente
+     * @param email email
+     * @param password .
+     * @return sessione??
+     */
     @PostMapping(value="/login/")
     @ResponseBody
     public String login(@PathVariable @NotNull String email, @PathVariable @NotNull String password){
@@ -37,13 +51,19 @@ public class UserController {
     }
 
 
+    /**
+     * Creazione proponente progetto
+     * @param name nome pp
+     * @param surname cognome pp
+     * @return proponente progetto
+     */
     @PostMapping(value="/addpp")
     @ResponseBody
     public ProponenteProgetto addPropProgetto(@RequestParam String name, @RequestParam String surname){
         return proponenteProgettoService.createProponenteProgetto(name,surname);
 
     }
-    // qui metterei le diverse creazioni tipo progettisti sponsor eccetera
+    //TODO qui metterei le diverse creazioni tipo progettisti sponsor eccetera
 
 
 }

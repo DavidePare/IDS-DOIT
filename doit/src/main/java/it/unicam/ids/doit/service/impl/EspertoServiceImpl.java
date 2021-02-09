@@ -21,6 +21,11 @@ public class EspertoServiceImpl implements EspertoService {
     @Autowired
     private ProgettoService progettoService;
 
+    /**
+     * Metodo che viene richiamato se l'esperto valida un progetto e questo progetto viene aggiunto alla lista dell'esperto
+     * @param idEsperto che valuta un progetto
+     * @param idProgetto progetto valutatato
+     */
     @Override
     public void addProgetto(Long idEsperto, Long idProgetto){
         Esperto esperto = getEsperto(idEsperto);
@@ -28,6 +33,11 @@ public class EspertoServiceImpl implements EspertoService {
         espertoRepository.save(esperto);
     }
 
+    /**
+     * Rimozione di un progetto dall'esperto , questo metodo viene richiamato se un progetto viene eliminato
+     * @param idEsperto che aveva valutato il progetto
+     * @param idProgetto progetto eliminato
+     */
     @Override
     public void removeProgetto(Long idEsperto, Long idProgetto){
         Esperto esperto = getEsperto(idEsperto);
@@ -35,6 +45,12 @@ public class EspertoServiceImpl implements EspertoService {
         espertoRepository.save(esperto);
     }
 
+    /**
+     * Creazione di un esperto e viene salvato sul db
+     * @param name nome dell'esperto
+     * @param surname cognome dell'esperto
+     * @return esperto creato
+     */
     @Override
     public Esperto createEsperto(String name, String surname){
         Esperto esperto = new Esperto(name,surname);
@@ -42,6 +58,10 @@ public class EspertoServiceImpl implements EspertoService {
         return esperto;
     }
 
+    /**
+     * Rimozione di un esperto e rimozione da tutti i progetti a cui lui ha dato una valutazione
+     * @param idEsperto da rimuovere
+     */
     @Override
     public void deleteEsperto(Long idEsperto){
         Esperto esperto = getEsperto(idEsperto);
@@ -50,11 +70,20 @@ public class EspertoServiceImpl implements EspertoService {
         espertoRepository.delete(esperto);
     }
 
+    /**
+     * Ottenere un esperto per id
+     * @param id esperto da ricercare
+     * @return esperto
+     */
     @Override
     public Esperto getEsperto(Long id){
         return espertoRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
+    /**
+     * Visualizzazione di tutti gli esperti
+     * @return tutti gli esperti
+     */
     @Override
     public List<Esperto> getAllEsperti(){
         return espertoRepository.findAll();

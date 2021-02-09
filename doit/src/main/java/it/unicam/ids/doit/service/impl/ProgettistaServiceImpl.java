@@ -11,6 +11,7 @@ import it.unicam.ids.doit.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -228,6 +229,11 @@ public class ProgettistaServiceImpl implements ProgettistaService {
         progettistaRepository.save(progettista);
     }
 
+    /**
+     * Rimozione di un progetto a cui si è candidato
+     * @param idProgetto id del progetto al quale viene rimosso
+     * @param idProgettista progettista che si rimuove
+     */
     @Override
     public void removeprogettoCandidato(Long idProgetto, Long idProgettista){
         //Progetto progetto = progettoService.getProgetto(idProgetto);
@@ -241,14 +247,19 @@ public class ProgettistaServiceImpl implements ProgettistaService {
      * Invio della candidatura verso un progetto da parte di un progettista
      * @param idProgetto progetto al quale ci si vuole candidare
      * @param idProgettista progettista che si vuole candidare al progetto
+     * @return ritorna l esito della candidatura
      */
     @Override
-    public void sendCandidatura(Long idProgetto, Long idProgettista){
+    public boolean sendCandidatura(Long idProgetto, Long idProgettista){
         //Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
+        if(progettista.getProgettiCandidati().contains(idProgetto)){
+            return false;
+        }
         progettoService.addCandidato(idProgetto, idProgettista);
         progettista.getProgettiCandidati().add(idProgetto);
         progettistaRepository.save(progettista);
+        return true;
     }
 
 
@@ -260,7 +271,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     @Override
     public Curriculum getCurriculum(Long id){
         try {
-            Progettista p= progettistaRepository.findById(id).orElseThrow(null);
+            Progettista p= progettistaRepository.findById(id).orElseThrow(NullPointerException::new);
             return p.getCurriculum();
         }catch(Exception e){
             return null;
@@ -290,6 +301,18 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     }
 
 
-
+    /**
+     * Metodo che ritorna tutti i progetti al quale un progettista è candidato
+     * @param idProgettista progettista
+     * @return lista di progetti al quale il progettista è candidato
+     */
+    @Override
+    public List<Progetto> getCandidature(Long idProgettista){
+        List<Progetto> lProgetti= new ArrayList<>();
+        for(Long idProgetto : progettistaRepository.findById(idProgettista).orElseThrow(NullPointerException::new).getProgettiCandidati()){
+            lProgetti.add(progettoService.getProgetto(idProgetto));
+        }
+        return lProgetti;
+    }
 
 }

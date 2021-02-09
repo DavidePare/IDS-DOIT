@@ -15,11 +15,20 @@ public class UserServiceImpl implements UserService {
     ProgettoRepository progettoRepository;
     @Autowired
     ProgettistaRepository progettistaRepository;
+
+    /**
+     * Metodo per ottenere tutti i progetti
+     * @return tutti i progetti peresenti nel db
+     */
     @Override
     public List<Progetto> getProgetti() {
         return progettoRepository.findAll();
     }
 
+    /**
+     * metodo per ottenere tutti i progettisti
+     * @return tutti i progetti presenti nel db
+     */
     @Override
     public List<Progettista> getProgettisti() {
         return progettistaRepository.findAll();

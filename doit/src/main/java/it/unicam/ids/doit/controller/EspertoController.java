@@ -68,7 +68,7 @@ public class EspertoController {
     @ResponseBody
     public String declineProgetto(@PathVariable Long idProgetto, @RequestParam @NotNull Long idEsperto){
         try{
-            progettoService.declineProgetto(idProgetto, idEsperto);
+            progettoService.declineProgetto(idProgetto, idEsperto); //TODO se mettiamo confirm e decline dentro al service dell'esperto?
             return "success";
         }catch(Exception e){
             return e.getMessage();

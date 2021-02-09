@@ -185,6 +185,11 @@ public class ProgettoServiceImpl implements ProgettoService {
         return app;
     }
 
+    /**
+     * metodo per ottenere la lista di tutti i candidati di un progetto
+     * @param idProgetto progetto
+     * @return lista di progettisti candidati
+     */
     @Override
     public List<Progettista> getCandidati(Long idProgetto){
         Progetto p=progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);

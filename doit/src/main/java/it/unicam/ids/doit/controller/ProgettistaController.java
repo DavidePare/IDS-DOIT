@@ -120,7 +120,7 @@ public class ProgettistaController {
      * @param idProgetto progetto da accettare
      * @return messaggio di successo o errore
      */
-    @PutMapping (value="/{id}/inviti/accept")
+    @PutMapping (value="/{id}/inviti/accept/")
     @ResponseBody
     public String accpetInvite(@PathVariable @NotNull Long id, @RequestParam @NotNull Long idProgetto){
         try{
@@ -137,7 +137,7 @@ public class ProgettistaController {
      * @param idProgetto progetto da rifiutare
      * @return messaggio di successo o errore
      */
-    @PutMapping (value="/{id}/inviti/decline")
+    @PutMapping (value="/{id}/inviti/decline/")
     @ResponseBody
     public String refuseInvite(@PathVariable @NotNull Long id, @RequestParam @NotNull Long idProgetto){
         try{
@@ -215,8 +215,8 @@ public class ProgettistaController {
     @ResponseBody
     public String sendcandidatura(@PathVariable @NotNull Long idProgetto , @PathVariable @NotNull Long id){
         try{
-            progettistaService.sendCandidatura(idProgetto, id);
-            return "invio canddidatura effettuato";
+            if(progettistaService.sendCandidatura(idProgetto, id))  return "invio canddidatura effettuato";
+            return "Già candidato!";
         }catch(Exception e){
             return "candidatura non effettuata correttamente";
         }
@@ -224,12 +224,60 @@ public class ProgettistaController {
 
 
     /**
+     * Ottiene tutti i progetti al quale un progettista è candidato
+     * @param id del progettista
+     * @return tutte le candidature del progettista
+     */
+    @GetMapping(value="/{id}/getcandidature/")
+    @ResponseBody
+    public List<Progetto> getcandidature(@PathVariable @NotNull Long id){
+        try {
+            return progettistaService.getCandidature(id);
+        }catch(Exception e){
+            return null;
+        }
+    }
+
+    /**
+     * Ottiene un progetto al quale si è candidato
+     * @param id del progettista
+     * @param idProgetto al quale si candidat
+     * @return il progetto selezionato
+     */
+    @GetMapping(value="/{id}/getcandidature/{idProgetto}/")
+    @ResponseBody
+    public Progetto getprogettocandidato(@PathVariable @NotNull Long id,@PathVariable @NotNull Long idProgetto){
+        try {
+            return progettoService.getProgetto(id);
+        }catch(Exception e){
+            return null;
+        }
+    }
+
+    /**
+     * Progettista che rimuove una candidatura dal progetto
+     * @param id progettista
+     * @param idProgetto al quale viene rimossa la candidatura
+     * @return messaggio di successo / insuccesso
+     */
+    @PutMapping(value="/{id}/getcandidature/{idProgetto}/remove")
+    @ResponseBody
+    public String uscitadaprogettocandidato(@PathVariable @NotNull Long id,@PathVariable @NotNull Long idProgetto){
+        try {
+            progettistaService.removeprogettoCandidato(idProgetto,id);
+            return "success";
+        }catch(Exception e){
+            return "Errore";
+        }
+    }
+
+    /**
      * Rimozione da un progetto di appartenenza
      * @param idProgetto progetto al quale si desidera rimuoversi
      * @param id progettista che si rimuove
      * @return messaggio di successo o insuccesso
      */
-    @DeleteMapping(value="/{id}/getprogetti/{idProgetto}/removecandidatura/")
+    @DeleteMapping(value="/{id}/getcandidature/{idProgetto}/removecandidatura/")
     @ResponseBody
     public String removecandidatura(@PathVariable @NotNull Long idProgetto , @PathVariable @NotNull Long id){
         try{

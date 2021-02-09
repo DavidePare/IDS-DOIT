@@ -40,17 +40,31 @@ public class SponsorServiceImpl implements SponsorService {
         sponsorRepository.delete(sponsor);
     }
 
+    /**
+     * Metodo per ottenere la visualizzazione di un singolo sponsor
+     * @param id dello sponsor che si vuole stampare
+     * @return sponsor richiesto
+     */
     @Override
     public Sponsor getSponsor(Long id){
         return sponsorRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
+    /**
+     * Metodo per ottenere tutti gli sponsor
+     * @return lista di tutti gli sponsor
+     */
     @Override
     public List<Sponsor> getAllSponsors() {
         return sponsorRepository.findAll();
     }
 
 
+    /**
+     * Rimozione di un progetto dalla lista dello sponsor
+     * @param idProgetto progetto che deve essere rimosso dalla lista dello sponsor
+     * @param idSponsor sponsor che riceve la rimozione del progetto
+     */
     @Override
     public void removeProgetto(Long idProgetto, Long idSponsor){
         Sponsor sponsor = getSponsor(idSponsor);
@@ -58,6 +72,12 @@ public class SponsorServiceImpl implements SponsorService {
         sponsorRepository.save(sponsor);
     }
 
+    /**
+     * Quando uno sponsor investe una cifra su un progetto
+     * @param idProgetto al quale vuole investire
+     * @param idSponsor sponsor che investisce
+     * @param amount valore che immette
+     */
     @Override
     public void addAmountProgetto(Long idProgetto, Long idSponsor, double amount){
         Sponsor sponsor = getSponsor(idSponsor);
@@ -71,6 +91,12 @@ public class SponsorServiceImpl implements SponsorService {
         sponsorRepository.save(sponsor);
     }
 
+    /**
+     * Quando uno sponsor vuole rimuovere fondi da un progetto
+     * @param idProgetto al quale vuole rimuovere i fondi
+     * @param idSponsor sponosr che effettua operazione
+     * @param amount valore da rimuovere
+     */
     @Override
     public void decrementAmountProgetto(Long idProgetto, Long idSponsor, double amount){
         Sponsor sponsor = getSponsor(idSponsor);
@@ -83,6 +109,11 @@ public class SponsorServiceImpl implements SponsorService {
         }
     }
 
+    /**
+     * Metodo per ottenere tutti i progetti a cui uno sponsor ha aggiunto denaro
+     * @param idSponsor sponsor che partecipa
+     * @return lista di progetti a cui lo sponsor partecipa
+     */
     @Override
     public List<Progetto> getProgetti(Long idSponsor){
         List<Progetto> lProgetti =new ArrayList<>();
