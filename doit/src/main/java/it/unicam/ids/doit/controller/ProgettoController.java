@@ -21,12 +21,12 @@ public class ProgettoController {
     // http://localhost:8080/addprogetto?idProponenteProgetto=1&name=gino Verifica
     @PostMapping(value="/addProgetto")
    // @ResponseStatus(HttpStatus.OK)
-    public String addProgetto(@NotNull @RequestParam Long idProponenteProgetto, @NotNull @RequestParam String name , @RequestParam int nMaxProgettisti){
+    public Progetto addProgetto(@NotNull @RequestParam Long idProponenteProgetto, @NotNull @RequestParam String name , @RequestParam int nMaxProgettisti){
         try {
-            progettoService.createProgetto(idProponenteProgetto, name, nMaxProgettisti);
-            return "success";
+            return progettoService.createProgetto(idProponenteProgetto, name, nMaxProgettisti);
+            //return "success";
         }catch(Exception e){
-            return e.getMessage();
+            return null;//e.getMessage();
         }
     }
 

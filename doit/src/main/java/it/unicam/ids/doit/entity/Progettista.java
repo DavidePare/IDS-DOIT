@@ -7,6 +7,7 @@ import java.util.List;
 import java.lang.Long;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Progettista {
 
     @Id

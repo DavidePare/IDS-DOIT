@@ -16,14 +16,14 @@ public class Blocked extends AbstractState{
     public Blocked(){ }
 
     @Override
-    public void changeState(Long idProgetto, IState newState) {
-        Progetto progetto = progettoService.getProgetto(idProgetto);
+    public void changeState(Progetto progetto, IState newState) {
+      //  Progetto progetto = progettoService.getProgetto(idProgetto);
         progetto.setState(newState);
     }
 
     @Override
-    public void decline(Long idProgetto){
-        this.changeState(idProgetto,new Blocked());
+    public void confirm(Progetto progetto){
+        this.changeState(progetto,new Blocked());
     }
 
     @Override

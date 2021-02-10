@@ -2,9 +2,9 @@ package it.unicam.ids.doit.entity;
 
 public interface IState {
 
-    void confirm(Long idProgetto);
+    void confirm(Progetto progetto);
 
-    void decline(Long idProgetto);
+    void decline(Progetto progetto);
 
     void incrementAmount(Long idProgetto, double amount);
 

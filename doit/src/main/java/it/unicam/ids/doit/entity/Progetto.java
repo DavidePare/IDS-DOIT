@@ -46,7 +46,7 @@ public class Progetto {
         this.name=name;
         this.state = new Waiting();
         this.candidati = new ArrayList<>();
-        this.team = new Team();
+        this.team = new Team(getId());
         this.sponsors= new ArrayList<>();
         this.progettistiInvitati = new ArrayList<>();
         this.espertoId = (long)0;

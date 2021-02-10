@@ -68,8 +68,9 @@ public class ProgettoServiceImpl implements ProgettoService {
     @Override
     public void confirmProgetto(Long idProgetto,Long idEsperto) {
         Progetto progetto = getProgetto(idProgetto);
-        progetto.getState().confirm(idProgetto);
+        progetto.getState().confirm(progetto);
         progetto.setEspertoId(idEsperto);
+        progetto.getTeam().setProgettoID(progetto.getId());
         //state.confirm();
         progettoRepository.save(progetto);
     }
@@ -77,7 +78,7 @@ public class ProgettoServiceImpl implements ProgettoService {
     @Override
     public void declineProgetto(Long idProgetto,Long idEsperto) {
         Progetto progetto = getProgetto(idProgetto);
-        progetto.getState().decline(idProgetto);
+        progetto.getState().decline(progetto);
         progetto.setEspertoId(idEsperto);
         //state.decline();
         progettoRepository.save(progetto);

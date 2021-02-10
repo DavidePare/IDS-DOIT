@@ -11,10 +11,10 @@ public abstract class AbstractState implements IState{
 
 
     @Override
-    public void confirm(Long idProgetto){ }
+    public void confirm(Progetto progetto){ }
 
     @Override
-    public void decline(Long idProgetto){ }
+    public void decline(Progetto progetto){ }
 
     @Override
     public void incrementAmount(Long idProgetto, double amount){ }
@@ -34,5 +34,5 @@ public abstract class AbstractState implements IState{
     @Override
     public void removeInvitoProgettista(Long idProgetto,Long idProgettista){ }
 
-    public abstract void changeState(Long idProgetto, IState newState);
+    public abstract void changeState(Progetto progetto, IState newState);
 }
