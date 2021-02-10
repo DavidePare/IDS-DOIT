@@ -4,7 +4,6 @@ import it.unicam.ids.doit.dao.ProgettistaRepository;
 import it.unicam.ids.doit.entity.Curriculum;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
-import it.unicam.ids.doit.entity.Team;
 import it.unicam.ids.doit.service.ProgettistaService;
 import it.unicam.ids.doit.service.ProgettoService;
 import it.unicam.ids.doit.service.TeamService;
@@ -256,9 +255,10 @@ public class ProgettistaServiceImpl implements ProgettistaService {
         if(progettista.getProgettiCandidati().contains(idProgetto)){
             return false;
         }
-        progettoService.addCandidato(idProgetto, idProgettista);
-        progettista.getProgettiCandidati().add(idProgetto);
-        progettistaRepository.save(progettista);
+        if( progettoService.addCandidato(idProgetto, idProgettista)) {
+            progettista.getProgettiCandidati().add(idProgetto);
+            progettistaRepository.save(progettista);
+        }
         return true;
     }
 

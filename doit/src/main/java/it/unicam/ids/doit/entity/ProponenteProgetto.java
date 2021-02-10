@@ -5,8 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name="ProponenteProgetto_Table")
 public class ProponenteProgetto extends  Progettista{
 
+  //  @OneToMany()
+    //@JoinColumn(name="id")
+  /*  @OneToMany
+    @JoinColumn(name="id_Progetti")*/
     @ElementCollection
     private List<Long> progettiGestiti;
     public ProponenteProgetto(){

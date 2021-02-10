@@ -5,19 +5,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name="Esperto_Table")
 public class Esperto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="ID_Esperto")
     private Long id;
 
     private String name;
 
     private String surname;
 
+    //@OneToMany(mappedBy ="ID_Progetto")
     @ElementCollection
     private List<Long> progettiEsperto;
 
+    public Esperto(){
+
+    }
     public Esperto(String name, String surname){
         this.name= name;
         this.surname= surname;

@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Entity
+@Table(name="Sponsor_Table")
 public class Sponsor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="ID_SPONSOR")
     private Long id;
 
     private String name;

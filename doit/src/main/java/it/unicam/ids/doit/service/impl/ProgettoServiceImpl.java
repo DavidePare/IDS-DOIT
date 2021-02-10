@@ -1,6 +1,7 @@
 package it.unicam.ids.doit.service.impl;
 
 import it.unicam.ids.doit.dao.ProgettoRepository;
+import it.unicam.ids.doit.entity.Approved;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.entity.Waiting;
@@ -86,18 +87,21 @@ public class ProgettoServiceImpl implements ProgettoService {
     }
 
     @Override
-    public void addCandidato(Long idProgetto, Long idProgettista){
+    public boolean addCandidato(Long idProgetto, Long idProgettista){
         Progetto progetto = getProgetto(idProgetto);
-        progetto.getState().addCandidato(idProgetto, idProgettista);
-        //state.addCandidato(progettista);
-        progettoRepository.save(progetto);
-
+        if(progetto.getState() instanceof Approved) {
+            progetto.getState().addCandidato(progetto, progettistaService.getProgettista(idProgettista));
+            //state.addCandidato(progettista);
+            progettoRepository.save(progetto);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public void removeCandidato(Long idProgetto, Long idProgettista) {
         Progetto progetto = getProgetto(idProgetto);
-        progetto.getState().removeCandidato(idProgetto, idProgettista);
+        progetto.getState().removeCandidato(progetto, progettistaService.getProgettista(idProgettista));
         //state.removeCandidato(p);
         progettoRepository.save(progetto);
 
@@ -106,7 +110,7 @@ public class ProgettoServiceImpl implements ProgettoService {
     @Override
     public void addProgettistaInvitato(Long idProgetto, Long idProgettista){
         Progetto progetto = getProgetto(idProgetto);
-        progetto.getState().addInvitoProgettista(idProgetto, idProgettista);
+        progetto.getState().addInvitoProgettista(progetto, progettistaService.getProgettista(idProgettista));
         //state.addCandidato(progettista);
         progettoRepository.save(progetto);
     }
@@ -114,7 +118,7 @@ public class ProgettoServiceImpl implements ProgettoService {
     @Override
     public void removeProgettistaInvitato(Long idProgetto, Long idProgettista){
         Progetto progetto = getProgetto(idProgetto);
-        progetto.getState().removeInvitoProgettista(idProgetto, idProgettista);
+        progetto.getState().removeInvitoProgettista(progetto, progettistaService.getProgettista(idProgettista));
         //state.addCandidato(progettista);
         progettoRepository.save(progetto);
     }
@@ -159,7 +163,7 @@ public class ProgettoServiceImpl implements ProgettoService {
     @Override
     public void incrementAmount(Long idProgetto, double amount){
         Progetto progetto = getProgetto(idProgetto);
-        progetto.getState().incrementAmount(idProgetto, amount);
+        progetto.getState().incrementAmount(progetto, amount);
         //state.incrementAmount(a);
         progettoRepository.save(progetto);
     }
@@ -167,7 +171,7 @@ public class ProgettoServiceImpl implements ProgettoService {
     @Override
     public void decrementAmount(Long idProgetto, double amount){
         Progetto progetto = getProgetto(idProgetto);
-        progetto.getState().decrementAmount(idProgetto, amount);
+        progetto.getState().decrementAmount(progetto, amount);
         //state.decrementAmount(a);
         progettoRepository.save(progetto);
     }

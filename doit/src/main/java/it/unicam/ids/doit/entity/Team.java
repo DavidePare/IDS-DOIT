@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name="Team_Table")
 public class Team {
 
     @Id
-    @Column(name= "idTeam")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="ID_TEAM")
     private Long id;
 
     @ElementCollection

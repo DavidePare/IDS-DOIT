@@ -2,29 +2,33 @@ package it.unicam.ids.doit.entity;
 
 import javax.persistence.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.Long;
 
 @Entity
+@Table(name="Progettista_Table")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Progettista {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="ID_Progettista")
     private Long id;
 
     private String name;
 
     private String surname;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<Long> progettiCandidati;
 
     @OneToOne
     private Curriculum curriculum;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+
     private List<Progetto> progettiProgettista;
 
     @OneToMany

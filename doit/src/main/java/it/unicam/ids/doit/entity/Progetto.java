@@ -6,9 +6,11 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name="Progetto_Table")
 public class Progetto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="ID_Progetto")
     private Long id;
 
     private int nMaxProgettisti;
@@ -24,6 +26,7 @@ public class Progetto {
     @OneToOne(cascade = CascadeType.ALL)
     private Team team;
 
+
     private Long espertoId;
 
     private Date scadenza;
@@ -33,7 +36,6 @@ public class Progetto {
     @ElementCollection
     private List<Long> progettistiInvitati;
 
-    //metterei Progettisti invece di Long perchè al ritorno fa comodo vederli
     @ElementCollection
     private List<Long> candidati;
 

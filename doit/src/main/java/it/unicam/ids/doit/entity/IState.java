@@ -6,15 +6,15 @@ public interface IState {
 
     void decline(Progetto progetto);
 
-    void incrementAmount(Long idProgetto, double amount);
+    void incrementAmount(Progetto progetto, double amount);
 
-    void decrementAmount(Long idProgetto, double amount);
+    void decrementAmount(Progetto progetto, double amount);
 
-    void addCandidato(Long idProgetto,Long idProgettista);
+    void addCandidato(Progetto progetto,Progettista progettista);
 
-    void removeCandidato(Long idProgetto,Long idProgettista);
+    void removeCandidato(Progetto progetto,Progettista progettista);
 
-    void addInvitoProgettista(Long idProgetto,Long idProgettista);
+    void addInvitoProgettista(Progetto progetto,Progettista progettista);
 
-    void removeInvitoProgettista(Long idProgetto,Long idProgettista);
+    void removeInvitoProgettista(Progetto progetto,Progettista progettista);
 }
