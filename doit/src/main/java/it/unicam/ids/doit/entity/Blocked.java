@@ -9,9 +9,7 @@ import javax.persistence.Transient;
 @Entity
 public class Blocked extends AbstractState{
 
-    @Autowired
-    @Transient
-    private ProgettoService progettoService;
+
 
     public Blocked(){ }
 

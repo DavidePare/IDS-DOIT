@@ -1,9 +1,12 @@
 package it.unicam.ids.doit.controller;
 
 import com.sun.istack.NotNull;
+import it.unicam.ids.doit.entity.Esperto;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.entity.ProponenteProgetto;
+import it.unicam.ids.doit.service.impl.EspertoServiceImpl;
+import it.unicam.ids.doit.service.impl.ProgettistaServiceImpl;
 import it.unicam.ids.doit.service.impl.ProponenteProgettoServiceImpl;
 import it.unicam.ids.doit.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,10 @@ public class UserController {
     private UserServiceImpl userService;
     @Autowired
     private ProponenteProgettoServiceImpl proponenteProgettoService;
+    @Autowired
+    private ProgettistaServiceImpl progettistaService;
+    @Autowired
+    private EspertoServiceImpl espertoService;
 
     /**
      * Visualizzazione di tutti i progetti
@@ -63,6 +70,20 @@ public class UserController {
         return proponenteProgettoService.createProponenteProgetto(name,surname);
 
     }
+
+    @PostMapping(value="/addp")
+    @ResponseBody
+    public Progettista addProgettista(@RequestParam String name, @RequestParam String surname){
+        return progettistaService.createProgettista(name,surname);
+    }
+
+    @PostMapping(value="/addesperto")
+    @ResponseBody
+    public Esperto addEsperto(@RequestParam String name, @RequestParam String surname){
+        return espertoService.createEsperto(name,surname);
+    }
+
+
     //TODO qui metterei le diverse creazioni tipo progettisti sponsor eccetera
 
 

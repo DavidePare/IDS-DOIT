@@ -45,7 +45,7 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
     public void deleteProponenteProgetto(Long idPropProgetto){
         ProponenteProgetto prop = getProponenteProgetto(idPropProgetto);
         if(!prop.getProgettiGestiti().isEmpty()) prop.getProgettiGestiti().
-                forEach(p -> progettoService.deleteProgetto(p));
+                forEach(p -> progettoService.deleteProgetto(p.getId()));
         propProgRepository.delete(prop);
     }
 
@@ -77,8 +77,9 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
     @Override
     public void addProgettoGestito(Long idPropProgetto, Long idProgetto) {
         ProponenteProgetto prop = getProponenteProgetto(idPropProgetto);
-        if(prop.getProgettiGestiti().contains(idProgetto)) {
-            prop.getProgettiGestiti().add(idProgetto);
+        Progetto p= progettoService.getProgetto(idProgetto);
+        if(prop.getProgettiGestiti().contains(p)) {
+            prop.getProgettiGestiti().add(p);
             propProgRepository.save(prop);
         }
     }
@@ -92,8 +93,9 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
     public void removeProgettoGestito(Long idPropProgetto, Long idProgetto) {
         //TODO manca la rimozione del progetto da tutte le diverse liste, viene richiamato forse da progetto???
         ProponenteProgetto prop = getProponenteProgetto(idPropProgetto);
-        if(prop.getProgettiGestiti().contains(idProgetto)){
-            prop.getProgettiGestiti().remove(idProgetto);
+        Progetto p = progettoService.getProgetto(idProgetto);
+        if(prop.getProgettiGestiti().contains(p)){
+            prop.getProgettiGestiti().remove(p);
 
             propProgRepository.save(prop);
         }
@@ -171,7 +173,7 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
     public List<Progetto> getProgettiGestiti(Long idPropProgetto){
         ProponenteProgetto prop= propProgRepository.findById(idPropProgetto).orElseThrow(NullPointerException::new);
         List<Progetto> listaProgetti=new ArrayList<>();
-        if(prop != null) prop.getProgettiGestiti().forEach(p -> listaProgetti.add(progettoService.getProgetto(p)));
+        if(prop != null) prop.getProgettiGestiti().forEach(p -> listaProgetti.add(progettoService.getProgetto(p.getId())));
         return listaProgetti; //TODO verifica
     }
 
@@ -202,11 +204,8 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
         ProponenteProgetto prop = getProponenteProgetto(idProponente);
         Progetto p = progettoService.getProgetto(id);
         if(p.getProponenteProgettoID().equals(idProponente) && p.getTeam()!=null){
-            List<Progettista> progettisti= new ArrayList<>();
-            for(Long idProgettista : p.getTeam().getProgettistiTeam()){
-                progettisti.add(progettistaService.getProgettista(idProgettista));
-            }
-            return progettisti;
+            return new ArrayList<>(p.getTeam().getProgettistiTeam());
+
         }
         return null; //TODO ritornare eccezione
     }

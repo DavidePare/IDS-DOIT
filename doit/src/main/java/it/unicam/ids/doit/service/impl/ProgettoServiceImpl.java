@@ -1,6 +1,7 @@
 package it.unicam.ids.doit.service.impl;
 
 import it.unicam.ids.doit.dao.ProgettoRepository;
+import it.unicam.ids.doit.dao.TeamRepository;
 import it.unicam.ids.doit.entity.Approved;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
@@ -19,6 +20,8 @@ public class ProgettoServiceImpl implements ProgettoService {
     @Autowired
     private ProgettoRepository progettoRepository;
 
+    @Autowired
+    private TeamRepository teamRepository;
     @Autowired
     private TeamService teamService;
 
@@ -46,13 +49,19 @@ public class ProgettoServiceImpl implements ProgettoService {
     public void deleteProgetto(Long idProgetto){
         Progetto p = getProgetto(idProgetto);
         propProgService.removeProgettoGestito(p.getProponenteProgettoID(),idProgetto);
-        espertoService.removeProgetto(p.getEspertoId(),idProgetto);
-        if(!p.getCandidati().isEmpty()) p.getCandidati().forEach(c -> progettistaService.removeprogettoCandidato(idProgetto,c));
-        if(!p.getProgettistiInvitati().isEmpty()) p.getProgettistiInvitati().forEach(c -> progettistaService.refuseInvito(idProgetto,c));
-        if(!p.getTeam().getProgettistiTeam().isEmpty()) p.getTeam().getProgettistiTeam().
-                forEach(pt -> progettistaService.removeProgetto(idProgetto,pt));
-        if(!p.getSponsors().isEmpty()) p.getSponsors().forEach(s -> sponsorService.removeProgetto(idProgetto,s));
-        if(p.getTeam() != null )teamService.deleteTeam(p.getTeam().getId());
+        if(p.getEspertoId()!=0) {
+            espertoService.removeProgetto(p.getEspertoId(), idProgetto);
+
+            if (!p.getCandidati().isEmpty())
+                p.getCandidati().forEach(c -> progettistaService.removeprogettoCandidato(idProgetto, c.getId()));
+            if (!p.getProgettistiInvitati().isEmpty())
+                p.getProgettistiInvitati().forEach(c -> progettistaService.refuseInvito(idProgetto, c.getId()));
+            if (!p.getTeam().getProgettistiTeam().isEmpty()) p.getTeam().getProgettistiTeam().
+                    forEach(pt -> progettistaService.removeProgetto(idProgetto, pt.getId()));
+            if (!p.getSponsors().isEmpty())
+                p.getSponsors().forEach(s -> sponsorService.removeProgetto(idProgetto, s.getId()));
+            if (p.getTeam() != null) teamService.deleteTeam(p.getTeam().getId());
+        }
         progettoRepository.delete(p);
     }
 
@@ -72,6 +81,7 @@ public class ProgettoServiceImpl implements ProgettoService {
         progetto.getState().confirm(progetto);
         progetto.setEspertoId(idEsperto);
         progetto.getTeam().setProgettoID(progetto.getId());
+        progetto.setProgettistiInvitati(new ArrayList<>());
         //state.confirm();
         progettoRepository.save(progetto);
     }
@@ -87,13 +97,14 @@ public class ProgettoServiceImpl implements ProgettoService {
     }
 
     @Override
-    public boolean addCandidato(Long idProgetto, Long idProgettista){
-        Progetto progetto = getProgetto(idProgetto);
+    public boolean addCandidato(Progetto progetto, Progettista progettista){
+
         if(progetto.getState() instanceof Approved) {
-            progetto.getState().addCandidato(progetto, progettistaService.getProgettista(idProgettista));
-            //state.addCandidato(progettista);
-            progettoRepository.save(progetto);
-            return true;
+            if(progetto.getCandidati().stream().noneMatch(t -> t.getId().equals(progettista.getId()))){
+                progetto.getState().addCandidato(progetto, progettista);
+                progettoRepository.save(progetto);
+                return true;
+             }
         }
         return false;
     }
@@ -101,8 +112,10 @@ public class ProgettoServiceImpl implements ProgettoService {
     @Override
     public void removeCandidato(Long idProgetto, Long idProgettista) {
         Progetto progetto = getProgetto(idProgetto);
+        Progettista progettista=progettistaService.getProgettista(idProgettista);
         progetto.getState().removeCandidato(progetto, progettistaService.getProgettista(idProgettista));
         //state.removeCandidato(p);
+        progettistaService.removeprogettoCandidato(progetto.getId(),progettista.getId());
         progettoRepository.save(progetto);
 
     }
@@ -110,9 +123,12 @@ public class ProgettoServiceImpl implements ProgettoService {
     @Override
     public void addProgettistaInvitato(Long idProgetto, Long idProgettista){
         Progetto progetto = getProgetto(idProgetto);
-        progetto.getState().addInvitoProgettista(progetto, progettistaService.getProgettista(idProgettista));
-        //state.addCandidato(progettista);
-        progettoRepository.save(progetto);
+        Progettista progettista=progettistaService.getProgettista(idProgettista);
+        if(progetto.getProgettistiInvitati().stream().noneMatch(t -> t.getId().equals(progettista.getId()))) {
+            progetto.getState().addInvitoProgettista(progetto,progettista );
+            //state.addCandidato(progettista);
+            progettoRepository.save(progetto);
+        }
     }
 
     @Override
@@ -126,7 +142,7 @@ public class ProgettoServiceImpl implements ProgettoService {
     @Override
     public void addSponsor(Long idProgetto, Long idSponsor){
         Progetto progetto = getProgetto(idProgetto);
-        progetto.getSponsors().add(idSponsor);
+        progetto.getSponsors().add(sponsorService.getSponsor(idSponsor));
         //sponsors.add(s.getID());
         progettoRepository.save(progetto);
     }
@@ -171,7 +187,7 @@ public class ProgettoServiceImpl implements ProgettoService {
     @Override
     public void decrementAmount(Long idProgetto, double amount){
         Progetto progetto = getProgetto(idProgetto);
-        progetto.getState().decrementAmount(progetto, amount);
+        progetto.getState().decrementAmount(progetto, amount); //TODO manca da controllare se chi fa l'operazione ha immesso denaro
         //state.decrementAmount(a);
         progettoRepository.save(progetto);
     }
@@ -198,10 +214,6 @@ public class ProgettoServiceImpl implements ProgettoService {
     @Override
     public List<Progettista> getCandidati(Long idProgetto){
         Progetto p=progettoRepository.findById(idProgetto).orElseThrow(NoSuchElementException::new);
-        List<Progettista> lProgettisti = new ArrayList<>();
-        for(Long idProgettista : p.getCandidati()){
-            lProgettisti.add(progettistaService.getProgettista(idProgettista));
-        }
-        return lProgettisti;
+        return p.getCandidati();
     }
 }

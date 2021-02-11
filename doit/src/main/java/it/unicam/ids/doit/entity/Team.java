@@ -14,8 +14,8 @@ public class Team {
     @Column(name="ID_TEAM")
     private Long id;
 
-    @ElementCollection
-    private List<Long> progettistiTeam;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Progettista> progettistiTeam;
 
     private Long progettoID;
 
@@ -30,11 +30,11 @@ public class Team {
         return id;
     }
 
-    public List<Long> getProgettistiTeam() {
+    public List<Progettista> getProgettistiTeam() {
         return progettistiTeam;
     }
 
-    public void setProgettistiTeam(List<Long> progettistiTeam) {
+    public void setProgettistiTeam(List<Progettista> progettistiTeam) {
         this.progettistiTeam = progettistiTeam;
     }
 

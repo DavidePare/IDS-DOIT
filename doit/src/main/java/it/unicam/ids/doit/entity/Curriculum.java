@@ -13,8 +13,10 @@ public class Curriculum {
     Long progettistaID;
     String instruction;
     String formation;
-    @ElementCollection
+    @Transient
+    @ElementCollection //classe esperienza con l entita
     List<String> workingExperience;
+    @Transient
     @ElementCollection
     List<String> languages;
     int phone;

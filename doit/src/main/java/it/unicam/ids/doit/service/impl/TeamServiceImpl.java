@@ -1,6 +1,7 @@
 package it.unicam.ids.doit.service.impl;
 
 import it.unicam.ids.doit.dao.TeamRepository;
+import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Team;
 import it.unicam.ids.doit.service.ProgettistaService;
 import it.unicam.ids.doit.service.ProgettoService;
@@ -45,7 +46,7 @@ public class TeamServiceImpl implements TeamService {
         Team team = getTeam(idTeam);
         progettoService.removeTeam(team.getProgettoID());
         if(!team.getProgettistiTeam().isEmpty()) team.getProgettistiTeam().
-                forEach(p -> progettistaService.removeTeam(p,idTeam));
+                forEach(p -> progettistaService.removeTeam(p.getId(),idTeam));
         teamRepository.delete(team);
     }
 
@@ -89,8 +90,9 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public void addProgettista(Long idTeam, Long idProgettista){
         Team team = getTeam(idTeam);
-        if(team.getProgettistiTeam().contains(idProgettista)){
-            team.getProgettistiTeam().add(idProgettista);
+        Progettista progettista=progettistaService.getProgettista(idProgettista);
+        if(!team.getProgettistiTeam().contains(progettista)){
+            team.getProgettistiTeam().add(progettista);
             teamRepository.save(team);
         }
         //progettistiTeam.add(p);

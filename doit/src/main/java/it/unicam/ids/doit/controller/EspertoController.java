@@ -46,7 +46,7 @@ public class EspertoController {
      * @param idEsperto id di colui che ha accettato
      * @return errore oppure messaggio di successo
      */
-    @PostMapping(value="/getprogettidavalutare/{id}/confirm")
+    @PostMapping(value="/getprogettidavalutare/{idProgetto}/confirm")
     @ResponseBody
     public String confirmProgetto(@PathVariable Long idProgetto, @RequestParam @NotNull Long idEsperto){
         try {
@@ -64,7 +64,7 @@ public class EspertoController {
      * @param idEsperto id di colui che ha rifiutato
      * @return errore oppure messaggio di successo
      */
-    @PostMapping(value="/getprogettidavalutare/{id}/decline")
+    @PostMapping(value="/getprogettidavalutare/{idProgetto}/decline")
     @ResponseBody
     public String declineProgetto(@PathVariable Long idProgetto, @RequestParam @NotNull Long idEsperto){
         try{

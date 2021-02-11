@@ -15,7 +15,8 @@ public class Sponsor {
 
     private String name;
 
-    @ElementCollection
+    @Transient
+    @ElementCollection(fetch = FetchType.EAGER)
     private Map<Long,Double> progettiInv;
 
     public Sponsor(){ }

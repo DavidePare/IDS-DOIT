@@ -1,12 +1,14 @@
 package it.unicam.ids.doit.service.impl;
 
 import it.unicam.ids.doit.dao.ProgettistaRepository;
+import it.unicam.ids.doit.dao.ProgettoRepository;
 import it.unicam.ids.doit.entity.Curriculum;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.service.ProgettistaService;
 import it.unicam.ids.doit.service.ProgettoService;
 import it.unicam.ids.doit.service.TeamService;
+import org.apache.catalina.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ import java.util.NoSuchElementException;
 @Service
 public class ProgettistaServiceImpl implements ProgettistaService {
 
+    @Autowired
+    private ProgettoRepository progettoRepository;
     @Autowired
     private ProgettistaRepository progettistaRepository;
 
@@ -43,9 +47,9 @@ public class ProgettistaServiceImpl implements ProgettistaService {
         Progettista p = getProgettista(idProgettista);
         if(!p.getInviti().isEmpty()) p.getInviti().forEach(pr -> progettoService.removeProgettistaInvitato(pr.getId(),idProgettista));
         if(!p.getProgettiCandidati().isEmpty()) p.getProgettiCandidati().
-                forEach(pc -> progettoService.removeCandidato(pc,idProgettista));
+                forEach(pc -> progettoService.removeCandidato(pc.getId(),idProgettista));
         if(!p.getTeamsProgettista().isEmpty()) p.getTeamsProgettista().
-                forEach(t -> teamService.removeProgettista(t,idProgettista));
+                forEach(t -> teamService.removeProgettista(t.getId(),idProgettista));
         progettistaRepository.delete(p);
     }
 
@@ -202,7 +206,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     @Override
     public void addTeam(Long idProgettista, Long idTeam){
         Progettista progettista = getProgettista(idProgettista);
-        progettista.getTeamsProgettista().add(idTeam);
+        progettista.getTeamsProgettista().add(teamService.getTeam(idTeam));
         progettistaRepository.save(progettista);
 
     }
@@ -215,7 +219,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     @Override
     public void removeTeam(Long idProgettista, Long idTeam){
         Progettista progettista = getProgettista(idProgettista);
-        progettista.getTeamsProgettista().remove(idTeam);
+        progettista.getTeamsProgettista().remove(teamService.getTeam(idTeam));
         progettistaRepository.save(progettista);
     }
 
@@ -224,7 +228,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     public void addprogettoCandidato(Long idProgetto, Long idProgettista){
         //Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
-        progettista.getProgettiCandidati().add(idProgetto);
+        progettista.getProgettiCandidati().add(progettoService.getProgetto(idProgetto));
         progettistaRepository.save(progettista);
     }
 
@@ -237,7 +241,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     public void removeprogettoCandidato(Long idProgetto, Long idProgettista){
         //Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
-        progettista.getProgettiCandidati().remove(idProgetto);
+        progettista.getProgettiCandidati().remove(progettoService.getProgetto(idProgetto));
         progettistaRepository.save(progettista);
     }
 
@@ -252,11 +256,12 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     public boolean sendCandidatura(Long idProgetto, Long idProgettista){
         //Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
-        if(progettista.getProgettiCandidati().contains(idProgetto)){
+        if(progettista.getProgettiCandidati().contains(progettoService.getProgetto(idProgetto))){ //TODO Test
             return false;
         }
-        if( progettoService.addCandidato(idProgetto, idProgettista)) {
-            progettista.getProgettiCandidati().add(idProgetto);
+        Progetto p=progettoService.getProgetto(idProgetto);
+        if( progettoService.addCandidato(p, progettista)) {
+            progettista.getProgettiCandidati().add(p);
             progettistaRepository.save(progettista);
         }
         return true;
@@ -308,11 +313,12 @@ public class ProgettistaServiceImpl implements ProgettistaService {
      */
     @Override
     public List<Progetto> getCandidature(Long idProgettista){
-        List<Progetto> lProgetti= new ArrayList<>();
-        for(Long idProgetto : progettistaRepository.findById(idProgettista).orElseThrow(NullPointerException::new).getProgettiCandidati()){
-            lProgetti.add(progettoService.getProgetto(idProgetto));
+      /*  List<Progetto> lProgetti= new ArrayList<>();
+        for(Progetto progetto : progettistaRepository.findById(idProgettista).orElseThrow(NullPointerException::new).getProgettiCandidati()){
+            lProgetti.add(Progetto);
         }
-        return lProgetti;
+        return lProgetti;*/
+        return getProgettista(idProgettista).getProgettiCandidati();
     }
 
 }

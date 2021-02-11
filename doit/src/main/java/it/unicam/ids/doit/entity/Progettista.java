@@ -1,11 +1,15 @@
 package it.unicam.ids.doit.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.Long;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="Progettista_Table")
@@ -21,21 +25,28 @@ public class Progettista {
 
     private String surname;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<Long> progettiCandidati;
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+  //  @JsonIgnore()
+    @JsonIgnoreProperties({"candidati","progettistiInvitati","sponsor"})
+    private List<Progetto> progettiCandidati;
 
+   // @Transient
     @OneToOne
     private Curriculum curriculum;
 
-    @OneToMany(cascade = CascadeType.ALL)
-
+    @Transient
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"candidati","progettistiInvitati","sponsor"})
     private List<Progetto> progettiProgettista;
 
-    @OneToMany
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"candidati","progettistiInvitati","sponsor"})
     private List<Progetto> inviti;
 
-    @ElementCollection
-    private List<Long> teamsProgettista;
+    @Transient
+  //  @ElementCollection
+    private List<Team> teamsProgettista;
 
 
     public Progettista(){ }
@@ -70,11 +81,11 @@ public class Progettista {
         this.surname = surname;
     }
 
-    public List<Long> getProgettiCandidati() {
+    public List<Progetto> getProgettiCandidati() {
         return progettiCandidati;
     }
 
-    public void setProgettiCandidati(List<Long> progettiCandidati) {
+    public void setProgettiCandidati(List<Progetto> progettiCandidati) {
         this.progettiCandidati = progettiCandidati;
     }
 
@@ -102,11 +113,11 @@ public class Progettista {
         this.inviti = inviti;
     }
 
-    public List<Long> getTeamsProgettista() {
+    public List<Team> getTeamsProgettista() {
         return teamsProgettista;
     }
 
-    public void setTeamsProgettista(List<Long> teamsProgettista) {
+    public void setTeamsProgettista(List<Team> teamsProgettista) {
         this.teamsProgettista = teamsProgettista;
     }
 }

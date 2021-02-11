@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Entity;
 import javax.persistence.Transient;
+import java.util.List;
 
 @Entity
 public class Approved extends AbstractState {
@@ -57,7 +58,7 @@ public class Approved extends AbstractState {
     public void addCandidato(Progetto progetto,Progettista progettista){
        // Progetto progetto = progettoService.getProgetto(idProgetto);
        // Progettista progettista = progettistaService.getProgettista(idProgettista);
-        progetto.getCandidati().add(progettista.getId());
+        progetto.getCandidati().add(progettista);
     }
 
     /**
@@ -67,23 +68,21 @@ public class Approved extends AbstractState {
      */
     @Override
     public void removeCandidato(Progetto progetto,Progettista progettista){
-       // Progetto progetto = progettoService.getProgetto(idProgetto);
-       // Progettista progettista = progettistaService.getProgettista(idProgettista);
-        progetto.getCandidati().remove(progettista.getId());
+        progetto.getCandidati().removeIf(p -> p.getId().equals(progettista.getId()));
     }
 
     @Override
     public void addInvitoProgettista(Progetto progetto,Progettista progettista){
        // Progetto progetto = progettoService.getProgetto(idProgetto);
       //  Progettista progettista = progettistaService.getProgettista(idProgettista);
-        progetto.getProgettistiInvitati().add(progettista.getId());
+        progetto.getProgettistiInvitati().add(progettista);
     }
 
     @Override
     public void removeInvitoProgettista(Progetto progetto,Progettista progettista){
        // Progetto progetto = progettoService.getProgetto(idProgetto);
       //  Progettista progettista = progettistaService.getProgettista(idProgettista);
-        progetto.getProgettistiInvitati().remove(progettista.getId());
+        progetto.getProgettistiInvitati().remove(progettista);
     }
 
 

@@ -1,9 +1,13 @@
 package it.unicam.ids.doit.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="Progetto_Table")
@@ -15,6 +19,7 @@ public class Progetto {
 
     private int nMaxProgettisti;
 
+    //Era messo
     @OneToOne(targetEntity = AbstractState.class,
                 cascade= {CascadeType.ALL})
     private IState state;
@@ -24,6 +29,7 @@ public class Progetto {
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="ID_Team")
     private Team team;
 
 
@@ -33,14 +39,20 @@ public class Progetto {
 
     private Long proponenteProgettoID;
 
-    @ElementCollection
-    private List<Long> progettistiInvitati;
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    //@JoinTable(name ="Progettista",
+    //        joinColumns=@JoinColumn(name="ID_Progettista"))
+    @JsonIgnoreProperties({"progettiCandidati","progettiProgettista","inviti",})
+    private List<Progettista> progettistiInvitati;
 
-    @ElementCollection
-    private List<Long> candidati;
 
-    @ElementCollection
-    private List<Long> sponsors;
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"progettiCandidati","progettiProgettista","inviti"})
+    private List<Progettista> candidati;
+
+    //@Transient
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    private List<Sponsor> sponsors;
 
     public Progetto(){ }
 
@@ -108,22 +120,22 @@ public class Progetto {
     public void setProponenteProgettoID(long proponenteProgettoID) {
         this.proponenteProgettoID = proponenteProgettoID;
     }
-    public List<Long> getCandidati() {
+    public List<Progettista> getCandidati() {
         return candidati;
     }
-    public void setCandidati(List<Long> candidati) {
+    public void setCandidati(List<Progettista> candidati) {
         this.candidati = candidati;
     }
-    public List<Long> getSponsors() {
+    public List<Sponsor> getSponsors() {
         return sponsors;
     }
-    public void setSponsors(List<Long> sponsors) {
+    public void setSponsors(List<Sponsor> sponsors) {
         this.sponsors = sponsors;
     }
-    public List<Long> getProgettistiInvitati() {
+    public List<Progettista> getProgettistiInvitati() {
         return progettistiInvitati;
     }
-    public void setProgettistiInvitati(List<Long> progettistiInvitati) {
+    public void setProgettistiInvitati(List<Progettista> progettistiInvitati) {
         this.progettistiInvitati = progettistiInvitati;
     }
 }

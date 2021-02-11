@@ -12,8 +12,9 @@ public class ProponenteProgetto extends  Progettista{
     //@JoinColumn(name="id")
   /*  @OneToMany
     @JoinColumn(name="id_Progetti")*/
-    @ElementCollection
-    private List<Long> progettiGestiti;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//sicuro
+    private List<Progetto> progettiGestiti;
     public ProponenteProgetto(){
         super();
     }
@@ -22,11 +23,11 @@ public class ProponenteProgetto extends  Progettista{
         progettiGestiti = new ArrayList<>();
     }
 
-    public List<Long> getProgettiGestiti() {
+    public List<Progetto> getProgettiGestiti() {
         return progettiGestiti;
     }
 
-    public void setProgettiGestiti(List<Long> progettiGestiti) {
+    public void setProgettiGestiti(List<Progetto> progettiGestiti) {
         this.progettiGestiti = progettiGestiti;
     }
 }

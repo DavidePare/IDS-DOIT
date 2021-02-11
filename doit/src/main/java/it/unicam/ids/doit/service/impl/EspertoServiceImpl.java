@@ -29,7 +29,7 @@ public class EspertoServiceImpl implements EspertoService {
     @Override
     public void addProgetto(Long idEsperto, Long idProgetto){
         Esperto esperto = getEsperto(idEsperto);
-        esperto.getProgettiEsperto().add(idProgetto);
+        esperto.getProgettiEsperto().add(progettoService.getProgetto(idProgetto));
         espertoRepository.save(esperto);
     }
 
@@ -41,7 +41,7 @@ public class EspertoServiceImpl implements EspertoService {
     @Override
     public void removeProgetto(Long idEsperto, Long idProgetto){
         Esperto esperto = getEsperto(idEsperto);
-        esperto.getProgettiEsperto().remove(idProgetto);
+        esperto.getProgettiEsperto().remove(progettoService.getProgetto(idProgetto));
         espertoRepository.save(esperto);
     }
 

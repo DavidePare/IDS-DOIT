@@ -100,7 +100,7 @@ public class SponsorController {
             sponsorService.deleteSponsor(idSponsor);
             return "rimozione effettuata";
         }catch(Exception e){
-            return "errore";
+            return e.getMessage();
         }
     }
 }
