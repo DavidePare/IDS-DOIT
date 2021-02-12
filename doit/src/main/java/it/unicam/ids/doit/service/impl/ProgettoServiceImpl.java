@@ -97,8 +97,9 @@ public class ProgettoServiceImpl implements ProgettoService {
     }
 
     @Override
-    public boolean addCandidato(Progetto progetto, Progettista progettista){
-
+    public boolean addCandidato(Long idProgetto, Long idProgettista){
+        Progetto progetto= getProgetto(idProgetto);
+        Progettista progettista= progettistaService.getProgettista(idProgettista);
         if(progetto.getState() instanceof Approved) {
             if(progetto.getCandidati().stream().noneMatch(t -> t.getId().equals(progettista.getId()))){
                 progetto.getState().addCandidato(progetto, progettista);

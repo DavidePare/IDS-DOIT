@@ -14,12 +14,14 @@ public class Team {
     @Column(name="ID_TEAM")
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
     private List<Progettista> progettistiTeam;
 
     private Long progettoID;
 
-    public Team(){ }
+    public Team(){
+
+    }
 
     public Team(Long idProgetto){
         this.progettoID = idProgetto;

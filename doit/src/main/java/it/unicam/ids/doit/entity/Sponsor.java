@@ -1,5 +1,7 @@
 package it.unicam.ids.doit.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +19,7 @@ public class Sponsor {
 
     @Transient
     @ElementCollection(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("sponsors")
     private Map<Long,Double> progettiInv;
 
     public Sponsor(){ }

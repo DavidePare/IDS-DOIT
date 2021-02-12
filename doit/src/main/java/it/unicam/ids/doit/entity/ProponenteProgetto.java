@@ -1,5 +1,7 @@
 package it.unicam.ids.doit.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ public class ProponenteProgetto extends  Progettista{
     @JoinColumn(name="id_Progetti")*/
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//sicuro
+    @JsonIgnoreProperties({"candidati","progettistiInvitati","sponsor"})
     private List<Progetto> progettiGestiti;
     public ProponenteProgetto(){
         super();

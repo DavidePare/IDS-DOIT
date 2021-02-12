@@ -20,7 +20,7 @@ public class Esperto {
     private String surname;
 
     //@OneToMany(mappedBy ="ID_Progetto")
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Progetto> progettiEsperto;
 
     public Esperto(){

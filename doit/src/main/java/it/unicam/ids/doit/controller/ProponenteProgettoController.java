@@ -180,4 +180,14 @@ public class ProponenteProgettoController {
             return e.getMessage();
         }
     }
+    @PostMapping(value="/addProgetto")
+    // @ResponseStatus(HttpStatus.OK)
+    public Progetto createProgetto(@NotNull @RequestParam Long idProponenteProgetto, @NotNull @RequestParam String name , @RequestParam int nMaxProgettisti){
+        try {
+            return propProgettoService.createProgetto(idProponenteProgetto, name, nMaxProgettisti);
+            //return "success";
+        }catch(Exception e){
+            return null;//e.getMessage();
+        }
+    }
 }

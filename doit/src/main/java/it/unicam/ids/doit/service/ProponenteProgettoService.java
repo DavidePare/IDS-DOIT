@@ -20,7 +20,7 @@ public interface ProponenteProgettoService {
 
     void removeProgettoGestito(Long idPropProgetto, Long idProgetto);
 
-    void createProgetto(Long idPropProgetto, String name, int nMaxProgettisti);
+    Progetto createProgetto(Long idPropProgetto, String name, int nMaxProgettisti);
 
     void acceptCandidatura(Long idPropProgetto,Long idProgetto,Long idProgettista);
 

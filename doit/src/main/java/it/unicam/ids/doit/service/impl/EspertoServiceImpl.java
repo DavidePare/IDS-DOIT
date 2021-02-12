@@ -41,7 +41,7 @@ public class EspertoServiceImpl implements EspertoService {
     @Override
     public void removeProgetto(Long idEsperto, Long idProgetto){
         Esperto esperto = getEsperto(idEsperto);
-        esperto.getProgettiEsperto().remove(progettoService.getProgetto(idProgetto));
+        esperto.getProgettiEsperto().removeIf(p -> p.getId().equals(idProgetto));//remove(progettoService.getProgetto(idProgetto));
         espertoRepository.save(esperto);
     }
 
@@ -89,4 +89,17 @@ public class EspertoServiceImpl implements EspertoService {
         return espertoRepository.findAll();
     }
 
+    @Override
+    public void confirmProgetto(Long idProgetto, Long idEsperto){
+        progettoService.confirmProgetto(idProgetto, idEsperto);
+        addProgetto(idEsperto,idProgetto);
+        espertoRepository.save(getEsperto(idEsperto));
+    }
+
+    @Override
+    public void declineProgetto(Long idProgetto, Long idEsperto){
+        progettoService.declineProgetto(idProgetto, idEsperto);
+        addProgetto(idEsperto,idProgetto);
+        espertoRepository.save(getEsperto(idEsperto));
+    }
 }

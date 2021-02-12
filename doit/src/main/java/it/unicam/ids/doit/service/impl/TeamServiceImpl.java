@@ -77,7 +77,7 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public void removeProgettista(Long idTeam, Long idProgettista){
         Team team = getTeam(idTeam);
-        team.getProgettistiTeam().remove(idProgettista);
+        team.getProgettistiTeam().removeIf(t-> t.getId().equals(idProgettista));
         //progettistiTeam.remove(p);
         teamRepository.save(team);
     }
@@ -91,7 +91,7 @@ public class TeamServiceImpl implements TeamService {
     public void addProgettista(Long idTeam, Long idProgettista){
         Team team = getTeam(idTeam);
         Progettista progettista=progettistaService.getProgettista(idProgettista);
-        if(!team.getProgettistiTeam().contains(progettista)){
+        if(team.getProgettistiTeam().stream().noneMatch(t-> t.getId().equals(progettista.getId()))){
             team.getProgettistiTeam().add(progettista);
             teamRepository.save(team);
         }

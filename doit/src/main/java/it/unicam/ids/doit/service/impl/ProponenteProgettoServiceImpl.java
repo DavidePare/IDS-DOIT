@@ -21,6 +21,7 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
     @Autowired
     private ProponenteProgettoRepository propProgRepository;
 
+
     @Autowired
     private ProgettoService progettoService;
 
@@ -78,7 +79,7 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
     public void addProgettoGestito(Long idPropProgetto, Long idProgetto) {
         ProponenteProgetto prop = getProponenteProgetto(idPropProgetto);
         Progetto p= progettoService.getProgetto(idProgetto);
-        if(prop.getProgettiGestiti().contains(p)) {
+        if(!prop.getProgettiGestiti().contains(p)) {
             prop.getProgettiGestiti().add(p);
             propProgRepository.save(prop);
         }
@@ -94,8 +95,8 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
         //TODO manca la rimozione del progetto da tutte le diverse liste, viene richiamato forse da progetto???
         ProponenteProgetto prop = getProponenteProgetto(idPropProgetto);
         Progetto p = progettoService.getProgetto(idProgetto);
-        if(prop.getProgettiGestiti().contains(p)){
-            prop.getProgettiGestiti().remove(p);
+        if(prop.getProgettiGestiti().stream().anyMatch(t-> t.getId().equals(idProgetto))){
+            prop.getProgettiGestiti().removeIf(t -> t.getId().equals(idProgetto));
 
             propProgRepository.save(prop);
         }
@@ -108,9 +109,10 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
      * @param nMaxProgettisti che possano partecipare al progetto
      */
     @Override
-    public void createProgetto(Long idPropProgetto, String name, int nMaxProgettisti) {
+    public Progetto createProgetto(Long idPropProgetto, String name, int nMaxProgettisti) {
         Progetto p = progettoService.createProgetto(idPropProgetto,name,nMaxProgettisti);
         addProgettoGestito(idPropProgetto,p.getId());
+        return p;
     }
 
     /**
@@ -123,10 +125,11 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
     public void acceptCandidatura(Long idPropProgetto,Long idProgetto,Long idProgettista) {
         ProponenteProgetto prop = getProponenteProgetto(idPropProgetto);
         Progetto p = progettoService.getProgetto(idProgetto);
-        if(prop.getProgettiGestiti().contains(idProgetto) && p.getCandidati().contains(idProgettista)){
+        if(prop.getProgettiGestiti().stream().anyMatch(t-> t.getId().equals(idProgetto)) //filter(t-> t.getProponenteProgettoID().equals(idProgetto)).count()==1
+                && p.getCandidati().stream().anyMatch(t-> t.getId().equals(idProgettista))){ //TODO migliorabile
             //progetto.getTeam().addProgettista(progettista);
-            teamService.addProgettista(p.getTeam().getId(),idProgettista);
-            progettistaService.addTeam(idProgettista,p.getTeam().getId());
+            teamService.addProgettista(progettoService.getProgetto(p.getId()).getTeam().getId(),idProgettista);
+            progettistaService.addTeam(idProgettista,progettoService.getProgetto(p.getId()).getTeam().getId());
             //progetto.removeCandidato(progettista);
             progettoService.removeCandidato(idProgetto,idProgettista);
             //progettista.removeprogettoCandidato(progetto);
@@ -144,7 +147,8 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
     public void declineCandidatura(Long idPropProgetto,Long idProgetto,Long idProgettista) {
         ProponenteProgetto prop = getProponenteProgetto(idPropProgetto);
         Progetto p = progettoService.getProgetto(idProgetto);
-        if(prop.getProgettiGestiti().contains(idProgetto) && p.getCandidati().contains(idProgettista)){
+        if(prop.getProgettiGestiti().stream().anyMatch(t-> t.getId().equals(idProgetto)) &&
+                p.getCandidati().stream().anyMatch(t-> t.getId().equals(idProgettista))){
             progettoService.removeCandidato(idProgetto,idProgettista);
             progettistaService.removeprogettoCandidato(idProgetto,idProgettista);
         }
@@ -159,8 +163,11 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
     @Override
     public void inviteProgettista(Long idPropProgetto,Long idProgetto,Long idProgettista) {
         ProponenteProgetto prop = getProponenteProgetto(idPropProgetto);
-        if(prop.getProgettiGestiti().contains(idProgetto)){
+        Progettista progettista= progettistaService.getProgettista(idProgettista);
+        if(prop.getProgettiGestiti().stream().anyMatch(t-> t.getId().equals(idProgetto))
+            && progettista.getInviti().stream().noneMatch(t->t.getId().equals(idProgetto))){
             progettistaService.addInvito(idProgetto,idProgettista);
+            progettoService.addProgettistaInvitato(idProgetto,idProgettista);
         }
     }
 

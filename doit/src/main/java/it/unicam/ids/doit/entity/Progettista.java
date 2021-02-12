@@ -25,7 +25,7 @@ public class Progettista {
 
     private String surname;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
   //  @JsonIgnore()
     @JsonIgnoreProperties({"candidati","progettistiInvitati","sponsor"})
     private List<Progetto> progettiCandidati;
@@ -34,18 +34,19 @@ public class Progettista {
     @OneToOne
     private Curriculum curriculum;
 
-    @Transient
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"candidati","progettistiInvitati","sponsor"})
     private List<Progetto> progettiProgettista;
 
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"candidati","progettistiInvitati","sponsor"})
     private List<Progetto> inviti;
 
-    @Transient
+   // @Transient
   //  @ElementCollection
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
     private List<Team> teamsProgettista;
 
 

@@ -39,14 +39,14 @@ public class Progetto {
 
     private Long proponenteProgettoID;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
     //@JoinTable(name ="Progettista",
     //        joinColumns=@JoinColumn(name="ID_Progettista"))
     @JsonIgnoreProperties({"progettiCandidati","progettiProgettista","inviti",})
     private List<Progettista> progettistiInvitati;
 
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"progettiCandidati","progettiProgettista","inviti"})
     private List<Progettista> candidati;
 

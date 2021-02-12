@@ -14,6 +14,10 @@ public interface EspertoService {
 
     void deleteEsperto(Long idEsperto);
 
+    void confirmProgetto(Long idProgetto, Long idEsperto);
+
+    void declineProgetto(Long idProgetto, Long idEsperto);
+
     Esperto getEsperto(Long id);
 
     List<Esperto> getAllEsperti();

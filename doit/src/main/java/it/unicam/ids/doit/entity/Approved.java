@@ -82,7 +82,7 @@ public class Approved extends AbstractState {
     public void removeInvitoProgettista(Progetto progetto,Progettista progettista){
        // Progetto progetto = progettoService.getProgetto(idProgetto);
       //  Progettista progettista = progettistaService.getProgettista(idProgettista);
-        progetto.getProgettistiInvitati().remove(progettista);
+        progetto.getProgettistiInvitati().removeIf(p -> p.getId().equals(progettista.getId()));
     }
 
 

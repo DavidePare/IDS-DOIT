@@ -1,6 +1,7 @@
 package it.unicam.ids.doit.service.impl;
 
 import it.unicam.ids.doit.entity.*;
+import it.unicam.ids.doit.service.SponsorService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +26,8 @@ class ProgettoServiceImplTest {
     @Autowired
     ProgettistaServiceImpl progettistaService;
 
+    @Autowired
+    SponsorServiceImpl sponsorService;
     @Autowired
     EspertoServiceImpl espertoService;
 
@@ -118,7 +121,7 @@ class ProgettoServiceImplTest {
 
         assertEquals(progettistaService.getProgettista(progettistaA.getId()).getProgettiCandidati().size(),1);
 
-        progettoService.addCandidato(progettoService.getProgetto(p.getId()),progettistaB);
+        progettoService.addCandidato(p.getId(),progettistaB.getId());
         progettistaList=progettoService.getProgetto(p.getId()).getCandidati();
         assertEquals(progettoService.getProgetto(p.getId()).getCandidati().size(),2);
     }
@@ -129,11 +132,11 @@ class ProgettoServiceImplTest {
         Progettista progettistaA=progettistaService.createProgettista("Paolo","Bronio");
         Progettista progettistaB= progettistaService.createProgettista("Mario","Rossi");
         progettoService.confirmProgetto(p.getId(),e.getId());
-        progettoService.addCandidato(progettoService.getProgetto(p.getId()),progettistaA);
+        progettoService.addCandidato(p.getId(),progettistaA.getId());
         assertEquals(progettoService.getCandidati(p.getId()).size(),1);
-        progettoService.addCandidato(progettoService.getProgetto(p.getId()),progettistaA);
+        progettoService.addCandidato(p.getId(),progettistaA.getId());
         assertEquals(progettoService.getCandidati(p.getId()).size(),1);
-        progettoService.addCandidato(progettoService.getProgetto(p.getId()),progettistaB);
+        progettoService.addCandidato(p.getId(),progettistaB.getId());
         assertEquals(progettoService.getCandidati(p.getId()).size(),2);
         progettoService.removeCandidato(p.getId(),progettistaB.getId());
         assertEquals(progettoService.getCandidati(p.getId()).size(),1);
@@ -159,27 +162,60 @@ class ProgettoServiceImplTest {
 
     @Test
     void removeProgettistaInvitato () {
+        p=progettoService.createProgetto(proponenteProgettoA.getId(),"IoT",10);
+        Progettista progettistaA=progettistaService.createProgettista("Paolo","Bronio");
+        Progettista progettistaB= progettistaService.createProgettista("Mario","Rossi");
+        progettoService.confirmProgetto(p.getId(),e.getId());
+        progettoService.addProgettistaInvitato(p.getId(),progettistaA.getId());
+        assertEquals(progettoService.getProgetto(p.getId()).getProgettistiInvitati().size(),1);
+        progettoService.removeProgettistaInvitato(p.getId(),progettistaA.getId());
+        assertEquals(progettoService.getProgetto(p.getId()).getProgettistiInvitati().size(),0);
+
+        progettoService.removeProgettistaInvitato(p.getId(),progettistaA.getId());
+        assertEquals(progettoService.getProgetto(p.getId()).getProgettistiInvitati().size(),0);
+
 
     }
 
-    @Test
+    @Test //TODO MODIFY SPONSOR
     void addSponsor () {
+        p=progettoService.createProgetto(proponenteProgettoA.getId(),"IoT",10);
+        Sponsor sponsor= sponsorService.createSponsor("mario");
+        progettoService.addSponsor(p.getId(),sponsor.getId());
+        progettoService.incrementAmount(p.getId(),100);
+        assertNotEquals(progettoService.getProgetto(p.getId()).getAmount(),100.0);
+        progettoService.confirmProgetto(p.getId(),e.getId());
+        progettoService.addSponsor(p.getId(),sponsor.getId());
+        progettoService.incrementAmount(p.getId(),100);
+        assertNotEquals(progettoService.getProgetto(p.getId()).getAmount(),100.0);
+        assertFalse(progettoService.getProgetto(p.getId()).getSponsors().isEmpty());
 
     }
 
     @Test
     void removeSponsor () {
-
+        //TODO
     }
 
     @Test
     void addEsperto () {
-
+        p=progettoService.createProgetto(proponenteProgettoA.getId(),"IoT",10);
+        progettoService.confirmProgetto(p.getId(),e.getId());
+        assertEquals(progettoService.getProgetto(p.getId()).getEspertoId(),e.getId());
+        Progetto p2=progettoService.createProgetto(proponenteProgettoA.getId(),"IoT",10);
+        progettoService.addEsperto(p2.getId(),e.getId());
+        assertEquals(progettoService.getProgetto(p2.getId()).getEspertoId(),e.getId());
     }
 
     @Test
     void removeEsperto () {
+        p=progettoService.createProgetto(proponenteProgettoA.getId(),"IoT",10);
+        progettoService.confirmProgetto(p.getId(),e.getId());
+        assertEquals(progettoService.getProgetto(p.getId()).getEspertoId(),e.getId());
+        progettoService.removeEsperto(p.getId());
+        assertEquals(progettoService.getProgetto(p.getId()).getEspertoId(),0);
     }
+
 
     @Test
     void incrementAmount () {

@@ -154,7 +154,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     public void removeProgetto(Long idProgetto, Long idProgettista){
         Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
-        progettista.getProgettiProgettista().remove(progetto);
+        progettista.getProgettiProgettista().removeIf(t-> t.getId().equals(idProgetto));
         //TODO aggiunto da ricontrollare
         removeTeam(idProgettista,progetto.getTeam().getId());
         //progettoRepository.save(progetto);
@@ -219,7 +219,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     @Override
     public void removeTeam(Long idProgettista, Long idTeam){
         Progettista progettista = getProgettista(idProgettista);
-        progettista.getTeamsProgettista().remove(teamService.getTeam(idTeam));
+        progettista.getTeamsProgettista().removeIf(t-> t.getId().equals(idTeam));
         progettistaRepository.save(progettista);
     }
 
@@ -241,7 +241,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     public void removeprogettoCandidato(Long idProgetto, Long idProgettista){
         //Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
-        progettista.getProgettiCandidati().remove(progettoService.getProgetto(idProgetto));
+        progettista.getProgettiCandidati().removeIf(p -> p.getId().equals(progettista.getId()));
         progettistaRepository.save(progettista);
     }
 
@@ -260,7 +260,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
             return false;
         }
         Progetto p=progettoService.getProgetto(idProgetto);
-        if( progettoService.addCandidato(p, progettista)) {
+        if( progettoService.addCandidato(p.getId(), progettista.getId())) {
             progettista.getProgettiCandidati().add(p);
             progettistaRepository.save(progettista);
         }
