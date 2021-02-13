@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name="ProponenteProgetto_Table")
-public class ProponenteProgetto extends  Progettista{
+public class ProponenteProgetto extends Progettista{
 
   //  @OneToMany()
     //@JoinColumn(name="id")
@@ -18,6 +18,11 @@ public class ProponenteProgetto extends  Progettista{
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//sicuro
     @JsonIgnoreProperties({"candidati","progettistiInvitati","sponsor"})
     private List<Progetto> progettiGestiti;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    private List<NotificationMessage> messaggeBacheca;
+
+
     public ProponenteProgetto(){
         super();
     }

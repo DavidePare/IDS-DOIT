@@ -29,8 +29,10 @@ public class EspertoServiceImpl implements EspertoService {
     @Override
     public void addProgetto(Long idEsperto, Long idProgetto){
         Esperto esperto = getEsperto(idEsperto);
-        esperto.getProgettiEsperto().add(progettoService.getProgetto(idProgetto));
-        espertoRepository.save(esperto);
+        if(esperto.getProgettiEsperto().stream().noneMatch(t-> t.getId().equals(idProgetto))) {
+            esperto.getProgettiEsperto().add(progettoService.getProgetto(idProgetto));
+            espertoRepository.save(esperto);
+        }
     }
 
     /**
@@ -65,8 +67,9 @@ public class EspertoServiceImpl implements EspertoService {
     @Override
     public void deleteEsperto(Long idEsperto){
         Esperto esperto = getEsperto(idEsperto);
-        if(!esperto.getProgettiEsperto().isEmpty()) esperto.getProgettiEsperto().
-                forEach(p -> progettoService.removeEsperto(idEsperto));
+        if(!esperto.getProgettiEsperto().isEmpty())
+            esperto.getProgettiEsperto().forEach(t->progettoService.removeEsperto(t.getId()));
+        esperto.setProgettiEsperto(null);
         espertoRepository.delete(esperto);
     }
 

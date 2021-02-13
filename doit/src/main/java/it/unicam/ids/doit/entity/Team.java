@@ -1,6 +1,8 @@
 package it.unicam.ids.doit.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ public class Team {
     private Long id;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"progettiCandidati","progettiProgettista","inviti"})
     private List<Progettista> progettistiTeam;
 
     private Long progettoID;

@@ -49,7 +49,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
         if(!p.getProgettiCandidati().isEmpty()) p.getProgettiCandidati().
                 forEach(pc -> progettoService.removeCandidato(pc.getId(),idProgettista));
         if(!p.getTeamsProgettista().isEmpty()) p.getTeamsProgettista().
-                forEach(t -> teamService.removeProgettista(t.getId(),idProgettista));
+                forEach(t -> teamService.removeProgettista(t.getId(),idProgettista,t.getProgettoID()));
         progettistaRepository.delete(p);
     }
 
@@ -183,10 +183,12 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     public void acceptInvito(Long idProgetto, Long idProgettista){
         Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
-        teamService.addProgettista(progetto.getTeam().getId(),idProgettista);
-        progettista.getInviti().remove(progetto);
-        progettista.getProgettiProgettista().add(progetto);
-        progettistaRepository.save(progettista);
+        if(progettista.getInviti().stream().anyMatch(t-> t.getId().equals(idProgetto))) {
+            teamService.addProgettista(progetto.getTeam().getId(), idProgettista);
+            progettista.getInviti().removeIf(t-> t.getId().equals(progetto.getId()));
+            progettista.getProgettiProgettista().add(progetto);
+            progettistaRepository.save(progettista);
+        }
 
     }
 

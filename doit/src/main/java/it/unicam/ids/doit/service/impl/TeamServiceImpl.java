@@ -1,7 +1,9 @@
 package it.unicam.ids.doit.service.impl;
 
+import it.unicam.ids.doit.dao.ProgettoRepository;
 import it.unicam.ids.doit.dao.TeamRepository;
 import it.unicam.ids.doit.entity.Progettista;
+import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.entity.Team;
 import it.unicam.ids.doit.service.ProgettistaService;
 import it.unicam.ids.doit.service.ProgettoService;
@@ -24,6 +26,9 @@ public class TeamServiceImpl implements TeamService {
     @Autowired
     private ProgettistaService progettistaService;
 
+
+    @Autowired
+    private ProgettoRepository progettoRepository;
     /**
      * Costruttore del team
      * @param idProgetto progetto al quale appartiene il team
@@ -75,10 +80,13 @@ public class TeamServiceImpl implements TeamService {
      * @param idProgettista progettista da rimuovere dal team
      */
     @Override
-    public void removeProgettista(Long idTeam, Long idProgettista){
-        Team team = getTeam(idTeam);
+    public void removeProgettista(Long idTeam, Long idProgettista,Long idProgetto){
+        Progetto p=progettoService.getProgetto(idProgetto);
+        Team team = p.getTeam();
         team.getProgettistiTeam().removeIf(t-> t.getId().equals(idProgettista));
         //progettistiTeam.remove(p);
+
+        progettoRepository.save(p);
         teamRepository.save(team);
     }
 

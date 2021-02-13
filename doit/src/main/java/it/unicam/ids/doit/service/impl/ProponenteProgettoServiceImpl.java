@@ -194,7 +194,9 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
     public void removeProgettistaFromProgetto(Long idPropProgetto,Long idProgetto, Long idProgettista){
         ProponenteProgetto prop = getProponenteProgetto(idPropProgetto);
         Progetto p = progettoService.getProgetto(idProgetto);
-        teamService.removeProgettista(p.getTeam().getId(), idProgettista);
+        teamService.removeProgettista(p.getTeam().getId(), idProgettista, idProgetto);
+
+        progettistaService.getProgettista(idProgettista).notify("Sei stato eliminato dal progetto con id",p.getName(),p.getId());
         //TODO aggiunto da controllare
         progettistaService.removeProgetto(idProgetto,idProgettista);
 

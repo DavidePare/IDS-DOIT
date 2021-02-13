@@ -184,17 +184,32 @@ class ProponenteProgettoServiceImplTest {
     void removeProgettistaFromProgetto() {
         ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva");
         p=proponenteProgettoService.createProgetto(proponenteA.getId(),"IoT",5);
-        progettoService.confirmProgetto(p.getId(),proponenteA.getId());
+        progettoService.confirmProgetto(p.getId(),e.getId());
         proponenteProgettoService.inviteProgettista(proponenteA.getId(),p.getId(),progettistaA.getId());
-        progettistaService.acceptInvito(p.getId(),proponenteA.getId());
+        progettistaService.acceptInvito(p.getId(),progettistaA.getId());
 
         assertEquals(progettoService.getProgetto(p.getId()).getTeam().getProgettistiTeam().size(),1);
         proponenteProgettoService.removeProgettistaFromProgetto(proponenteA.getId(),p.getId(),progettistaA.getId());
+
+        progettistaService.getProgettista(proponenteA.getId());
+
         assertEquals(progettoService.getProgetto(p.getId()).getTeam().getProgettistiTeam().size(),0);
     }
 
     @Test
     void getComponentOfTeam() {
+        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva");
+        p=proponenteProgettoService.createProgetto(proponenteA.getId(),"IoT",5);
+        progettoService.confirmProgetto(p.getId(),proponenteA.getId());
+        proponenteProgettoService.inviteProgettista(proponenteA.getId(),p.getId(),progettistaA.getId());
+        progettistaService.acceptInvito(p.getId(),proponenteA.getId());
+        progettistaService.sendCandidatura(p.getId(),progettistaA.getId());
+        progettistaService.sendCandidatura(p.getId(),progettistaB.getId());
+        proponenteProgettoService.acceptCandidatura(proponenteA.getId(),p.getId(),progettistaA.getId());
+
+        assertEquals(proponenteProgettoService.getComponentOfTeam(p.getId(),proponenteA.getId()).size(),1);
+        proponenteProgettoService.acceptCandidatura(proponenteA.getId(),p.getId(),progettistaB.getId());
+        assertEquals(proponenteProgettoService.getComponentOfTeam(p.getId(),proponenteA.getId()).size(),2);
 
     }
 }

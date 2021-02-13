@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name="Progettista_Table")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Progettista {
+public class Progettista implements Subscribe{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,6 +50,12 @@ public class Progettista {
     private List<Team> teamsProgettista;
 
 
+
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<NotificationMessage> messaggeBacheca;
+
+
     public Progettista(){ }
 
     public Progettista(String name, String surname){
@@ -59,6 +65,7 @@ public class Progettista {
         this.progettiProgettista = new ArrayList<>();
         this.teamsProgettista = new ArrayList<>();
         this.inviti= new ArrayList<>();
+        this. messaggeBacheca= new ArrayList<>();
         progettiCandidati= new ArrayList<>();
     }
 
@@ -120,5 +127,17 @@ public class Progettista {
 
     public void setTeamsProgettista(List<Team> teamsProgettista) {
         this.teamsProgettista = teamsProgettista;
+    }
+
+    public void notify(String message,String name, Long id){
+        messaggeBacheca.add(new NotificationMessage(message,name,id));
+    }
+
+    public List<NotificationMessage> getMessaggeBacheca() {
+        return messaggeBacheca;
+    }
+
+    public void setMessaggeBacheca(List<NotificationMessage> messaggeBacheca) {
+        this.messaggeBacheca.addAll(messaggeBacheca);
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -22,11 +23,16 @@ public class Sponsor {
     @JsonIgnoreProperties("sponsors")
     private Map<Long,Double> progettiInv;
 
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    private List<NotificationMessage> messagge;
+
     public Sponsor(){ }
 
     public Sponsor(String name){
         this.name=name;
         progettiInv= new HashMap<>();
+
     }
 
     public Long getId() {
