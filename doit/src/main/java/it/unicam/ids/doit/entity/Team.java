@@ -16,7 +16,7 @@ public class Team {
     @Column(name="ID_TEAM")
     private Long id;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"progettiCandidati","progettiProgettista","inviti"})
     private List<Progettista> progettistiTeam;
 

@@ -133,6 +133,7 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
             //progetto.removeCandidato(progettista);
             progettoService.removeCandidato(idProgetto,idProgettista);
             //progettista.removeprogettoCandidato(progetto);
+            progettistaService.addProgetto(idProgetto,idProgettista);
             progettistaService.removeprogettoCandidato(idProgetto,idProgettista);
         }
     }
@@ -196,8 +197,7 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
         Progetto p = progettoService.getProgetto(idProgetto);
         teamService.removeProgettista(p.getTeam().getId(), idProgettista, idProgetto);
 
-        progettistaService.getProgettista(idProgettista).notify("Sei stato eliminato dal progetto con id",p.getName(),p.getId());
-        //TODO aggiunto da controllare
+        
         progettistaService.removeProgetto(idProgetto,idProgettista);
 
     }

@@ -140,8 +140,10 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     public void addProgetto(Long idProgetto, Long idProgettista){
         Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
-        progettista.getProgettiProgettista().add(progetto);
-        progettistaRepository.save(progettista);
+        if(progettista.getProgettiProgettista().stream().noneMatch(t-> t.getId().equals(idProgetto))) {
+            progettista.getProgettiProgettista().add(progetto);
+            progettistaRepository.save(progettista);
+        }
 
     }
 
@@ -170,8 +172,10 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     public void addInvito(Long idProgetto, Long idProgettista){
         Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
-        progettista.getInviti().add(progetto);
-        progettistaRepository.save(progettista);
+        if(progettista.getInviti().stream().noneMatch(t-> t.getId().equals(progetto.getId()))) {
+            progettista.getInviti().add(progetto);
+            progettistaRepository.save(progettista);
+        }
     }
 
     /**
@@ -184,8 +188,10 @@ public class ProgettistaServiceImpl implements ProgettistaService {
         Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
         if(progettista.getInviti().stream().anyMatch(t-> t.getId().equals(idProgetto))) {
-            teamService.addProgettista(progetto.getTeam().getId(), idProgettista);
+           // teamService.addProgettista(progetto.getTeam().getId(), idProgettista);
             progettista.getInviti().removeIf(t-> t.getId().equals(progetto.getId()));
+            teamService.addProgettista(progetto.getTeam().getId(), idProgettista);
+            progettista.getTeamsProgettista().add(progetto.getTeam());
             progettista.getProgettiProgettista().add(progetto);
             progettistaRepository.save(progettista);
         }
@@ -201,8 +207,10 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     public void refuseInvito(Long idProgetto, Long idProgettista){
         Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
-        progettista.getInviti().remove(progetto);
-        progettistaRepository.save(progettista);
+        if(progettista.getInviti().stream().anyMatch(t-> t.getId().equals(idProgetto))){
+            progettista.getInviti().removeIf(t -> t.getId().equals(idProgetto));
+            progettistaRepository.save(progettista);
+        }
     }
 
     @Override
@@ -225,13 +233,14 @@ public class ProgettistaServiceImpl implements ProgettistaService {
         progettistaRepository.save(progettista);
     }
 
-    //TODO cosa differisce da sendcandidatura???
     @Override
     public void addprogettoCandidato(Long idProgetto, Long idProgettista){
         //Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
-        progettista.getProgettiCandidati().add(progettoService.getProgetto(idProgetto));
-        progettistaRepository.save(progettista);
+        if(progettista.getProgettiCandidati().stream().noneMatch(t-> t.getId().equals(idProgetto))){
+            progettista.getProgettiCandidati().add(progettoService.getProgetto(idProgetto));
+            progettistaRepository.save(progettista);
+        }
     }
 
     /**
@@ -243,7 +252,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     public void removeprogettoCandidato(Long idProgetto, Long idProgettista){
         //Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
-        progettista.getProgettiCandidati().removeIf(p -> p.getId().equals(progettista.getId()));
+        progettista.getProgettiCandidati().removeIf(p -> p.getId().equals(idProgetto));
         progettistaRepository.save(progettista);
     }
 
