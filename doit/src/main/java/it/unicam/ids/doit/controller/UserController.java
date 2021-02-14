@@ -29,7 +29,6 @@ public class UserController {
      * Visualizzazione di tutti i progetti
      * @return tutti i progetti
      */
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/getprogetti/")
     @ResponseBody
     public List<Progetto> getProgetto(){
@@ -40,7 +39,6 @@ public class UserController {
      * Visualizzazione tutti i progettisti
      * @return tutti i progettisti
      */
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/getprogettisti/")
     @ResponseBody
     public List<Progettista> getProgettisti(){
@@ -53,7 +51,6 @@ public class UserController {
      * @param password .
      * @return sessione??
      */
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/login/")
     @ResponseBody
     public String login(@PathVariable @NotNull String email, @PathVariable @NotNull String password){
@@ -67,7 +64,6 @@ public class UserController {
      * @param surname cognome pp
      * @return proponente progetto
      */
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/addpp")
     @ResponseBody
     public ProponenteProgetto addPropProgetto(@RequestParam String name, @RequestParam String surname){
@@ -75,14 +71,12 @@ public class UserController {
 
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/addp")
     @ResponseBody
     public Progettista addProgettista(@RequestParam String name, @RequestParam String surname){
         return progettistaService.createProgettista(name,surname);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/addesperto")
     @ResponseBody
     public Esperto addEsperto(@RequestParam String name, @RequestParam String surname){

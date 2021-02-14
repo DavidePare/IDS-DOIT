@@ -27,7 +27,6 @@ public class ProponenteProgettoController {
      * @param idProponente id del proponente
      * @return ottiene tutti i progetti gestiti
      */
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/progettigestiti/")
     @ResponseBody
     public List<Progetto> getprogettigestiti(@RequestParam @NotNull Long idProponente){
@@ -38,8 +37,6 @@ public class ProponenteProgettoController {
      * Prende progetto per id passato nel path
      * @return lista di tutti i progettisti
      */
-
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/progettigestiti/{id}/invite")
     @ResponseBody
     public List<Progettista> getprogettisti(){
@@ -53,7 +50,6 @@ public class ProponenteProgettoController {
      * @param idProp id del proponente progetto
      * @return messaggio di validazione o no
      */
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/progettigestiti/{id}/invite/{idProgettista}")
     @ResponseBody
     public String invite(@PathVariable Long id , @PathVariable Long idProgettista, @RequestParam @NotNull Long idProp){
@@ -71,7 +67,6 @@ public class ProponenteProgettoController {
      * @param id id del progetto
      * @return lista progettisti
      */
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/progettigestiti/{id}/candidati")
     @ResponseBody
     public List<Progettista> getcandidati(@PathVariable Long id) {
@@ -89,7 +84,6 @@ public class ProponenteProgettoController {
      * @param idProponente id del proponente progetto
      * @return messaggio di validazione o errore
      */
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value= "/progettigestiti/{id}/candidati/{idCandidato}/accept")
     @ResponseBody
     public String acceptCandidato(@PathVariable @NotNull Long id, @PathVariable @NotNull Long idCandidato, @RequestParam Long idProponente) {
@@ -108,7 +102,6 @@ public class ProponenteProgettoController {
      * @param idProponente del proponente del progetto
      * @return messaggio di rifiuto o errore
      */
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value= "/progettigestiti/{id}/candidati/{idCandidato}/decline")
     @ResponseBody
     public String declineCandidato(@PathVariable @NotNull Long id, @PathVariable @NotNull Long idCandidato, @RequestParam Long idProponente) {
@@ -126,7 +119,6 @@ public class ProponenteProgettoController {
      * @param idProponente del proponente progetto
      * @return messaggio di corretta rimozione o di errore
      */
-    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping(value= "/progettigestiti/{id}/remove")
     @ResponseBody
     public String removeProgetto(@PathVariable Long id,@RequestParam @NotNull Long idProponente){
@@ -144,7 +136,6 @@ public class ProponenteProgettoController {
      * @param idProponente gestore del progetto
      * @return componenti del team del progetto
      */
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/progettigestiti/{id}/getTeam/")
     @ResponseBody
     public List<Progettista> getTeam(@PathVariable Long id, @RequestParam @NotNull Long idProponente ){
@@ -162,7 +153,6 @@ public class ProponenteProgettoController {
      * @param id progetto
      * @return Progettista
      */
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/progettigestiti/{id}/getTeam/{idProgettista}")
     @ResponseBody
     public Progettista getProgettista(@PathVariable Long idProgettista,@RequestParam @NotNull Long idProponente, @PathVariable Long id){
@@ -180,7 +170,6 @@ public class ProponenteProgettoController {
      * @param idProgettista progettista che subisce la rimozione
      * @return messaggio di corretta esecuzione o di errore
      */
-    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping(value="/progettigestiti/{id}/getTeam/{idProgettista}/remove")
     @ResponseBody
     public String removeProgettistaFromProgetto(@PathVariable Long id,@RequestParam @NotNull Long idProponente, @PathVariable Long idProgettista){
@@ -191,9 +180,7 @@ public class ProponenteProgettoController {
             return e.getMessage();
         }
     }
-    @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping(value="/createProgetto/")
-    @ResponseBody
+    @PostMapping(value="/addProgetto")
     // @ResponseStatus(HttpStatus.OK)
     public Progetto createProgetto(@NotNull @RequestParam Long idProponenteProgetto, @NotNull @RequestParam String name , @RequestParam int nMaxProgettisti){
         try {
