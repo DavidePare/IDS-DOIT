@@ -14,7 +14,7 @@ public interface TeamService {
 
     List<Team> getAllTeams();
 
-    void removeProgettista(Long idTeam, Long idProgettista);
+    void removeProgettista(Long idTeam, Long idProgettista, Long idProgetto);
 
     void addProgettista(Long idTeam, Long idProgettista);
 

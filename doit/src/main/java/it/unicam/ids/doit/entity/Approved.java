@@ -8,87 +8,81 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Entity;
 import javax.persistence.Transient;
+import java.util.List;
 
 @Entity
 public class Approved extends AbstractState {
 
-    @Autowired
-    @Transient
-    private ProgettoService progettoService;
 
-    @Autowired
-    @Transient
-    private ProgettistaService progettistaService;
+
 
     @Override
-    public void changeState(Long idProgetto, IState newState) {
-        Progetto progetto = progettoService.getProgetto(idProgetto);
+    public void changeState(Progetto progetto, IState newState) {
+       // Progetto progetto = progettoService.getProgetto(idProgetto);
         progetto.setState(newState);
     }
 
     @Override
-    public void decline(Long idProgetto){
-        this.changeState(idProgetto,new Blocked());
+    public void decline(Progetto progetto){
+        this.changeState(progetto,new Blocked());
     }
 
     /**
      * Metodo che permetterà di aggiungere una somma di denaro dentro allo stato del progetto
-     * @param idProgetto
+     * @param progetto
      * @param amount
      */
     @Override
-    public void incrementAmount(Long idProgetto, double amount){
-        Progetto progetto = progettoService.getProgetto(idProgetto);
+    public void incrementAmount(Progetto progetto, double amount){
+        //Progetto progetto = progettoService.getProgetto(idProgetto);
         progetto.setAmount(progetto.getAmount()+amount);
     }
 
     /**
      * Metodo che rimuoverà una cifra di denaro dal progetto
-     * @param idProgetto
+     * @param progetto
      * @param amount
      */
     @Override
-    public void decrementAmount(Long idProgetto, double amount){
-        Progetto progetto = progettoService.getProgetto(idProgetto);
+    public void decrementAmount(Progetto progetto, double amount){
+       // Progetto progetto = progettoService.getProgetto(idProgetto);
         progetto.setAmount(progetto.getAmount()-amount);
     }
 
     /**
      * Aggiunta del candidato alla lista dei candidati
-     * @param idProgetto
-     * @param idProgettista
+     * @param progetto
+     * @param progettista
      */
     @Override
-    public void addCandidato(Long idProgetto,Long idProgettista){
-        Progetto progetto = progettoService.getProgetto(idProgetto);
-        Progettista progettista = progettistaService.getProgettista(idProgettista);
-        progetto.getCandidati().add(progettista.getId());
+    public void addCandidato(Progetto progetto,Progettista progettista){
+       // Progetto progetto = progettoService.getProgetto(idProgetto);
+       // Progettista progettista = progettistaService.getProgettista(idProgettista);
+        progetto.getCandidati().add(progettista);
     }
 
     /**
      * Rimozione del candidato dalla lista
-     * @param idProgetto
-     * @param idProgettista
+     * @param progetto
+     * @param progettista
      */
     @Override
-    public void removeCandidato(Long idProgetto,Long idProgettista){
-        Progetto progetto = progettoService.getProgetto(idProgetto);
-        Progettista progettista = progettistaService.getProgettista(idProgettista);
-        progetto.getCandidati().remove(progettista.getId());
+    public void removeCandidato(Progetto progetto,Progettista progettista){
+        progetto.getCandidati().removeIf(p -> p.getId().equals(progettista.getId()));
     }
 
     @Override
-    public void addInvitoProgettista(Long idProgetto,Long idProgettista){
-        Progetto progetto = progettoService.getProgetto(idProgetto);
-        Progettista progettista = progettistaService.getProgettista(idProgettista);
-        progetto.getProgettistiInvitati().add(progettista.getId());
+    public void addInvitoProgettista(Progetto progetto,Progettista progettista){
+       // Progetto progetto = progettoService.getProgetto(idProgetto);
+      //  Progettista progettista = progettistaService.getProgettista(idProgettista);
+        progetto.getProgettistiInvitati().add(progettista);
     }
 
     @Override
-    public void removeInvitoProgettista(Long idProgetto,Long idProgettista){
-        Progetto progetto = progettoService.getProgetto(idProgetto);
-        Progettista progettista = progettistaService.getProgettista(idProgettista);
-        progetto.getProgettistiInvitati().remove(progettista.getId());
+    public void removeInvitoProgettista(Progetto progetto,Progettista progettista){
+       // Progetto progetto = progettoService.getProgetto(idProgetto);
+      //  Progettista progettista = progettistaService.getProgettista(idProgettista);
+        progetto.getProgettistiInvitati().removeIf(p -> p.getId().equals(progettista.getId()));
     }
 
 

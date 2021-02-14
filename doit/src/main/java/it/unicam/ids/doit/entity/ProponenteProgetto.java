@@ -1,14 +1,28 @@
 package it.unicam.ids.doit.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class ProponenteProgetto extends  Progettista{
+@Table(name="ProponenteProgetto_Table")
+public class ProponenteProgetto extends Progettista{
 
-    @ElementCollection
-    private List<Long> progettiGestiti;
+  //  @OneToMany()
+    //@JoinColumn(name="id")
+  /*  @OneToMany
+    @JoinColumn(name="id_Progetti")*/
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//sicuro
+    @JsonIgnoreProperties({"candidati","progettistiInvitati","sponsor"})
+    private List<Progetto> progettiGestiti;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    private List<NotificationMessage> messaggeBacheca;
+
+
     public ProponenteProgetto(){
         super();
     }
@@ -17,11 +31,11 @@ public class ProponenteProgetto extends  Progettista{
         progettiGestiti = new ArrayList<>();
     }
 
-    public List<Long> getProgettiGestiti() {
+    public List<Progetto> getProgettiGestiti() {
         return progettiGestiti;
     }
 
-    public void setProgettiGestiti(List<Long> progettiGestiti) {
+    public void setProgettiGestiti(List<Progetto> progettiGestiti) {
         this.progettiGestiti = progettiGestiti;
     }
 }

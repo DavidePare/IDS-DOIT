@@ -1,23 +1,36 @@
 package it.unicam.ids.doit.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Esperto {
+@Table(name="Esperto_Table")
+public class Esperto implements Subscribe{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="ID_Esperto")
     private Long id;
 
     private String name;
 
     private String surname;
 
-    @ElementCollection
-    private List<Long> progettiEsperto;
+    //@OneToMany(mappedBy ="ID_Progetto")
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Progetto> progettiEsperto;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<NotificationMessage> messaggeBacheca;
+
+
+
+    public Esperto(){
+
+    }
     public Esperto(String name, String surname){
         this.name= name;
         this.surname= surname;
@@ -44,11 +57,26 @@ public class Esperto {
         this.surname = surname;
     }
 
-    public List<Long> getProgettiEsperto() {
+    public List<Progetto> getProgettiEsperto() {
         return progettiEsperto;
     }
 
-    public void setProgettiEsperto(List<Long> progettiEsperto) {
+    public void setProgettiEsperto(List<Progetto> progettiEsperto) {
         this.progettiEsperto = progettiEsperto;
+    }
+
+
+    @Override
+    public void notify(String message, String name, Long id) {
+        messaggeBacheca.add(new NotificationMessage(message,name,id));
+    }
+
+    @Override
+    public List<NotificationMessage> getMessaggeBacheca() {
+        return messaggeBacheca;
+    }
+
+    public void setMessaggeBacheca(List<NotificationMessage> messaggeBacheca) {
+        this.messaggeBacheca.addAll(messaggeBacheca);
     }
 }

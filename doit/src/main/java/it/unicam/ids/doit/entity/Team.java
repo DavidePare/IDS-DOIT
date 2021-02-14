@@ -1,24 +1,30 @@
 package it.unicam.ids.doit.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name="Team_Table")
 public class Team {
 
     @Id
-    @Column(name= "idTeam")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="ID_TEAM")
     private Long id;
 
-    @ElementCollection
-    private List<Long> progettistiTeam;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"progettiCandidati","progettiProgettista","inviti"})
+    private List<Progettista> progettistiTeam;
 
     private Long progettoID;
 
-    public Team(){ }
+    public Team(){
+
+    }
 
     public Team(Long idProgetto){
         this.progettoID = idProgetto;
@@ -29,11 +35,11 @@ public class Team {
         return id;
     }
 
-    public List<Long> getProgettistiTeam() {
+    public List<Progettista> getProgettistiTeam() {
         return progettistiTeam;
     }
 
-    public void setProgettistiTeam(List<Long> progettistiTeam) {
+    public void setProgettistiTeam(List<Progettista> progettistiTeam) {
         this.progettistiTeam = progettistiTeam;
     }
 

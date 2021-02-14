@@ -1,9 +1,12 @@
 package it.unicam.ids.doit.controller;
 
 import com.sun.istack.NotNull;
+import it.unicam.ids.doit.entity.Esperto;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.entity.ProponenteProgetto;
+import it.unicam.ids.doit.service.impl.EspertoServiceImpl;
+import it.unicam.ids.doit.service.impl.ProgettistaServiceImpl;
 import it.unicam.ids.doit.service.impl.ProponenteProgettoServiceImpl;
 import it.unicam.ids.doit.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +20,40 @@ public class UserController {
     private UserServiceImpl userService;
     @Autowired
     private ProponenteProgettoServiceImpl proponenteProgettoService;
+    @Autowired
+    private ProgettistaServiceImpl progettistaService;
+    @Autowired
+    private EspertoServiceImpl espertoService;
 
+    /**
+     * Visualizzazione di tutti i progetti
+     * @return tutti i progetti
+     */
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/getprogetti/")
     @ResponseBody
     public List<Progetto> getProgetto(){
         return userService.getProgetti();
     }
 
+    /**
+     * Visualizzazione tutti i progettisti
+     * @return tutti i progettisti
+     */
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/getprogettisti/")
     @ResponseBody
     public List<Progettista> getProgettisti(){
         return userService.getProgettisti();
     }
 
+    /**
+     * Login dell'utente
+     * @param email email
+     * @param password .
+     * @return sessione??
+     */
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/login/")
     @ResponseBody
     public String login(@PathVariable @NotNull String email, @PathVariable @NotNull String password){
@@ -37,13 +61,36 @@ public class UserController {
     }
 
 
+    /**
+     * Creazione proponente progetto
+     * @param name nome pp
+     * @param surname cognome pp
+     * @return proponente progetto
+     */
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/addpp")
     @ResponseBody
     public ProponenteProgetto addPropProgetto(@RequestParam String name, @RequestParam String surname){
         return proponenteProgettoService.createProponenteProgetto(name,surname);
 
     }
-    // qui metterei le diverse creazioni tipo progettisti sponsor eccetera
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping(value="/addp")
+    @ResponseBody
+    public Progettista addProgettista(@RequestParam String name, @RequestParam String surname){
+        return progettistaService.createProgettista(name,surname);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping(value="/addesperto")
+    @ResponseBody
+    public Esperto addEsperto(@RequestParam String name, @RequestParam String surname){
+        return espertoService.createEsperto(name,surname);
+    }
+
+
+    //TODO qui metterei le diverse creazioni tipo progettisti sponsor eccetera
 
 
 }

@@ -43,11 +43,13 @@ public interface ProgettistaService {
 
     void removeprogettoCandidato(Long idProgetto, Long idProgettista);
 
-    void sendCandidatura(Long idProgetto, Long idProgettista);
+    boolean sendCandidatura(Long idProgetto, Long idProgettista);
 
     Curriculum getCurriculum(Long id);
 
     List<Progetto> getInviti(Long idProgettista);
 
     List<Progetto> getProgettiAttivi(Long idProgettista);
+
+    List<Progetto> getCandidature(Long idProgettista);
 }

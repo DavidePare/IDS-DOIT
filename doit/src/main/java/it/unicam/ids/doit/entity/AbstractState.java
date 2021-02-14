@@ -11,28 +11,28 @@ public abstract class AbstractState implements IState{
 
 
     @Override
-    public void confirm(Long idProgetto){ }
+    public void confirm(Progetto progetto){ }
 
     @Override
-    public void decline(Long idProgetto){ }
+    public void decline(Progetto progetto){ }
 
     @Override
-    public void incrementAmount(Long idProgetto, double amount){ }
+    public void incrementAmount(Progetto progetto, double amount){ }
 
     @Override
-    public void decrementAmount(Long idProgetto, double amount){ }
+    public void decrementAmount(Progetto progetto, double amount){ }
 
     @Override
-    public void addCandidato(Long idProgetto,Long idProgettista){ }
+    public void addCandidato(Progetto progetto,Progettista progettista){ }
 
     @Override
-    public void removeCandidato(Long idProgetto,Long idProgettista){ }
+    public void removeCandidato(Progetto progetto,Progettista progettista){ }
 
     @Override
-    public void addInvitoProgettista(Long idProgetto,Long idProgettista){ }
+    public void addInvitoProgettista(Progetto progetto,Progettista progettista){ }
 
     @Override
-    public void removeInvitoProgettista(Long idProgetto,Long idProgettista){ }
+    public void removeInvitoProgettista(Progetto progetto,Progettista progettista){ }
 
-    public abstract void changeState(Long idProgetto, IState newState);
+    public abstract void changeState(Progetto progetto, IState newState);
 }

@@ -19,18 +19,10 @@ public class ProgettoController {
 
     // http://localhost:8080/addprogetto?idProponenteProgetto=1&name=gino&nMaxProgettisti5
     // http://localhost:8080/addprogetto?idProponenteProgetto=1&name=gino Verifica
-    @PostMapping(value="/addProgetto")
-   // @ResponseStatus(HttpStatus.OK)
-    public String addProgetto(@NotNull @RequestParam Long idProponenteProgetto, @NotNull @RequestParam String name , @RequestParam int nMaxProgettisti){
-        try {
-            progettoService.createProgetto(idProponenteProgetto, name, nMaxProgettisti);
-            return "success";
-        }catch(Exception e){
-            return e.getMessage();
-        }
-    }
+
 
     // http://localhost:8080/getprogetto/1
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/getprogetto/{id}")
     @ResponseBody
     public Progetto getProgettista(@PathVariable Long id){
@@ -38,6 +30,7 @@ public class ProgettoController {
     }
 
     //http://localhost:8080/getprogetto/
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/getprogetto/")
     @ResponseBody
     public List<Progetto> getProgettisti(){

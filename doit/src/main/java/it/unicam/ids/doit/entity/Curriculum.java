@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name="Curriculum_Table")
 public class Curriculum {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -12,8 +13,10 @@ public class Curriculum {
     Long progettistaID;
     String instruction;
     String formation;
-    @ElementCollection
+    @Transient
+    @ElementCollection //classe esperienza con l entita
     List<String> workingExperience;
+    @Transient
     @ElementCollection
     List<String> languages;
     int phone;

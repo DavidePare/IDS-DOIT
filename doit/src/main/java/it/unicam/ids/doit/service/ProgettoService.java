@@ -19,7 +19,7 @@ public interface ProgettoService {
 
     void declineProgetto(Long idProgetto,Long idEsperto);
 
-    void addCandidato(Long idProgetto, Long idProgettista);
+    boolean addCandidato(Long idProgetto, Long idProgettista);
 
     void removeCandidato(Long idProgetto, Long idProgettista);
 

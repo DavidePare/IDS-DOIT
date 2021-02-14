@@ -26,6 +26,7 @@ public class SponsorController {
      * @param id dello sponsor
      * @return tutti i progetti in cui ha investito uno sponsor
      */
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value= "/progettisponsor/")
     @ResponseBody
     public List<Progetto> getProgettiSponsor(@RequestParam @NotNull Long id){
@@ -42,6 +43,7 @@ public class SponsorController {
      * @param idSponsor sponsor che ha questa relazione
      * @return amount del progetto
      */
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value ="/progettisponsor/{id}/")
     @ResponseBody
     public Double getAmount(@PathVariable @NotNull Long id, @RequestParam @NotNull Long idSponsor){
@@ -59,6 +61,7 @@ public class SponsorController {
      * @param amount valore da sottrarre alla quota
      * @return messaggio di corretta esecuzione o errore
      */
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping(value= "/progettisponsor/{id}/decrement")
     @ResponseBody
     public String decrementAmountProgetto(@PathVariable Long id,@RequestParam @NotNull Long idSponsor, @RequestParam Double amount){
@@ -77,6 +80,7 @@ public class SponsorController {
      * @param amount valore che aggiunge
      * @return messaggio di corretta esecuzione o errore
      */
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping(value= "/progettisponsor/{id}/increment")
     @ResponseBody
     public String incrementAmountProgetto(@PathVariable Long id,@RequestParam @NotNull Long idSponsor, @RequestParam Double amount){
@@ -93,6 +97,7 @@ public class SponsorController {
      * @param idSponsor sponsor che viene rimosso
      * @return messaggio di corretta esecuzione o errore
      */
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping(value="/remove/")
     @ResponseBody
     public String removeSponsor(@RequestParam @NotNull Long idSponsor){
@@ -100,7 +105,7 @@ public class SponsorController {
             sponsorService.deleteSponsor(idSponsor);
             return "rimozione effettuata";
         }catch(Exception e){
-            return "errore";
+            return e.getMessage();
         }
     }
 }

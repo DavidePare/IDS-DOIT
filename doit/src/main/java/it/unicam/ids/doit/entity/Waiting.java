@@ -10,26 +10,22 @@ import javax.persistence.Transient;
 @Entity
 public class Waiting extends AbstractState {
 
-    @Autowired
-    @Transient
-    private ProgettoService progettoService;
 
     public Waiting(){ }
 
     @Override
-    public void changeState(Long idProgetto, IState newState) {
-        Progetto progetto = progettoService.getProgetto(idProgetto);
+    public void changeState(Progetto progetto, IState newState) {
         progetto.setState(newState);
     }
 
     @Override
-    public void confirm(Long idProgetto){
-        this.changeState(idProgetto,new Approved());
+    public void confirm(Progetto progetto){
+        this.changeState(progetto,new Approved());
     }
 
     @Override
-    public void decline(Long idProgetto){
-        this.changeState(idProgetto,new Blocked());
+    public void decline(Progetto progetto){
+        this.changeState(progetto,new Blocked());
     }
 
     @Override

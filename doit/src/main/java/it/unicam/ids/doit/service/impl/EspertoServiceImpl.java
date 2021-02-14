@@ -21,20 +21,38 @@ public class EspertoServiceImpl implements EspertoService {
     @Autowired
     private ProgettoService progettoService;
 
+    /**
+     * Metodo che viene richiamato se l'esperto valida un progetto e questo progetto viene aggiunto alla lista dell'esperto
+     * @param idEsperto che valuta un progetto
+     * @param idProgetto progetto valutatato
+     */
     @Override
     public void addProgetto(Long idEsperto, Long idProgetto){
         Esperto esperto = getEsperto(idEsperto);
-        esperto.getProgettiEsperto().add(idProgetto);
-        espertoRepository.save(esperto);
+        if(esperto.getProgettiEsperto().stream().noneMatch(t-> t.getId().equals(idProgetto))) {
+            esperto.getProgettiEsperto().add(progettoService.getProgetto(idProgetto));
+            espertoRepository.save(esperto);
+        }
     }
 
+    /**
+     * Rimozione di un progetto dall'esperto , questo metodo viene richiamato se un progetto viene eliminato
+     * @param idEsperto che aveva valutato il progetto
+     * @param idProgetto progetto eliminato
+     */
     @Override
     public void removeProgetto(Long idEsperto, Long idProgetto){
         Esperto esperto = getEsperto(idEsperto);
-        esperto.getProgettiEsperto().remove(idProgetto);
+        esperto.getProgettiEsperto().removeIf(p -> p.getId().equals(idProgetto));//remove(progettoService.getProgetto(idProgetto));
         espertoRepository.save(esperto);
     }
 
+    /**
+     * Creazione di un esperto e viene salvato sul db
+     * @param name nome dell'esperto
+     * @param surname cognome dell'esperto
+     * @return esperto creato
+     */
     @Override
     public Esperto createEsperto(String name, String surname){
         Esperto esperto = new Esperto(name,surname);
@@ -42,22 +60,49 @@ public class EspertoServiceImpl implements EspertoService {
         return esperto;
     }
 
+    /**
+     * Rimozione di un esperto e rimozione da tutti i progetti a cui lui ha dato una valutazione
+     * @param idEsperto da rimuovere
+     */
     @Override
     public void deleteEsperto(Long idEsperto){
         Esperto esperto = getEsperto(idEsperto);
-        if(!esperto.getProgettiEsperto().isEmpty()) esperto.getProgettiEsperto().
-                forEach(p -> progettoService.removeEsperto(idEsperto));
+        if(!esperto.getProgettiEsperto().isEmpty())
+            esperto.getProgettiEsperto().forEach(t->progettoService.removeEsperto(t.getId()));
+        esperto.setProgettiEsperto(null);
         espertoRepository.delete(esperto);
     }
 
+    /**
+     * Ottenere un esperto per id
+     * @param id esperto da ricercare
+     * @return esperto
+     */
     @Override
     public Esperto getEsperto(Long id){
         return espertoRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
+    /**
+     * Visualizzazione di tutti gli esperti
+     * @return tutti gli esperti
+     */
     @Override
     public List<Esperto> getAllEsperti(){
         return espertoRepository.findAll();
     }
 
+    @Override
+    public void confirmProgetto(Long idProgetto, Long idEsperto){
+        progettoService.confirmProgetto(idProgetto, idEsperto);
+        addProgetto(idEsperto,idProgetto);
+        espertoRepository.save(getEsperto(idEsperto));
+    }
+
+    @Override
+    public void declineProgetto(Long idProgetto, Long idEsperto){
+        progettoService.declineProgetto(idProgetto, idEsperto);
+        addProgetto(idEsperto,idProgetto);
+        espertoRepository.save(getEsperto(idEsperto));
+    }
 }
