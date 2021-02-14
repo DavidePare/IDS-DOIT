@@ -100,10 +100,10 @@ public class SponsorServiceImpl implements SponsorService {
     @Override
     public void decrementAmountProgetto(Long idProgetto, Long idSponsor, double amount){
         Sponsor sponsor = getSponsor(idSponsor);
-        Progetto progetto = progettoService.getProgetto(idProgetto);
+        //Progetto progetto = progettoService.getProgetto(idProgetto);
         if(sponsor.getProgettiInv().containsKey(idProgetto) &&
                 (sponsor.getProgettiInv().get(idProgetto) >= amount) ){
-            sponsor.getProgettiInv().replace(idProgetto,sponsor.getProgettiInv().get(progetto)-amount);
+            sponsor.getProgettiInv().replace(idProgetto,sponsor.getProgettiInv().get(idProgetto)-amount);
             progettoService.decrementAmount(idProgetto,amount);
             sponsorRepository.save(sponsor);
         }
