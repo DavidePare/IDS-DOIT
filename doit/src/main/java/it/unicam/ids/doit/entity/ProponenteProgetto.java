@@ -19,7 +19,8 @@ public class ProponenteProgetto extends Progettista{
     @JsonIgnoreProperties({"candidati","progettistiInvitati","sponsor"})
     private List<Progetto> progettiGestiti;
 
-
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    private List<NotificationMessage> messaggeBacheca;
 
 
     public ProponenteProgetto(){

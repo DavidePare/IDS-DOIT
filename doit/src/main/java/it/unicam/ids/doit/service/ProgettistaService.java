@@ -52,4 +52,5 @@ public interface ProgettistaService {
     List<Progetto> getProgettiAttivi(Long idProgettista);
 
     List<Progetto> getCandidature(Long idProgettista);
+    void createCurriculum(Long idProgettista , String instruction, String formation, Number phone,String email);
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name="Esperto_Table")
-public class Esperto {
+public class Esperto implements Subscribe{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,6 +23,8 @@ public class Esperto {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Progetto> progettiEsperto;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<NotificationMessage> messaggeBacheca;
 
 
 
@@ -64,4 +66,17 @@ public class Esperto {
     }
 
 
+    @Override
+    public void notify(String message, String name, Long id) {
+        messaggeBacheca.add(new NotificationMessage(message,name,id));
+    }
+
+    @Override
+    public List<NotificationMessage> getMessaggeBacheca() {
+        return messaggeBacheca;
+    }
+
+    public void setMessaggeBacheca(List<NotificationMessage> messaggeBacheca) {
+        this.messaggeBacheca.addAll(messaggeBacheca);
+    }
 }

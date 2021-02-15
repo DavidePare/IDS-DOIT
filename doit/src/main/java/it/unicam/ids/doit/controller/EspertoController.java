@@ -23,6 +23,7 @@ public class EspertoController {
      * metodo che ricerca tutti i progetti che sono i stato di Waiting
      * @return lista dei progetti da valutare
      */
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/getprogettidavalutare/")
     @ResponseBody
     public List<Progetto> getprogettidavalutare(/*@RequestParam Long idEsperto*/){
@@ -34,6 +35,7 @@ public class EspertoController {
      * @param id id del progetto
      * @return progetto con l'id, ritorna tutti i dati
      */
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/getprogettidavalutare/{id}")
     @ResponseBody
     public Progetto getprogetto(@PathVariable Long id){
@@ -46,6 +48,7 @@ public class EspertoController {
      * @param idEsperto id di colui che ha accettato
      * @return errore oppure messaggio di successo
      */
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/getprogettidavalutare/{idProgetto}/confirm")
     @ResponseBody
     public String confirmProgetto(@PathVariable Long idProgetto, @RequestParam @NotNull Long idEsperto){
@@ -63,6 +66,7 @@ public class EspertoController {
      * @param idEsperto id di colui che ha rifiutato
      * @return errore oppure messaggio di successo
      */
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/getprogettidavalutare/{idProgetto}/decline")
     @ResponseBody
     public String declineProgetto(@PathVariable Long idProgetto, @RequestParam @NotNull Long idEsperto){
@@ -79,6 +83,7 @@ public class EspertoController {
      * @param idEsperto id del esperto da eliminare
      * @return messaggio di successo o insuccesso
      */
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping(value="/remove")
     @ResponseBody
     public String removeAccount(@RequestParam @NotNull Long idEsperto){

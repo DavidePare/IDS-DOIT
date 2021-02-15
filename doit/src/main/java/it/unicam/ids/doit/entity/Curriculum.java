@@ -2,7 +2,9 @@ package it.unicam.ids.doit.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="Curriculum_Table")
@@ -13,25 +15,23 @@ public class Curriculum {
     Long progettistaID;
     String instruction;
     String formation;
-    @Transient
-    @ElementCollection //classe esperienza con l entita
-    List<String> workingExperience;
-    @Transient
-    @ElementCollection
-    List<String> languages;
-    int phone;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER) //classe esperienza con l entita
+    Set<WorkingExperienceCurriculum> workingExperience;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    Set<LanguagesCurriculum> languages;
+    Number phone;
     String email;
 
     public Curriculum(){ }
 
-    public Curriculum(Long idProgettista,String instruction,String formation,int phone,String email){
+    public Curriculum(Long idProgettista,String instruction,String formation,Number phone,String email){
         this.progettistaID = idProgettista;
         this.instruction = instruction;
         this.formation = formation;
         this.phone = phone;
         this.email = email;
-        workingExperience = new ArrayList<>();
-        languages = new ArrayList<>();
+        this.workingExperience=new HashSet<>();
+        this.languages = new HashSet<>();
     }
     public long getId() {
         return id;
@@ -54,22 +54,22 @@ public class Curriculum {
     public void setFormation(String formation) {
         this.formation = formation;
     }
-    public List<String> getWorkingExperience() {
+    public Set<WorkingExperienceCurriculum> getWorkingExperience() {
         return workingExperience;
     }
-    public void setWorkingExperience(List<String> workingExperience) {
+    public void setWorkingExperience(Set<WorkingExperienceCurriculum> workingExperience) {
         this.workingExperience = workingExperience;
     }
-    public List<String> getLanguages() {
+    public Set<LanguagesCurriculum> getLanguages() {
         return languages;
     }
-    public void setLanguages(List<String> languages) {
+    public void setLanguages(Set<LanguagesCurriculum> languages) {
         this.languages = languages;
     }
-    public int getPhone() {
+    public Number getPhone() {
         return phone;
     }
-    public void setPhone(int phone) {
+    public void setPhone(Number phone) {
         this.phone = phone;
     }
     public String getEmail() {

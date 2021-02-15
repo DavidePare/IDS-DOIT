@@ -24,6 +24,8 @@ public class Sponsor {
     private Map<Long,Double> progettiInv;
 
 
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    private List<NotificationMessage> messagge;
 
     public Sponsor(){ }
 
