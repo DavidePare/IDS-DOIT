@@ -35,8 +35,8 @@ class TeamServiceImplTest {
 
     @BeforeEach
     void init() {
-        proponenteProgettoA=proponenteProgettoService.createProponenteProgetto("mario","rossi");
-        proponenteProgettoB=proponenteProgettoService.createProponenteProgetto("paolo","morlacco");
+        proponenteProgettoA=proponenteProgettoService.createProponenteProgetto("mario","rossi","qqqqq","");
+        proponenteProgettoB=proponenteProgettoService.createProponenteProgetto("paolo","morlacco","aaaaaaaa","");
         e=espertoService.createEsperto("Mario","Michelini","cccc","ccc");
     }
 
@@ -61,7 +61,7 @@ class TeamServiceImplTest {
         p= proponenteProgettoService.createProgetto(proponenteProgettoA.getId(),"IoT",10);
         assertFalse(teamService.getTeam(p.getTeam().getId()) == null);
         espertoService.confirmProgetto(p.getId(),e.getId());
-        Progettista progettistaA= progettistaService.createProgettista("Gianluca","Alessio");
+        Progettista progettistaA= progettistaService.createProgettista("Gianluca","Alessio","aaa","");
         assertEquals(teamService.getTeam(p.getTeam().getId()).getProgettistiTeam().size(), 0);
         progettistaService.sendCandidatura(p.getId(),progettistaA.getId());
         proponenteProgettoService.acceptCandidatura(proponenteProgettoA.getId(),p.getId(),progettistaA.getId());
@@ -81,8 +81,8 @@ class TeamServiceImplTest {
     void removeProgettista() {
         p= proponenteProgettoService.createProgetto(proponenteProgettoA.getId(),"IoT",10);
 
-        Progettista progettistaA= progettistaService.createProgettista("Gianluca","Alessio");
-        Progettista progettistaB= progettistaService.createProgettista("Gianluca","Alessio");
+        Progettista progettistaA= progettistaService.createProgettista("Gianluca","Alessio","qqqq","");
+        Progettista progettistaB= progettistaService.createProgettista("Gianluca","Alessio","qqqqqqq","");
         teamService.addProgettista(p.getTeam().getId(),progettistaA.getId());
 
         teamService.addProgettista(p.getTeam().getId(),progettistaB.getId());
@@ -103,8 +103,8 @@ class TeamServiceImplTest {
         p= proponenteProgettoService.createProgetto(proponenteProgettoA.getId(),"IoT",10);
 
         assertTrue(teamService.getTeam(p.getTeam().getId()).getProgettistiTeam().isEmpty());
-        Progettista progettistaA= progettistaService.createProgettista("Gianluca","Alessio");
-        Progettista progettistaB= progettistaService.createProgettista("Gianluca","Alessio");
+        Progettista progettistaA= progettistaService.createProgettista("Gianluca","Alessio","qqqqqqqqq","");
+        Progettista progettistaB= progettistaService.createProgettista("Gianluca","Alessio","qqqqqqqqqqqqq","");
         teamService.addProgettista(p.getTeam().getId(),progettistaA.getId());
         assertEquals(teamService.getTeam(p.getTeam().getId()).getProgettistiTeam().size(),1);
 
