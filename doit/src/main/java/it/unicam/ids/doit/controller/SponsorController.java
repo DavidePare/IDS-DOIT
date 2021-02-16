@@ -3,6 +3,8 @@ package it.unicam.ids.doit.controller;
 import com.sun.istack.NotNull;
 import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.service.SponsorService;
+import it.unicam.ids.doit.service.UserHandlerService;
+import it.unicam.ids.doit.service.impl.UserHandlerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,8 @@ public class SponsorController {
     @Autowired
     private SponsorService sponsorService;
 
+    @Autowired
+    private UserHandlerService userHandlerService;
     //TODO  assente metodo di ricerca di nuovi progetti per lo sponsor
     /*@PostMapping(value="/addsponsor")
     public Sponsor addSponsor(@RequestParam @NotNull String name){
@@ -30,9 +34,13 @@ public class SponsorController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value= "/progettisponsor/")
     @ResponseBody
-    public List<Progetto> getProgettiSponsor(@RequestParam @NotNull Long id){
+    public List<Progetto> getProgettiSponsor(@RequestParam @NotNull Long id,@RequestParam @NotNull Long token){
         try{
-            return sponsorService.getProgetti(id);
+            if(userHandlerService.check(id,token)){
+
+                return sponsorService.getProgetti(id);
+            }
+            return null;
         }catch(Exception e){
             return null;
         }
@@ -47,11 +55,14 @@ public class SponsorController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value ="/progettisponsor/{id}/")
     @ResponseBody
-    public Double getAmount(@PathVariable @NotNull Long id, @RequestParam @NotNull Long idSponsor){
+    public Double getAmount(@PathVariable @NotNull Long id, @RequestParam @NotNull Long idSponsor,@RequestParam @NotNull Long token){
         try{
-            return sponsorService.getSponsor(idSponsor).getProgettiInv().stream().filter(t-> t.getIdProgetto().equals(id)).collect(Collectors.toList()).get(0).getAmount();
+            if(userHandlerService.check(id,token)) {
+                return sponsorService.getSponsor(idSponsor).getProgettiInv().stream().filter(t -> t.getIdProgetto().equals(id)).collect(Collectors.toList()).get(0).getAmount();
+            }
+            return Double.MIN_VALUE;
         }catch(Exception e){
-            return -Double.MIN_VALUE;
+            return Double.MIN_VALUE;
         }
     }
 
@@ -65,10 +76,13 @@ public class SponsorController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping(value= "/progettisponsor/{id}/decrement")
     @ResponseBody
-    public String decrementAmountProgetto(@PathVariable Long id,@RequestParam @NotNull Long idSponsor, @RequestParam Double amount){
+    public String decrementAmountProgetto(@PathVariable Long id,@RequestParam @NotNull Long idSponsor, @RequestParam Double amount,@RequestParam @NotNull Long token){
         try {
-            sponsorService.decrementAmountProgetto(id,idSponsor,amount);
-            return "Decrementato";
+            if(userHandlerService.check(id,token)) {
+                sponsorService.decrementAmountProgetto(id, idSponsor, amount);
+                return "Decrementato";
+            }
+            return "Not logged";
         }catch(Exception e){
             return e.getMessage();
         }
@@ -84,10 +98,13 @@ public class SponsorController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping(value= "/progettisponsor/{id}/increment")
     @ResponseBody
-    public String incrementAmountProgetto(@PathVariable Long id,@RequestParam @NotNull Long idSponsor, @RequestParam Double amount){
+    public String incrementAmountProgetto(@PathVariable Long id,@RequestParam @NotNull Long idSponsor, @RequestParam Double amount,@RequestParam @NotNull Long token){
         try {
-            sponsorService.addAmountProgetto(id,idSponsor,amount);
-            return "Incrementato";
+            if(userHandlerService.check(id,token)) {
+                sponsorService.addAmountProgetto(id, idSponsor, amount);
+                return "Incrementato";
+            }
+            return "Not logged";
         }catch(Exception e){
             return e.getMessage();
         }
@@ -101,10 +118,13 @@ public class SponsorController {
     @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping(value="/remove/")
     @ResponseBody
-    public String removeSponsor(@RequestParam @NotNull Long idSponsor){
+    public String removeSponsor(@RequestParam @NotNull Long idSponsor,@RequestParam @NotNull Long token){
         try{
-            sponsorService.deleteSponsor(idSponsor);
-            return "rimozione effettuata";
+            if(userHandlerService.check(idSponsor,token)) {
+                sponsorService.deleteSponsor(idSponsor);
+                return "rimozione effettuata";
+            }
+            return "not logged";
         }catch(Exception e){
             return e.getMessage();
         }
