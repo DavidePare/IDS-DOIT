@@ -22,4 +22,6 @@ public interface SponsorService {
     void decrementAmountProgetto(Long idProgetto, Long idSponsor, double amount);
 
     List<Progetto> getProgetti(Long idSponsor);
+
+    Sponsor createSponsor(String name,String email, String password);
 }

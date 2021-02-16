@@ -18,17 +18,36 @@ public class Sponsor {
 
     private String name;
 
+    @Column(nullable= false, unique=true)
+    private String email;
+    private String password;
+
+
+
     @Transient
     @ElementCollection(fetch = FetchType.EAGER)
     @JsonIgnoreProperties("sponsors")
     private Map<Long,Double> progettiInv;
 
 
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    private List<NotificationMessage> messagge;
 
     public Sponsor(){ }
 
+    /**
+     * Per test
+     * @param name nome
+     */
     public Sponsor(String name){
         this.name=name;
+        progettiInv= new HashMap<>();
+
+    }
+    public Sponsor(String name,String email,String password){
+        this.name=name;
+        this.email=email;
+        this.password=password;
         progettiInv= new HashMap<>();
 
     }
@@ -51,5 +70,20 @@ public class Sponsor {
 
     public void setProgettiInv(Map<Long, Double> progettiInv) {
         this.progettiInv = progettiInv;
+    }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

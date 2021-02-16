@@ -3,6 +3,7 @@ package it.unicam.ids.doit.service.impl;
 import it.unicam.ids.doit.dao.EspertoRepository;
 import it.unicam.ids.doit.entity.Esperto;
 import it.unicam.ids.doit.entity.Progettista;
+import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.entity.ProponenteProgetto;
 import it.unicam.ids.doit.service.EspertoService;
 import it.unicam.ids.doit.service.ProgettoService;
@@ -54,8 +55,8 @@ public class EspertoServiceImpl implements EspertoService {
      * @return esperto creato
      */
     @Override
-    public Esperto createEsperto(String name, String surname){
-        Esperto esperto = new Esperto(name,surname);
+    public Esperto createEsperto(String name, String surname, String email , String password){
+        Esperto esperto = new Esperto(name,surname,email,password);
         espertoRepository.save(esperto);
         return esperto;
     }
@@ -104,5 +105,15 @@ public class EspertoServiceImpl implements EspertoService {
         progettoService.declineProgetto(idProgetto, idEsperto);
         addProgetto(idEsperto,idProgetto);
         espertoRepository.save(getEsperto(idEsperto));
+    }
+
+    @Override
+    public List<Progetto> getAllProgettiValutare(){
+        return progettoService.getAllProgettiValutare();
+    }
+
+    @Override
+    public Progetto getProgetto(Long id){
+        return progettoService.getProgetto(id);
     }
 }

@@ -38,7 +38,7 @@ class ProgettistaServiceImplTest {
         proponenteProgettoB=proponenteProgettoService.createProponenteProgetto("paolo","morlacco");
 
         p= proponenteProgettoService.createProgetto(proponenteProgettoA.getId(),"IoT",3);
-        e=espertoService.createEsperto("Mario","Michelini");
+        e=espertoService.createEsperto("Mario","Michelini","Giampiero","b");
     }
 
     @Test
@@ -83,19 +83,69 @@ class ProgettistaServiceImplTest {
 
     @Test
     void addWorkingExperience() {
-        //TODO modificare
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335,"Email");
+        c=progettistaService.getCurriculum(progettistaA.getId());
+        assertTrue(c.getWorkingExperience().isEmpty());
+        progettistaService.addWorkingExperience(progettistaA.getId(),"Esperienza 1");
+        progettistaService.addWorkingExperience(progettistaA.getId(),"Esperienza 2");
+
+        c=progettistaService.getCurriculum(progettistaA.getId());
+        assertEquals(c.getWorkingExperience().size(),2);
     }
 
     @Test
     void removeWorkingExperience() {
+
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335,"Email");
+        c=progettistaService.getCurriculum(progettistaA.getId());
+        assertTrue(c.getWorkingExperience().isEmpty());
+        progettistaService.addWorkingExperience(progettistaA.getId(),"Esperienza 1");
+        progettistaService.addWorkingExperience(progettistaA.getId(),"Esperienza 2");
+
+        c=progettistaService.getCurriculum(progettistaA.getId());
+        assertEquals(c.getWorkingExperience().size(),2);
+        progettistaService.removeWorkingExperience(progettistaA.getId(),"Esperienza 1");
+
+        assertEquals(progettistaService.getCurriculum(progettistaA.getId()).getWorkingExperience().size(),1);
+        progettistaService.removeWorkingExperience(progettistaA.getId(),"Esperienza 1");
+
+        assertEquals(progettistaService.getCurriculum(progettistaA.getId()).getWorkingExperience().size(),1);
+
     }
 
     @Test
     void addLanguages() {
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335,"Email");
+        c=progettistaService.getCurriculum(progettistaA.getId());
+        assertTrue(c.getLanguages().isEmpty());
+        progettistaService.addLanguages(progettistaA.getId(),"Francese");
+        progettistaService.addLanguages(progettistaA.getId(),"Inglese");
+
+        c=progettistaService.getCurriculum(progettistaA.getId());
+        assertEquals(c.getLanguages().size(),2);
     }
 
     @Test
     void removeLanguages() {
+
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335,"Email");
+        c=progettistaService.getCurriculum(progettistaA.getId());
+        assertTrue(c.getLanguages().isEmpty());
+        progettistaService.addLanguages(progettistaA.getId(),"Francese");
+        progettistaService.addLanguages(progettistaA.getId(),"Inglese");
+
+        c=progettistaService.getCurriculum(progettistaA.getId());
+        assertEquals(c.getLanguages().size(),2);
+        progettistaService.removeLanguages(progettistaA.getId(),"Francese");
+
+        assertEquals(progettistaService.getCurriculum(progettistaA.getId()).getLanguages().size(),1);
+        progettistaService.removeWorkingExperience(progettistaA.getId(),"Francese");
+
+        assertEquals(progettistaService.getCurriculum(progettistaA.getId()).getLanguages().size(),1);
     }
 
     @Test

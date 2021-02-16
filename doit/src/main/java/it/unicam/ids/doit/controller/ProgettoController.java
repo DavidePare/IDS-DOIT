@@ -22,6 +22,7 @@ public class ProgettoController {
 
 
     // http://localhost:8080/getprogetto/1
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/getprogetto/{id}")
     @ResponseBody
     public Progetto getProgettista(@PathVariable Long id){
@@ -29,6 +30,7 @@ public class ProgettoController {
     }
 
     //http://localhost:8080/getprogetto/
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/getprogetto/")
     @ResponseBody
     public List<Progetto> getProgettisti(){

@@ -33,4 +33,8 @@ public interface ProponenteProgettoService {
     void removeProgettistaFromProgetto(Long idPropProgetto,Long idProgetto, Long idProgettista);
 
     List<Progettista> getComponentOfTeam(Long id, Long idProponente);
+
+    ProponenteProgetto createProponenteProgetto(String name, String surname,String email , String password);
+
+    List<Progettista> getInvitableProgettisti(Long id,Long idProponente);
 }

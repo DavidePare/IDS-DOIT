@@ -35,9 +35,9 @@ class ProgettoServiceImplTest {
     ProponenteProgettoServiceImpl proponenteProgettoService;
     @BeforeEach
     void createProject() {
-        proponenteProgettoA=proponenteProgettoService.createProponenteProgetto("mario","rossi");
-        proponenteProgettoB=proponenteProgettoService.createProponenteProgetto("paolo","morlacco");
-        e=espertoService.createEsperto("Mario","Michelini");
+        proponenteProgettoA=proponenteProgettoService.createProponenteProgetto("mario","rossi","qqq","qq");
+        proponenteProgettoB=proponenteProgettoService.createProponenteProgetto("paolo","morlacco","qq","qq");
+        e=espertoService.createEsperto("Mario","Michelini","q","q");
     }
     @Test
     void createProgetto () {

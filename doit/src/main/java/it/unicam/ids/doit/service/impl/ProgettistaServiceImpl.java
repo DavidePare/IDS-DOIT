@@ -1,10 +1,9 @@
 package it.unicam.ids.doit.service.impl;
 
+import it.unicam.ids.doit.dao.CurriculumRepository;
 import it.unicam.ids.doit.dao.ProgettistaRepository;
 import it.unicam.ids.doit.dao.ProgettoRepository;
-import it.unicam.ids.doit.entity.Curriculum;
-import it.unicam.ids.doit.entity.Progettista;
-import it.unicam.ids.doit.entity.Progetto;
+import it.unicam.ids.doit.entity.*;
 import it.unicam.ids.doit.service.ProgettistaService;
 import it.unicam.ids.doit.service.ProgettoService;
 import it.unicam.ids.doit.service.TeamService;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Service
 public class ProgettistaServiceImpl implements ProgettistaService {
@@ -28,11 +28,20 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     private ProgettoService progettoService;
 
     @Autowired
+    private CurriculumRepository curriculumRepository;
+    @Autowired
     private TeamService teamService;
 
     @Override
     public Progettista createProgettista(String name, String surname){
         Progettista p=new Progettista(name,surname);
+        progettistaRepository.save(p);
+        return p;
+    }
+
+    @Override
+    public Progettista createProgettista(String name, String surname,String email, String password){
+        Progettista p=new Progettista(name,surname,email,password);
         progettistaRepository.save(p);
         return p;
     }
@@ -81,10 +90,12 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     public void addWorkingExperience(Long id,String experience){
         Progettista progettista = progettistaRepository.findById(id).orElseThrow(null);
         if(progettista!=null) {
-            List<String> appoggio = progettista.getCurriculum().getWorkingExperience();
-            appoggio.add(experience);
+            Set<WorkingExperienceCurriculum> appoggio = progettista.getCurriculum().getWorkingExperience();
+            appoggio.add(new WorkingExperienceCurriculum(experience));
             progettista.getCurriculum().setWorkingExperience(appoggio);
-            progettistaRepository.save(progettista);
+            Curriculum c= progettista.getCurriculum();
+            curriculumRepository.save(c);
+           // progettistaRepository.save(progettista);
         }
     }
 
@@ -97,10 +108,11 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     public void removeWorkingExperience(Long id,String experience){
         Progettista progettista = progettistaRepository.findById(id).orElseThrow(null);
         if(progettista!=null) {
-            List<String> appoggio = progettista.getCurriculum().getWorkingExperience();
-            appoggio.remove(experience);
+            Set<WorkingExperienceCurriculum> appoggio = progettista.getCurriculum().getWorkingExperience();
+            appoggio.removeIf(t-> t.getWorkingExperience().compareTo(experience)==0);
             progettista.getCurriculum().setWorkingExperience(appoggio);
-            progettistaRepository.save(progettista);
+            Curriculum c= progettista.getCurriculum();
+            curriculumRepository.save(c);
         }
     }
 
@@ -113,10 +125,10 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     public void addLanguages(Long id,String language){
         Progettista progettista = progettistaRepository.findById(id).orElseThrow(null);
         if(progettista!=null) {
-            List<String> appoggio = progettista.getCurriculum().getLanguages();
-            appoggio.add(language);
+            Set<LanguagesCurriculum> appoggio = progettista.getCurriculum().getLanguages();
+            appoggio.add(new LanguagesCurriculum(language));
             progettista.getCurriculum().setLanguages(appoggio);
-            progettistaRepository.save(progettista);
+            curriculumRepository.save(progettista.getCurriculum());
         }
     }
 
@@ -129,10 +141,10 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     public void removeLanguages(Long id,String language){
         Progettista progettista = progettistaRepository.findById(id).orElseThrow(null);
         if(progettista!=null) {
-            List<String> appoggio = progettista.getCurriculum().getLanguages();
-            appoggio.remove(language);
+            Set<LanguagesCurriculum> appoggio = progettista.getCurriculum().getLanguages();
+            appoggio.removeIf(t-> t.getLanguage().compareTo(language)==0);
             progettista.getCurriculum().setLanguages(appoggio);
-            progettistaRepository.save(progettista);
+            curriculumRepository.save(progettista.getCurriculum());
         }
     }
 
@@ -193,6 +205,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
             teamService.addProgettista(progetto.getTeam().getId(), idProgettista);
             progettista.getTeamsProgettista().add(progetto.getTeam());
             progettista.getProgettiProgettista().add(progetto);
+            progettoService.removeProgettistaInvitato(idProgetto,idProgettista);
             progettistaRepository.save(progettista);
         }
 
@@ -209,6 +222,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
         Progettista progettista = getProgettista(idProgettista);
         if(progettista.getInviti().stream().anyMatch(t-> t.getId().equals(idProgetto))){
             progettista.getInviti().removeIf(t -> t.getId().equals(idProgetto));
+            progettoService.removeProgettistaInvitato(idProgetto,idProgettista);
             progettistaRepository.save(progettista);
         }
     }
@@ -324,12 +338,21 @@ public class ProgettistaServiceImpl implements ProgettistaService {
      */
     @Override
     public List<Progetto> getCandidature(Long idProgettista){
-      /*  List<Progetto> lProgetti= new ArrayList<>();
-        for(Progetto progetto : progettistaRepository.findById(idProgettista).orElseThrow(NullPointerException::new).getProgettiCandidati()){
-            lProgetti.add(Progetto);
-        }
-        return lProgetti;*/
         return getProgettista(idProgettista).getProgettiCandidati();
     }
 
+    /**
+     * Metodo per la creazione di un curriculum
+     * @param idProgettista progettista
+     * @param instruction dove ha studiato
+     * @param formation formazione
+     * @param phone telefono
+     * @param email email
+     */
+    @Override
+    public void createCurriculum(Long idProgettista , String instruction, String formation, Number phone,String email){
+        Progettista p=getProgettista(idProgettista);
+        p.addCurriculum(idProgettista,instruction,formation,phone,email);
+        progettistaRepository.save(p);
+    }
 }

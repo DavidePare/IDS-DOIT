@@ -32,9 +32,9 @@ class ProponenteProgettoServiceImplTest {
     ProponenteProgettoServiceImpl proponenteProgettoService;
     @BeforeEach
     void init() {
-        progettistaA=progettistaService.createProgettista("Paolo","Bronio");
-        progettistaB= progettistaService.createProgettista("Mario","Rossi");
-        e=espertoService.createEsperto("Mario","Michelini");
+        progettistaA=progettistaService.createProgettista("Paolo","Bronio","a","a");
+        progettistaB= progettistaService.createProgettista("Mario","Rossi","b","b");
+        e=espertoService.createEsperto("Mario","Michelini","d","d");
     }
     @Test
     void createProponenteProgetto() {
@@ -210,6 +210,22 @@ class ProponenteProgettoServiceImplTest {
         assertEquals(proponenteProgettoService.getComponentOfTeam(p.getId(),proponenteA.getId()).size(),1);
         proponenteProgettoService.acceptCandidatura(proponenteA.getId(),p.getId(),progettistaB.getId());
         assertEquals(proponenteProgettoService.getComponentOfTeam(p.getId(),proponenteA.getId()).size(),2);
+
+    }
+
+
+    @Test
+    void getInvitableProgettisti(){
+        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva","c","c");
+        p=proponenteProgettoService.createProgetto(proponenteA.getId(),"IoT",5);
+        progettoService.confirmProgetto(p.getId(),proponenteA.getId());
+        assertEquals(proponenteProgettoService.getInvitableProgettisti(p.getId(),proponenteA.getId()).size(),2); //3
+        progettistaService.sendCandidatura(p.getId(),progettistaA.getId());
+
+        assertEquals(proponenteProgettoService.getInvitableProgettisti(p.getId(),proponenteA.getId()).size(),1);
+        proponenteProgettoService.acceptCandidatura(proponenteA.getId(),p.getId(),progettistaA.getId());
+        assertEquals(proponenteProgettoService.getInvitableProgettisti(p.getId(),proponenteA.getId()).size(),1);
+
 
     }
 }

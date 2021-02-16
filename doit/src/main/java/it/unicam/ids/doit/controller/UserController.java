@@ -1,14 +1,10 @@
 package it.unicam.ids.doit.controller;
 
 import com.sun.istack.NotNull;
-import it.unicam.ids.doit.entity.Esperto;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
-import it.unicam.ids.doit.entity.ProponenteProgetto;
-import it.unicam.ids.doit.service.impl.EspertoServiceImpl;
-import it.unicam.ids.doit.service.impl.ProgettistaServiceImpl;
-import it.unicam.ids.doit.service.impl.ProponenteProgettoServiceImpl;
-import it.unicam.ids.doit.service.impl.UserServiceImpl;
+import it.unicam.ids.doit.entity.User;
+import it.unicam.ids.doit.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,14 +13,9 @@ import java.util.List;
 @RestController
 public class UserController {
     @Autowired
-    private UserServiceImpl userService;
+    private UserHandlerService userHandlerService;
     @Autowired
-    private ProponenteProgettoServiceImpl proponenteProgettoService;
-    @Autowired
-    private ProgettistaServiceImpl progettistaService;
-    @Autowired
-    private EspertoServiceImpl espertoService;
-
+    private ProgettoService progettoService;
     /**
      * Visualizzazione di tutti i progetti
      * @return tutti i progetti
@@ -32,59 +23,77 @@ public class UserController {
     @GetMapping(value="/getprogetti/")
     @ResponseBody
     public List<Progetto> getProgetto(){
-        return userService.getProgetti();
+        return progettoService.getAllProgetti();
     }
 
     /**
      * Visualizzazione tutti i progettisti
      * @return tutti i progettisti
      */
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/getprogettisti/")
     @ResponseBody
     public List<Progettista> getProgettisti(){
-        return userService.getProgettisti();
+        return userHandlerService.getAllProgettisti();
     }
 
-    /**
-     * Login dell'utente
-     * @param email email
-     * @param password .
-     * @return sessione??
-     */
-    @PostMapping(value="/login/")
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping(value="/signin")
     @ResponseBody
-    public String login(@PathVariable @NotNull String email, @PathVariable @NotNull String password){
-        return "Success"; // qui ritornerà una sessione
+    public String signin(@RequestParam @NotNull String email , @RequestParam @NotNull String password, @RequestParam @NotNull String name,@RequestParam String surname,@RequestParam @NotNull String type){
+        try {
+            int type2= Integer.parseInt(type);
+            if(type2 <0 || type2 >2) return "Not correct type";
+            userHandlerService.signin(type2,name,surname,email,password);
+            return "success";
+        }catch(Exception e){
+            return "Dati non validi, l'email potrebbe essere già registrata!";
+        }
     }
 
-
-    /**
-     * Creazione proponente progetto
-     * @param name nome pp
-     * @param surname cognome pp
-     * @return proponente progetto
-     */
-    @PostMapping(value="/addpp")
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping(value="/signin2")
     @ResponseBody
-    public ProponenteProgetto addPropProgetto(@RequestParam String name, @RequestParam String surname){
-        return proponenteProgettoService.createProponenteProgetto(name,surname);
-
+    public String signin(@RequestBody @NotNull User user) {
+        try {
+            if(user.getType() <0 || user.getType() >2) return "Not correct type";
+            userHandlerService.signin(user.getType(),user.getName(),user.getSurname(),user.getEmail(),user.getPassword());
+            return "success";
+        }catch(Exception e){
+            return "Dati invalidi forse è già stata usata questa email !";
+        }
     }
 
-    @PostMapping(value="/addp")
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping(value="/login")
     @ResponseBody
-    public Progettista addProgettista(@RequestParam String name, @RequestParam String surname){
-        return progettistaService.createProgettista(name,surname);
+    public List<Long> login(@RequestParam @NotNull int type,@RequestParam @NotNull String email , @RequestParam @NotNull String password){
+        try {
+            return userHandlerService.login(type,email,password);
+        }catch(Exception e){
+            return null;
+        }
     }
 
-    @PostMapping(value="/addesperto")
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping(value="/logout")
     @ResponseBody
-    public Esperto addEsperto(@RequestParam String name, @RequestParam String surname){
-        return espertoService.createEsperto(name,surname);
+    public void logout(@RequestParam @NotNull Long token){
+        userHandlerService.logout(token);
     }
-
-
-    //TODO qui metterei le diverse creazioni tipo progettisti sponsor eccetera
-
+/*
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping(value="/signin")
+    @ResponseBody
+    public String signin(@RequestBody @NotNull int type,@RequestBody @NotNull String email , @RequestBody @NotNull String password, @RequestBody @NotNull String name,@RequestBody String surname){
+        try {
+            if(type <0 || type >2) return "Not correct type";
+            userHandlerService.signin(type,name,surname,email,password);
+            return "success";
+        }catch(Exception e){
+            return "Dati non validi, l'email potrebbe essere già registrata!";
+        }
+    }*/
 
 }

@@ -28,6 +28,13 @@ public class SponsorServiceImpl implements SponsorService {
         return sponsor;
     }
 
+    @Override
+    public Sponsor createSponsor(String name,String email, String password){
+        Sponsor sponsor = new Sponsor(name,email,password);
+        sponsorRepository.save(sponsor);
+        return sponsor;
+    }
+
     /**
      * Rimozione dello sponsor
      * @param idSponsor sponsor da rimuovere

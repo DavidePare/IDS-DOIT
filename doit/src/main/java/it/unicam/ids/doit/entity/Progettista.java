@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name="Progettista_Table")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Progettista {
+public class Progettista implements Subscribe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,13 +25,16 @@ public class Progettista {
 
     private String surname;
 
+    @Column(nullable= false, unique=true)
+    private String email;
+
+    private String password;
+
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
-  //  @JsonIgnore()
     @JsonIgnoreProperties({"candidati","progettistiInvitati","sponsor"})
     private List<Progetto> progettiCandidati;
 
-   // @Transient
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Curriculum curriculum;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
@@ -43,13 +46,15 @@ public class Progettista {
     @JsonIgnoreProperties({"candidati","progettistiInvitati","sponsor"})
     private List<Progetto> inviti;
 
-   // @Transient
-  //  @ElementCollection
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
     private List<Team> teamsProgettista;
 
 
+
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<NotificationMessage> messaggeBacheca;
 
 
     public Progettista(){ }
@@ -61,6 +66,20 @@ public class Progettista {
         this.progettiProgettista = new ArrayList<>();
         this.teamsProgettista = new ArrayList<>();
         this.inviti= new ArrayList<>();
+        this. messaggeBacheca= new ArrayList<>();
+        progettiCandidati= new ArrayList<>();
+    }
+
+    public Progettista(String name, String surname,String email, String password){
+        this.name=name;
+        this.surname=surname;
+        this.email=email;
+        this.password=password;
+        this.curriculum=null;
+        this.progettiProgettista = new ArrayList<>();
+        this.teamsProgettista = new ArrayList<>();
+        this.inviti= new ArrayList<>();
+        this. messaggeBacheca= new ArrayList<>();
         progettiCandidati= new ArrayList<>();
     }
 
@@ -96,7 +115,7 @@ public class Progettista {
         return curriculum;
     }
 
-    public void addCurriculum(Long idProgettista,String instruction,String formation,int phone,String email){
+    public void addCurriculum(Long idProgettista,String instruction,String formation,Number phone,String email){
         this.curriculum = new Curriculum(idProgettista,instruction,formation,phone,email);
     }
 
@@ -124,4 +143,31 @@ public class Progettista {
         this.teamsProgettista = teamsProgettista;
     }
 
+    public void notify(String message,String name, Long id){
+        messaggeBacheca.add(new NotificationMessage(message,name,id));
+    }
+
+    public List<NotificationMessage> getMessaggeBacheca() {
+        return messaggeBacheca;
+    }
+
+    public void setMessaggeBacheca(List<NotificationMessage> messaggeBacheca) {
+        this.messaggeBacheca.addAll(messaggeBacheca);
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
