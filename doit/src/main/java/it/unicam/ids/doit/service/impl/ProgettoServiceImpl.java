@@ -143,9 +143,13 @@ public class ProgettoServiceImpl implements ProgettoService {
     @Override
     public void addSponsor(Long idProgetto, Long idSponsor){
         Progetto progetto = getProgetto(idProgetto);
-        progetto.getSponsors().add(sponsorService.getSponsor(idSponsor));
-        //sponsors.add(s.getID());
-        progettoRepository.save(progetto);
+        try {
+            progetto.getSponsors().add(sponsorService.getSponsor(idSponsor));
+                //sponsors.add(s.getID());
+            progettoRepository.save(progetto);
+        }catch (Exception ignored){
+
+        }
     }
 
     @Override

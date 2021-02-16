@@ -3,9 +3,7 @@ package it.unicam.ids.doit.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 @Table(name="Sponsor_Table")
@@ -24,10 +22,12 @@ public class Sponsor {
 
 
 
-    @Transient
+ /*   @Transient
     @ElementCollection(fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("sponsors")
-    private Map<Long,Double> progettiInv;
+    @JsonIgnoreProperties("sponsors")*/
+    //private Map<Long,Double> progettiInv;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Investimenti> progettiInv;
 
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
@@ -41,15 +41,23 @@ public class Sponsor {
      */
     public Sponsor(String name){
         this.name=name;
-        progettiInv= new HashMap<>();
+        progettiInv= new HashSet<>();
 
     }
     public Sponsor(String name,String email,String password){
         this.name=name;
         this.email=email;
         this.password=password;
-        progettiInv= new HashMap<>();
+        progettiInv= new HashSet<>();
 
+    }
+
+    public Set<Investimenti> getProgettiInv() {
+        return progettiInv;
+    }
+
+    public void setProgettiInv(Set<Investimenti> progettiInv) {
+        this.progettiInv = progettiInv;
     }
 
     public Long getId() {
@@ -64,13 +72,6 @@ public class Sponsor {
         this.name = name;
     }
 
-    public Map<Long, Double> getProgettiInv() {
-        return progettiInv;
-    }
-
-    public void setProgettiInv(Map<Long, Double> progettiInv) {
-        this.progettiInv = progettiInv;
-    }
     public String getEmail() {
         return email;
     }

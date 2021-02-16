@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/sponsor/")
@@ -48,7 +49,7 @@ public class SponsorController {
     @ResponseBody
     public Double getAmount(@PathVariable @NotNull Long id, @RequestParam @NotNull Long idSponsor){
         try{
-            return sponsorService.getSponsor(idSponsor).getProgettiInv().get(id);
+            return sponsorService.getSponsor(idSponsor).getProgettiInv().stream().filter(t-> t.getIdProgetto().equals(id)).collect(Collectors.toList()).get(0).getAmount();
         }catch(Exception e){
             return -Double.MIN_VALUE;
         }
