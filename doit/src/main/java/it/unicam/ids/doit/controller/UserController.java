@@ -77,6 +77,17 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping(value="/login2")
+    @ResponseBody
+    public List<Long> login(@RequestBody @NotNull User u){
+        try {
+            return userHandlerService.login(u.getType(),u.getEmail(),u.getPassword());
+        }catch(Exception e){
+            return null;
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/logout")
     @ResponseBody
     public void logout(@RequestParam @NotNull Long token){
