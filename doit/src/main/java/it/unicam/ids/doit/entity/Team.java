@@ -17,7 +17,7 @@ public class Team {
     private Long id;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
-    @JsonIgnoreProperties({"progettiCandidati","progettiProgettista","inviti"})
+    @JsonIgnoreProperties({"progettiCandidati","progettiProgettista","inviti","teamsProgettista"})
     private List<Progettista> progettistiTeam;
 
     private Long progettoID;

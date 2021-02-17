@@ -20,8 +20,6 @@ import java.util.Set;
 public class ProgettistaServiceImpl implements ProgettistaService {
 
     @Autowired
-    private ProgettoRepository progettoRepository;
-    @Autowired
     private ProgettistaRepository progettistaRepository;
 
     @Autowired
@@ -29,12 +27,20 @@ public class ProgettistaServiceImpl implements ProgettistaService {
 
     @Autowired
     private CurriculumRepository curriculumRepository;
+
     @Autowired
     private TeamService teamService;
 
     @Override
     public Progettista createProgettista(String name, String surname){
         Progettista p=new Progettista(name,surname);
+        progettistaRepository.save(p);
+        return p;
+    }
+
+    @Override
+    public Progettista createProgettista(String name, String surname,String email, String password){
+        Progettista p=new Progettista(name,surname,email,password);
         progettistaRepository.save(p);
         return p;
     }
@@ -198,6 +204,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
             teamService.addProgettista(progetto.getTeam().getId(), idProgettista);
             progettista.getTeamsProgettista().add(progetto.getTeam());
             progettista.getProgettiProgettista().add(progetto);
+            progettoService.removeProgettistaInvitato(idProgetto,idProgettista);
             progettistaRepository.save(progettista);
         }
 
@@ -214,6 +221,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
         Progettista progettista = getProgettista(idProgettista);
         if(progettista.getInviti().stream().anyMatch(t-> t.getId().equals(idProgetto))){
             progettista.getInviti().removeIf(t -> t.getId().equals(idProgetto));
+            progettoService.removeProgettistaInvitato(idProgetto,idProgettista);
             progettistaRepository.save(progettista);
         }
     }

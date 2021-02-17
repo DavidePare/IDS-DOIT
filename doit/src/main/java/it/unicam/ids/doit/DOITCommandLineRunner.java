@@ -12,8 +12,8 @@ public class DOITCommandLineRunner implements CommandLineRunner {
     private EspertoRepository espertoRepository;
     @Override
     public void run(String... args) throws Exception {
-       espertoRepository.save(new Esperto("Paolo","Marchetti"));
-       espertoRepository.save(new Esperto("Fabrizio","Maurizi"));
+       espertoRepository.save(new Esperto("Paolo","Marchetti","a","a"));
+       espertoRepository.save(new Esperto("Fabrizio","Maurizi","p","u"));
 
     }
 }

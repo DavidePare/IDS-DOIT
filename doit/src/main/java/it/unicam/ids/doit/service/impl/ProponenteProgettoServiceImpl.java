@@ -38,6 +38,13 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
         return prop;
     }
 
+    @Override
+    public ProponenteProgetto createProponenteProgetto(String name, String surname,String email , String password){
+        ProponenteProgetto prop =new ProponenteProgetto(name,surname,email,password);
+        propProgRepository.save(prop);
+        return prop;
+    }
+
     /**
      * Rimozione proponente progetto , verranno rimossi tutti i suoi progetti
      * @param idPropProgetto proponente progetto rimosso
@@ -218,5 +225,21 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
 
         }
         return null; //TODO ritornare eccezione
+    }
+
+    @Override
+    public List<Progettista> getInvitableProgettisti(Long id,Long idProponente){
+        List<Progettista> lProgettisti= progettistaService.getAllProgettisti();
+        lProgettisti.removeIf(t-> t.getProgettiProgettista().stream().anyMatch(p-> p.getId().equals(id)) ||
+                t.getProgettiCandidati().stream().anyMatch(p-> p.getId().equals(id)) ||
+                t.getInviti().stream().anyMatch(p-> p.getId().equals(id)) ||
+                t.getId().equals(idProponente));
+        return lProgettisti;
+
+    }
+
+    @Override
+    public List<Progettista> getCandidatiProgetto(Long idProgetto){
+        return progettoService.getCandidati(idProgetto);
     }
 }

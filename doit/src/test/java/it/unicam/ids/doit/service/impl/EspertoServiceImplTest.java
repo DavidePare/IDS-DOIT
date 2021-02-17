@@ -31,15 +31,15 @@ class EspertoServiceImplTest {
 
     @BeforeEach
     void init() {
-        proponenteProgettoA=proponenteProgettoService.createProponenteProgetto("mario","rossi");
-        proponenteProgettoB=proponenteProgettoService.createProponenteProgetto("paolo","morlacco");
-        e=espertoService.createEsperto("Mario","Michelini");
+        proponenteProgettoA=proponenteProgettoService.createProponenteProgetto("mario","rossi","emaiiill"," dd");
+        proponenteProgettoB=proponenteProgettoService.createProponenteProgetto("paolo","morlacco","eeeeeemanil","  dddd");
+        e=espertoService.createEsperto("Mario","Michelini","eeeeeeeee","e");
     }
 
     @Test
     void addProgetto() {
         Progetto p=proponenteProgettoService.createProgetto(proponenteProgettoA.getId(),"IoT",10);
-        Progettista progettistaA= progettistaService.createProgettista("Gianluca","Alessio");
+        Progettista progettistaA= progettistaService.createProgettista("Gianluca","Alessio","cccc","ccc" );
         espertoService.confirmProgetto(p.getId(),e.getId());
         assertEquals(espertoService.getEsperto(e.getId()).getProgettiEsperto().size(),1);
         espertoService.addProgetto(e.getId(),p.getId());
@@ -50,7 +50,7 @@ class EspertoServiceImplTest {
     @Test
     void removeProgetto() {
         Progetto p=proponenteProgettoService.createProgetto(proponenteProgettoA.getId(),"IoT",10);
-        Progettista progettistaA= progettistaService.createProgettista("Gianluca","Alessio");
+        Progettista progettistaA= progettistaService.createProgettista("Gianluca","Alessio","cccc","ccc");
         espertoService.confirmProgetto(p.getId(),e.getId());
         assertEquals(espertoService.getEsperto(e.getId()).getProgettiEsperto().size(),1);
         espertoService.addProgetto(e.getId(),p.getId());
@@ -75,9 +75,9 @@ class EspertoServiceImplTest {
 
     @Test
     void createEsperto() {
-        e=espertoService.createEsperto("Mario","Michelini");
-        e=espertoService.createEsperto("Mario","Michelini");
-        assertEquals(espertoService.getAllEsperti().size(),3);
+        e=espertoService.createEsperto("Mario","Michelini","ahia","ss");
+        e=espertoService.createEsperto("Mario","Michelini","ss","ss");
+        assertEquals(espertoService.getAllEsperti().size(),5);
     }
 
     @Test
@@ -94,15 +94,15 @@ class EspertoServiceImplTest {
 
     @Test
     void getEsperto() {
-        e=espertoService.createEsperto("Mario","Michelini");
+        e=espertoService.createEsperto("Mario","Michelini","qqqqqqq","qq");
         assertEquals(espertoService.getEsperto(e.getId()).getId(),e.getId());
     }
 
     @Test
     void getAllEsperti() {
-        e=espertoService.createEsperto("Mario","Michelini");
-        e=espertoService.createEsperto("Mario","Michelini");
-        assertEquals(espertoService.getAllEsperti().size(),3);
+        e=espertoService.createEsperto("Mario","Michelini","ciao","one");
+        e=espertoService.createEsperto("Mario","Michelini","aaaaaaaaaaaa","aaa");
+        assertEquals(espertoService.getAllEsperti().size(),5);
 
     }
 

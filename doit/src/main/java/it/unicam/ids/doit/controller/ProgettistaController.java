@@ -5,8 +5,7 @@ import it.unicam.ids.doit.entity.Curriculum;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.service.ProgettistaService;
-import it.unicam.ids.doit.service.ProgettoService;
-import it.unicam.ids.doit.service.impl.ProgettistaServiceImpl;
+import it.unicam.ids.doit.service.UserHandlerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,15 +18,13 @@ public class ProgettistaController {
     ProgettistaService progettistaService;
 
     @Autowired
-    ProgettoService progettoService;
+    private UserHandlerService userHandlerService;
 
-    /*
     @PostMapping(value="/addprogettista")
-    public Progettista addProgettista(@RequestParam @NotNull String name, @RequestParam @NotNull String surname){
-
-        return progettistaService.createProgettista(name,surname);
+    public Progettista addProgettista(@RequestParam @NotNull String name, @RequestParam @NotNull String surname, @RequestParam String email, @RequestParam @NotNull Long token){
+        return progettistaService.createProgettista(name,surname,email, "");
     }
-
+/*
     @GetMapping(value="/getprogettista/{id}")
     @ResponseBody
     public Progettista getProgettista(@PathVariable Long id){
@@ -49,10 +46,13 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping (value="/{id}/remove")
     @ResponseBody
-    public String removeProgettista(@PathVariable @NotNull Long id){ //TODO ci vorrà una verifica dell utenet!
+    public String removeProgettista(@PathVariable @NotNull Long id,@RequestParam @NotNull Long token){ //TODO ci vorrà una verifica dell utenet!
         try{
-            progettistaService.deleteProgettista(id);
-            return "Success";
+            if(userHandlerService.check(id,token)) {
+                progettistaService.deleteProgettista(id);
+                return "Success";
+            }
+            return "Not logged";
         }catch(Exception e){
             return e.getMessage();
         }
@@ -70,10 +70,13 @@ public class ProgettistaController {
     @PostMapping(value ="/{id}/addcurriculum/")
     @ResponseBody
     public String addCurriculum(@PathVariable @NotNull Long id,@RequestParam Number phone,@RequestParam  String instruction,
-                                @RequestParam String formaction){
+                                @RequestParam String formaction,@RequestParam @NotNull Long token){
         try {
-            progettistaService.createCurriculum(id, instruction, formaction, phone, "email");
-            return "success";
+            if(userHandlerService.check(id,token)){
+                progettistaService.createCurriculum(id, instruction, formaction, phone, "email");
+                return "success";
+            }
+            return "not logged";
         }catch(Exception e){
             return e.getMessage();
         }
@@ -86,9 +89,12 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping (value ="/{id}/curriculum/")
     @ResponseBody
-    public Curriculum getCurriculum(@PathVariable @NotNull Long id){
+    public Curriculum getCurriculum(@PathVariable @NotNull Long id,@RequestParam @NotNull Long token){
         try{
-            return progettistaService.getCurriculum(id);
+            if(userHandlerService.check(id,token)) {
+                return progettistaService.getCurriculum(id);
+            }
+            return null;
         }catch(Exception e){
             return null;
         }
@@ -103,10 +109,13 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping (value="/{id}/curriculum/addworkingexperience/")
     @ResponseBody
-    public String addWorkingExperience(@PathVariable @NotNull Long id, @RequestParam String experience){
+    public String addWorkingExperience(@PathVariable @NotNull Long id, @RequestParam String experience,@RequestParam @NotNull Long token){
         try{
-            progettistaService.addWorkingExperience(id,experience);
-            return "success";
+            if(userHandlerService.check(id,token)) {
+                progettistaService.addWorkingExperience(id, experience);
+                return "success";
+            }
+            return "not logged";
         }catch(Exception e){
             return e.getMessage();
         }
@@ -121,10 +130,14 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping (value="/{id}/curriculum/removeworkingexperience/")
     @ResponseBody
-    public String removeWorkingExperience(@PathVariable @NotNull Long id, @RequestParam String experience){
+    public String removeWorkingExperience(@PathVariable @NotNull Long id, @RequestParam String experience,@RequestParam @NotNull Long token){
         try{
-            progettistaService.addWorkingExperience(id,experience);
-            return "success";
+
+            if(userHandlerService.check(id,token)) {
+                progettistaService.addWorkingExperience(id, experience);
+                return "success";
+            }
+            return "not logged!";
         }catch(Exception e){
             return e.getMessage();
         }
@@ -134,9 +147,12 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping (value="/{id}/inviti/")
     @ResponseBody
-    public List<Progetto> getProgetto(@PathVariable @NotNull Long id){
+    public List<Progetto> getInviti(@PathVariable @NotNull Long id,@RequestParam @NotNull Long token){
         try{
-            return progettistaService.getInviti(id);
+            if(userHandlerService.check(id,token)) {
+                return progettistaService.getInviti(id);
+            }
+            return null;
         }catch (Exception e) {
             return null;
         }
@@ -151,10 +167,13 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping (value="/{id}/inviti/accept/")
     @ResponseBody
-    public String accpetInvite(@PathVariable @NotNull Long id, @RequestParam @NotNull Long idProgetto){
+    public String accpetInvite(@PathVariable @NotNull Long id, @RequestParam @NotNull Long idProgetto,@RequestParam @NotNull Long token){
         try{
-            progettistaService.acceptInvito(idProgetto,id);
-            return "Invito accettato";
+            if(userHandlerService.check(id,token)) {
+                progettistaService.acceptInvito(idProgetto, id);
+                return "Invito accettato";
+            }
+            return "not logged";
         }catch (Exception e){
             return "Errore non è stato possibile completare la sua operazione!";
         }
@@ -169,10 +188,13 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping (value="/{id}/inviti/decline/")
     @ResponseBody
-    public String refuseInvite(@PathVariable @NotNull Long id, @RequestParam @NotNull Long idProgetto){
+    public String refuseInvite(@PathVariable @NotNull Long id, @RequestParam @NotNull Long idProgetto,@RequestParam @NotNull Long token){
         try{
-            progettistaService.refuseInvito(idProgetto, id);
-            return "Invito rifiutato correttamente";
+            if(userHandlerService.check(id,token)) {
+                progettistaService.refuseInvito(idProgetto, id);
+                return "Invito rifiutato correttamente";
+            }
+            return "not logged";
         }catch (Exception e){
             return "Errore non è stato possibile completare la sua operazione!";
         }
@@ -186,10 +208,13 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping (value="/{id}/curriculum/addlanguage/")
     @ResponseBody
-    public String addLanguage(@PathVariable @NotNull Long id, @RequestParam String language){
+    public String addLanguage(@PathVariable @NotNull Long id, @RequestParam String language,@RequestParam @NotNull Long token){
         try{
-            progettistaService.addLanguages(id,language);
-            return "success";
+            if(userHandlerService.check(id,token)){
+                progettistaService.addLanguages(id,language);
+                return "success";
+            }
+            return "not logged";
         }catch(Exception e){
             return e.getMessage();
         }
@@ -204,10 +229,13 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping (value="/{id}/curriculum/removelanguage/")
     @ResponseBody
-    public String removeLanguage(@PathVariable @NotNull Long id, @RequestParam String language){
+    public String removeLanguage(@PathVariable @NotNull Long id, @RequestParam String language,@RequestParam @NotNull Long token){
         try{
-            progettistaService.removeLanguages(id, language);
-            return "success";
+            if(userHandlerService.check(id,token)) {
+                progettistaService.removeLanguages(id, language);
+                return "success";
+            }
+            return "not logged";
         }catch(Exception e){
             return e.getMessage();
         }
@@ -221,8 +249,12 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping (value="/{id}/getprogetti/")
     @ResponseBody
-    public List<Progetto> getProgetti(@PathVariable @NotNull Long id){ //TODO quando visualizza tutti i progetti se su uno è già candidato ha metodo elimina candidatura
-        return progettoService.getAllProgetti();
+    public List<Progetto> getProgetti(@PathVariable @NotNull Long id,@RequestParam @NotNull Long token){
+        //TODO quando visualizza tutti i progetti se su uno è già candidato ha metodo elimina candidatura
+        if(userHandlerService.check(id,token)){
+            return userHandlerService.getAllProgetti();
+        }
+        return null;
     }
 
 
@@ -235,8 +267,11 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping (value="/{id}/getprogetti/{idProgetto}")
     @ResponseBody
-    public Progetto getProgetto(@PathVariable @NotNull Long idProgetto, @PathVariable Long id){
-        return progettoService.getProgetto(idProgetto);
+    public Progetto getProgetto(@PathVariable @NotNull Long idProgetto, @PathVariable Long id,@RequestParam @NotNull Long token){
+        if(userHandlerService.check(id,token)){
+            return userHandlerService.getProgetto(idProgetto);
+        }
+        return null;
     }
 
     /**
@@ -248,10 +283,13 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/{id}/getprogetti/{idProgetto}/sendcandidatura/")
     @ResponseBody
-    public String sendcandidatura(@PathVariable @NotNull Long idProgetto , @PathVariable @NotNull Long id){
+    public String sendcandidatura(@PathVariable @NotNull Long idProgetto , @PathVariable @NotNull Long id,@RequestParam @NotNull Long token){
         try{
-            if(progettistaService.sendCandidatura(idProgetto, id))  return "invio canddidatura effettuato";
-            return "Già candidato!";
+            if(userHandlerService.check(id,token)) {
+                if (progettistaService.sendCandidatura(idProgetto, id)) return "invio canddidatura effettuato";
+                return "Già candidato!";
+            }
+            return "not logged";
         }catch(Exception e){
             return "candidatura non effettuata correttamente";
         }
@@ -266,9 +304,12 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/{id}/getcandidature/")
     @ResponseBody
-    public List<Progetto> getcandidature(@PathVariable @NotNull Long id){
+    public List<Progetto> getcandidature(@PathVariable @NotNull Long id,@RequestParam @NotNull Long token){
         try {
-            return progettistaService.getCandidature(id);
+            if(userHandlerService.check(id,token)) {
+                return progettistaService.getCandidature(id);
+            }
+            return null;
         }catch(Exception e){
             return null;
         }
@@ -283,9 +324,12 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/{id}/getcandidature/{idProgetto}/")
     @ResponseBody
-    public Progetto getprogettocandidato(@PathVariable @NotNull Long id,@PathVariable @NotNull Long idProgetto){
+    public Progetto getprogettocandidato(@PathVariable @NotNull Long id,@PathVariable @NotNull Long idProgetto,@RequestParam @NotNull Long token){
         try {
-            return progettoService.getProgetto(id);
+            if(userHandlerService.check(id,token)) {
+                return userHandlerService.getProgetto(id);
+            }
+            return null;
         }catch(Exception e){
             return null;
         }
@@ -300,10 +344,13 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping(value="/{id}/getcandidature/{idProgetto}/remove")
     @ResponseBody
-    public String uscitadaprogettocandidato(@PathVariable @NotNull Long id,@PathVariable @NotNull Long idProgetto){
+    public String uscitadaprogettocandidato(@PathVariable @NotNull Long id,@PathVariable @NotNull Long idProgetto,@RequestParam @NotNull Long token){
         try {
-            progettistaService.removeprogettoCandidato(idProgetto,id);
-            return "success";
+            if(userHandlerService.check(id,token)){
+                progettistaService.removeprogettoCandidato(idProgetto,id);
+                return "success";
+            }
+            return "not logged";
         }catch(Exception e){
             return "Errore";
         }
@@ -318,10 +365,13 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping(value="/{id}/getcandidature/{idProgetto}/removecandidatura/")
     @ResponseBody
-    public String removecandidatura(@PathVariable @NotNull Long idProgetto , @PathVariable @NotNull Long id){
+    public String removecandidatura(@PathVariable @NotNull Long idProgetto , @PathVariable @NotNull Long id,@RequestParam @NotNull Long token){
         try{
-            progettistaService.removeprogettoCandidato(idProgetto, id);
-            return "Rimozione avvenuta correttamente";
+            if(userHandlerService.check(id,token)) {
+                progettistaService.removeprogettoCandidato(idProgetto, id);
+                return "Rimozione avvenuta correttamente";
+            }
+            return "Not logged";
         }catch(Exception e){
             return "Errore";
         }
@@ -354,7 +404,7 @@ public class ProgettistaController {
     @ResponseBody
     public Progetto getProgettoProgettista(@PathVariable @NotNull Long id,@PathVariable @NotNull Long idProgetto) {
         try {
-            return progettoService.getProgetto(idProgetto);
+            return userHandlerService.getProgetto(idProgetto);
         } catch (Exception e) {
             return null;
         }

@@ -19,6 +19,10 @@ public class Esperto implements Subscribe{
 
     private String surname;
 
+    @Column(nullable= false, unique=true)
+    private String email;
+
+    private String password;
     //@OneToMany(mappedBy ="ID_Progetto")
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Progetto> progettiEsperto;
@@ -31,10 +35,41 @@ public class Esperto implements Subscribe{
     public Esperto(){
 
     }
+
+    /**
+     * Costruttore per i test
+     * @param name nome
+     * @param surname cognome
+     */
     public Esperto(String name, String surname){
         this.name= name;
         this.surname= surname;
         this.progettiEsperto = new ArrayList<>();
+    }
+
+    public Esperto(String name, String surname,String email, String password){
+        this.name= name;
+        this.surname= surname;
+        this.email= email;
+        this.password=password;
+        this.progettiEsperto = new ArrayList<>();
+        this.messaggeBacheca= null;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Long getId() {

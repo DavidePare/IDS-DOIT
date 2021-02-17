@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name="Progetto_Table")
@@ -19,7 +18,6 @@ public class Progetto {
 
     private int nMaxProgettisti;
 
-    //Era messo
     @OneToOne(targetEntity = AbstractState.class,
                 cascade= {CascadeType.ALL})
     private IState state;
@@ -40,8 +38,6 @@ public class Progetto {
     private Long proponenteProgettoID;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
-    //@JoinTable(name ="Progettista",
-    //        joinColumns=@JoinColumn(name="ID_Progettista"))
     @JsonIgnoreProperties({"progettiCandidati","progettiProgettista","inviti",})
     private List<Progettista> progettistiInvitati;
 
@@ -50,7 +46,6 @@ public class Progetto {
     @JsonIgnoreProperties({"progettiCandidati","progettiProgettista","inviti"})
     private List<Progettista> candidati;
 
-    //@Transient
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
     private List<Sponsor> sponsors;
 

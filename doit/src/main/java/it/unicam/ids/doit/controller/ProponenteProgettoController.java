@@ -3,13 +3,11 @@ package it.unicam.ids.doit.controller;
 import com.sun.istack.NotNull;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
-import it.unicam.ids.doit.service.impl.ProgettistaServiceImpl;
-import it.unicam.ids.doit.service.impl.ProgettoServiceImpl;
+import it.unicam.ids.doit.service.UserHandlerService;
 import it.unicam.ids.doit.service.impl.ProponenteProgettoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,9 +16,7 @@ public class ProponenteProgettoController {
     @Autowired
     ProponenteProgettoServiceImpl propProgettoService;
     @Autowired
-    ProgettistaServiceImpl progettistaService;
-    @Autowired
-    ProgettoServiceImpl progettoService;
+    UserHandlerService userHandlerService;
 
     /**
      * Ottenere tutti i progetti gestiti dal proponente progetto
@@ -30,20 +26,34 @@ public class ProponenteProgettoController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/progettigestiti/")
     @ResponseBody
-    public List<Progetto> getprogettigestiti(@RequestParam @NotNull Long idProponente){
-        return propProgettoService.getProgettiGestiti(idProponente);
+    public List<Progetto> getprogettigestiti(@RequestParam @NotNull Long idProponente,@RequestParam @NotNull Long token){
+        try{
+            if(userHandlerService.check(idProponente,token)) {
+                return propProgettoService.getProgettiGestiti(idProponente);
+            }
+            return null;
+        }catch(Exception e){
+            return null;
+        }
     }
 
     /**
      * Prende progetto per id passato nel path
-     * @return lista di tutti i progettisti
+     * @return lista di tutti i progettisti che può invitare su quel progetto
      */
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/progettigestiti/{id}/invite")
     @ResponseBody
-    public List<Progettista> getprogettisti(){
-        return progettistaService.getAllProgettisti();
+    public List<Progettista> getprogettisti(@PathVariable @NotNull Long id,@RequestParam @NotNull Long idProponente,@RequestParam @NotNull Long token){
+        try {
+            if (userHandlerService.check(idProponente, token)) {
+                return propProgettoService.getInvitableProgettisti(id, idProponente);
+            }
+            return null;
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -56,10 +66,13 @@ public class ProponenteProgettoController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/progettigestiti/{id}/invite/{idProgettista}")
     @ResponseBody
-    public String invite(@PathVariable Long id , @PathVariable Long idProgettista, @RequestParam @NotNull Long idProp){
+    public String invite(@PathVariable Long id , @PathVariable Long idProgettista, @RequestParam @NotNull Long idProp,@RequestParam @NotNull Long token){
         try {
-            propProgettoService.inviteProgettista(idProp, id, idProgettista);
-            return "success";
+            if(userHandlerService.check(idProp,token)) {
+                propProgettoService.inviteProgettista(idProp, id, idProgettista);
+                return "success";
+            }
+            return "not logged";
         }catch (Exception e){
             return e.getMessage();
         }
@@ -74,9 +87,12 @@ public class ProponenteProgettoController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/progettigestiti/{id}/candidati")
     @ResponseBody
-    public List<Progettista> getcandidati(@PathVariable Long id) {
+    public List<Progettista> getcandidati(@PathVariable Long id,@RequestParam @NotNull Long token,@RequestParam @NotNull Long idProp) {
         try {
-            return progettoService.getCandidati(id);
+            if(userHandlerService.check(idProp,token)) {
+                return propProgettoService.getCandidatiProgetto(id);
+            }
+            return null;
         }catch(Exception e){
             return null;
         }
@@ -92,10 +108,13 @@ public class ProponenteProgettoController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value= "/progettigestiti/{id}/candidati/{idCandidato}/accept")
     @ResponseBody
-    public String acceptCandidato(@PathVariable @NotNull Long id, @PathVariable @NotNull Long idCandidato, @RequestParam Long idProponente) {
+    public String acceptCandidato(@PathVariable @NotNull Long id, @PathVariable @NotNull Long idCandidato, @RequestParam Long idProponente,@RequestParam @NotNull Long token) {
         try {
-            propProgettoService.acceptCandidatura(idProponente, id, idCandidato);
-            return "Accettato!";
+            if(userHandlerService.check(idProponente,token)) {
+                propProgettoService.acceptCandidatura(idProponente, id, idCandidato);
+                return "Accettato!";
+            }
+            return "not logged";
         }catch(Exception e){
             return e.getMessage();
         }
@@ -111,10 +130,13 @@ public class ProponenteProgettoController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value= "/progettigestiti/{id}/candidati/{idCandidato}/decline")
     @ResponseBody
-    public String declineCandidato(@PathVariable @NotNull Long id, @PathVariable @NotNull Long idCandidato, @RequestParam Long idProponente) {
+    public String declineCandidato(@PathVariable @NotNull Long id, @PathVariable @NotNull Long idCandidato, @RequestParam Long idProponente,@RequestParam @NotNull Long token) {
         try {
-            propProgettoService.declineCandidatura(idProponente, id, idCandidato);
-            return "Rifiutato!";
+            if(userHandlerService.check(idProponente,token)) {
+                propProgettoService.declineCandidatura(idProponente, id, idCandidato);
+                return "Rifiutato!";
+            }
+            return "not logged";
         }catch(Exception e){
             return e.getMessage();
         }
@@ -129,10 +151,13 @@ public class ProponenteProgettoController {
     @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping(value= "/progettigestiti/{id}/remove")
     @ResponseBody
-    public String removeProgetto(@PathVariable Long id,@RequestParam @NotNull Long idProponente){
+    public String removeProgetto(@PathVariable Long id,@RequestParam @NotNull Long idProponente,@RequestParam @NotNull Long token){
         try {
-            propProgettoService.removeProgettoGestito(idProponente, id);
-            return "Rimosso";
+            if(userHandlerService.check(idProponente,token)) {
+                propProgettoService.removeProgettoGestito(idProponente, id);
+                return "Rimosso";
+            }
+            return "not logged";
         }catch(Exception e){
             return e.getMessage();
         }
@@ -147,9 +172,12 @@ public class ProponenteProgettoController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/progettigestiti/{id}/getTeam/")
     @ResponseBody
-    public List<Progettista> getTeam(@PathVariable Long id, @RequestParam @NotNull Long idProponente ){
+    public List<Progettista> getTeam(@PathVariable Long id, @RequestParam @NotNull Long idProponente,@RequestParam @NotNull Long token){
         try{
-            return propProgettoService.getComponentOfTeam(id,idProponente);
+            if(userHandlerService.check(idProponente,token)) {
+                return propProgettoService.getComponentOfTeam(id, idProponente);
+            }
+            return null;
         }catch(Exception e){
             return null;
         }
@@ -165,9 +193,12 @@ public class ProponenteProgettoController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/progettigestiti/{id}/getTeam/{idProgettista}")
     @ResponseBody
-    public Progettista getProgettista(@PathVariable Long idProgettista,@RequestParam @NotNull Long idProponente, @PathVariable Long id){
+    public Progettista getProgettista(@PathVariable Long idProgettista,@RequestParam @NotNull Long idProponente, @PathVariable Long id,@RequestParam @NotNull Long token){
         try{
-            return progettistaService.getProgettista(idProgettista);
+            if(userHandlerService.check(idProponente,token)) {
+                return userHandlerService.getProgettista(idProgettista);
+            }
+            return null;
         }catch(Exception e){
             return null;
         }
@@ -183,10 +214,13 @@ public class ProponenteProgettoController {
     @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping(value="/progettigestiti/{id}/getTeam/{idProgettista}/remove")
     @ResponseBody
-    public String removeProgettistaFromProgetto(@PathVariable Long id,@RequestParam @NotNull Long idProponente, @PathVariable Long idProgettista){
+    public String removeProgettistaFromProgetto(@PathVariable Long id,@RequestParam @NotNull Long idProponente, @PathVariable Long idProgettista,@RequestParam @NotNull Long token){
         try{
-            propProgettoService.removeProgettistaFromProgetto(idProponente,id,idProgettista);
-            return "Success";
+            if(userHandlerService.check(idProponente,token)) {
+                propProgettoService.removeProgettistaFromProgetto(idProponente, id, idProgettista);
+                return "Success";
+            }
+            return "not logged";
         }catch(Exception e){
             return e.getMessage();
         }
@@ -195,12 +229,14 @@ public class ProponenteProgettoController {
     @PostMapping(value="/createProgetto/")
     @ResponseBody
     // @ResponseStatus(HttpStatus.OK)
-    public Progetto createProgetto(@NotNull @RequestParam Long idProponenteProgetto, @NotNull @RequestParam String name , @RequestParam int nMaxProgettisti){
+    public Progetto createProgetto(@NotNull @RequestParam Long idProponenteProgetto, @NotNull @RequestParam String name , @RequestParam int nMaxProgettisti,@RequestParam @NotNull Long token){
         try {
-            return propProgettoService.createProgetto(idProponenteProgetto, name, nMaxProgettisti);
-            //return "success";
+            if(userHandlerService.check(idProponenteProgetto,token)) {
+                return propProgettoService.createProgetto(idProponenteProgetto, name, nMaxProgettisti);
+            }
+            return null;
         }catch(Exception e){
-            return null;//e.getMessage();
+            return null;
         }
     }
 }

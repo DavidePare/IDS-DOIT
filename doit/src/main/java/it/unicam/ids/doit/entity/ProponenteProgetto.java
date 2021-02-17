@@ -26,6 +26,16 @@ public class ProponenteProgetto extends Progettista{
     public ProponenteProgetto(){
         super();
     }
+    public ProponenteProgetto(String name, String surname,String email,String password){
+        super(name, surname, email ,password);
+        progettiGestiti = new ArrayList<>();
+    }
+
+    /**
+     * Per i test Eliminabile
+     * @param name nome
+     * @param surname cognome
+     */
     public ProponenteProgetto(String name, String surname){
         super(name, surname);
         progettiGestiti = new ArrayList<>();
