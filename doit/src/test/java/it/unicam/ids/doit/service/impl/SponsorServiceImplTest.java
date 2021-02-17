@@ -24,15 +24,16 @@ class SponsorServiceImplTest {
 
     @Test
     void createSponsor() {
-        assertEquals(sponsorService.getAllSponsors().size(),0);
+        assertEquals(sponsorService.getAllSponsors().size(), 0);
         sponsorService.createSponsor("Metisoft");
-        assertEquals(sponsorService.getAllSponsors().size(),1);
+        assertEquals(sponsorService.getAllSponsors().size(), 1);
         sponsorService.createSponsor("giulia picci ama davide");
-        assertEquals(sponsorService.getAllSponsors().size(),2);
+        assertEquals(sponsorService.getAllSponsors().size(), 2);
     }
 
     @Test
     void deleteSponsor() {
+
         sponsor=sponsorService.createSponsor("Metisoft");
         sp2=sponsorService.createSponsor("giulia picci ama davide");
         assertEquals(sponsorService.getAllSponsors().size(),2);
@@ -40,10 +41,12 @@ class SponsorServiceImplTest {
         assertEquals(sponsorService.getAllSponsors().size(),1);
         sponsorService.deleteSponsor(sp2.getId());
         assertEquals(sponsorService.getAllSponsors().size(),0);
+
     }
 
     @Test
     void getSponsor() {
+
         sponsor=sponsorService.createSponsor("Metisoft");
         sp2=sponsorService.createSponsor("giulia picci ama davide");
         assertEquals(sponsorService.getSponsor(sponsor.getId()).getId(),sponsor.getId());
@@ -53,6 +56,7 @@ class SponsorServiceImplTest {
 
     @Test
     void getAllSponsors() {
+
         sponsor=sponsorService.createSponsor("Metisoft");
         assertEquals(sponsorService.getAllSponsors().size(),1);
         sp2=sponsorService.createSponsor("giulia picci ama davide");
@@ -61,6 +65,7 @@ class SponsorServiceImplTest {
 
     @Test
     void removeProgetto() {
+
         pr1 = progettoService.createProgetto(1L,"cazzo",3);
         sponsor=sponsorService.createSponsor("Metisoft");
 
@@ -68,6 +73,7 @@ class SponsorServiceImplTest {
 
     @Test
     void addAmountProgetto() {
+
         pr1 = progettoService.createProgetto(1L,"cazzo",3);
         sponsor=sponsorService.createSponsor("Metisoft");
         sp2=sponsorService.createSponsor("Metisoft");
@@ -80,17 +86,21 @@ class SponsorServiceImplTest {
 
     @Test
     void decrementAmountProgetto() {
+
         pr1 = progettoService.createProgetto(1L,"cazzo",3);
         sponsor=sponsorService.createSponsor("Metisoft");
         sp2=sponsorService.createSponsor("Metisoft");
         sponsorService.addAmountProgetto(pr1.getId(),sponsor.getId(),200.0);
+
     }
 
     @Test
     void getProgetti() {
+
         pr1 = progettoService.createProgetto(1L,"cazzo",3);
         sponsor=sponsorService.createSponsor("Metisoft");
         sponsorService.addAmountProgetto(pr1.getId(),sponsor.getId(),200.0);
         assertTrue(sponsorService.getProgetti(sponsor.getId()).contains(pr1));
+
     }
 }
