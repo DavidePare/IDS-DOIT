@@ -23,7 +23,9 @@ public class UserController {
     @GetMapping(value="/getprogetti/")
     @ResponseBody
     public List<Progetto> getProgetto(){
-        return progettoService.getAllProgetti();
+        //return userHandlerService.getProgettista();
+        return
+                progettoService.getAllProgetti();
     }
 
     /**
@@ -37,7 +39,7 @@ public class UserController {
         return userHandlerService.getAllProgettisti();
     }
 
-
+/*
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/signin")
     @ResponseBody
@@ -50,7 +52,7 @@ public class UserController {
         }catch(Exception e){
             return "Dati non validi, l'email potrebbe essere già registrata!";
         }
-    }
+    }*/
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/signin2")

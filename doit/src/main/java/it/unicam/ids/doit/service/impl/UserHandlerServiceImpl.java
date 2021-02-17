@@ -24,6 +24,8 @@ public class UserHandlerServiceImpl implements UserHandlerService {
     EspertoService espertoService;
     @Autowired
     ProponenteProgettoService proponenteProgettoService;
+    @Autowired
+    ProgettoService progettoService;
 
     /**
      * Login con restituzione del token dell'utente loggato
@@ -56,6 +58,7 @@ public class UserHandlerServiceImpl implements UserHandlerService {
             token.add(generateToken(esperto.getId()));
             token.add(esperto.getId());
         }
+        token.add((long) type);
         return token;
     }
 
@@ -115,5 +118,21 @@ public class UserHandlerServiceImpl implements UserHandlerService {
     @Override
     public boolean check(Long id, Long token){
         return loggedUserRepository.findAll().stream().anyMatch(t-> t.getId().equals(id) && t.getToken().equals(token));
+    }
+
+
+    @Override
+    public Progettista getProgettista(Long idProgettista){
+        return progettistaService.getProgettista(idProgettista);
+    }
+
+    @Override
+    public List<Progetto> getAllProgetti(){
+        return progettoService.getAllProgetti();
+    }
+
+    @Override
+    public Progetto getProgetto(Long id){
+        return progettoService.getProgetto(id);
     }
 }

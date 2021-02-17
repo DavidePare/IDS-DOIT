@@ -21,8 +21,6 @@ public class ProgettoServiceImpl implements ProgettoService {
     private ProgettoRepository progettoRepository;
 
     @Autowired
-    private TeamRepository teamRepository;
-    @Autowired
     private TeamService teamService;
 
     @Autowired

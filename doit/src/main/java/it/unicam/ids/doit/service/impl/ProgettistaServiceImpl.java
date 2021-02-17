@@ -20,8 +20,6 @@ import java.util.Set;
 public class ProgettistaServiceImpl implements ProgettistaService {
 
     @Autowired
-    private ProgettoRepository progettoRepository;
-    @Autowired
     private ProgettistaRepository progettistaRepository;
 
     @Autowired
@@ -29,6 +27,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
 
     @Autowired
     private CurriculumRepository curriculumRepository;
+
     @Autowired
     private TeamService teamService;
 

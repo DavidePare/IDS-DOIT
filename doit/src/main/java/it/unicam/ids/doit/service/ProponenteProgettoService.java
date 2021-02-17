@@ -37,4 +37,6 @@ public interface ProponenteProgettoService {
     ProponenteProgetto createProponenteProgetto(String name, String surname,String email , String password);
 
     List<Progettista> getInvitableProgettisti(Long id,Long idProponente);
+
+    List<Progettista> getCandidatiProgetto(Long idProgetto);
 }

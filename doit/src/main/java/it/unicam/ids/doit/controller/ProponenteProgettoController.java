@@ -1,17 +1,13 @@
 package it.unicam.ids.doit.controller;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
 import com.sun.istack.NotNull;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.service.UserHandlerService;
-import it.unicam.ids.doit.service.impl.ProgettistaServiceImpl;
-import it.unicam.ids.doit.service.impl.ProgettoServiceImpl;
 import it.unicam.ids.doit.service.impl.ProponenteProgettoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,10 +15,6 @@ import java.util.List;
 public class ProponenteProgettoController {
     @Autowired
     ProponenteProgettoServiceImpl propProgettoService;
-    @Autowired
-    ProgettistaServiceImpl progettistaService;
-    @Autowired
-    ProgettoServiceImpl progettoService;
     @Autowired
     UserHandlerService userHandlerService;
 
@@ -98,7 +90,7 @@ public class ProponenteProgettoController {
     public List<Progettista> getcandidati(@PathVariable Long id,@RequestParam @NotNull Long token,@RequestParam @NotNull Long idProp) {
         try {
             if(userHandlerService.check(idProp,token)) {
-                return progettoService.getCandidati(id);
+                return propProgettoService.getCandidatiProgetto(id);
             }
             return null;
         }catch(Exception e){
@@ -204,7 +196,7 @@ public class ProponenteProgettoController {
     public Progettista getProgettista(@PathVariable Long idProgettista,@RequestParam @NotNull Long idProponente, @PathVariable Long id,@RequestParam @NotNull Long token){
         try{
             if(userHandlerService.check(idProponente,token)) {
-                return progettistaService.getProgettista(idProgettista);
+                return userHandlerService.getProgettista(idProgettista);
             }
             return null;
         }catch(Exception e){
@@ -241,11 +233,10 @@ public class ProponenteProgettoController {
         try {
             if(userHandlerService.check(idProponenteProgetto,token)) {
                 return propProgettoService.createProgetto(idProponenteProgetto, name, nMaxProgettisti);
-                //return "success";
             }
             return null;
         }catch(Exception e){
-            return null;//e.getMessage();
+            return null;
         }
     }
 }

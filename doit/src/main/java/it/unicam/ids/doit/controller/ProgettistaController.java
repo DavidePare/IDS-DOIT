@@ -5,9 +5,7 @@ import it.unicam.ids.doit.entity.Curriculum;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.service.ProgettistaService;
-import it.unicam.ids.doit.service.ProgettoService;
 import it.unicam.ids.doit.service.UserHandlerService;
-import it.unicam.ids.doit.service.impl.ProgettistaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +16,6 @@ import java.util.List;
 public class ProgettistaController {
     @Autowired
     ProgettistaService progettistaService;
-
-    @Autowired
-    ProgettoService progettoService;
 
     @Autowired
     private UserHandlerService userHandlerService;
@@ -257,7 +252,7 @@ public class ProgettistaController {
     public List<Progetto> getProgetti(@PathVariable @NotNull Long id,@RequestParam @NotNull Long token){
         //TODO quando visualizza tutti i progetti se su uno è già candidato ha metodo elimina candidatura
         if(userHandlerService.check(id,token)){
-            return progettoService.getAllProgetti();
+            return userHandlerService.getAllProgetti();
         }
         return null;
     }
@@ -274,7 +269,7 @@ public class ProgettistaController {
     @ResponseBody
     public Progetto getProgetto(@PathVariable @NotNull Long idProgetto, @PathVariable Long id,@RequestParam @NotNull Long token){
         if(userHandlerService.check(id,token)){
-            return progettoService.getProgetto(idProgetto);
+            return userHandlerService.getProgetto(idProgetto);
         }
         return null;
     }
@@ -332,7 +327,7 @@ public class ProgettistaController {
     public Progetto getprogettocandidato(@PathVariable @NotNull Long id,@PathVariable @NotNull Long idProgetto,@RequestParam @NotNull Long token){
         try {
             if(userHandlerService.check(id,token)) {
-                return progettoService.getProgetto(id);
+                return userHandlerService.getProgetto(id);
             }
             return null;
         }catch(Exception e){
@@ -409,7 +404,7 @@ public class ProgettistaController {
     @ResponseBody
     public Progetto getProgettoProgettista(@PathVariable @NotNull Long id,@PathVariable @NotNull Long idProgetto) {
         try {
-            return progettoService.getProgetto(idProgetto);
+            return userHandlerService.getProgetto(idProgetto);
         } catch (Exception e) {
             return null;
         }
