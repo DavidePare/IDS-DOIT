@@ -3,9 +3,7 @@ package it.unicam.ids.doit.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 @Table(name="Sponsor_Table")
@@ -18,19 +16,48 @@ public class Sponsor {
 
     private String name;
 
-    @Transient
+    @Column(nullable= false, unique=true)
+    private String email;
+    private String password;
+
+
+
+ /*   @Transient
     @ElementCollection(fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("sponsors")
-    private Map<Long,Double> progettiInv;
+    @JsonIgnoreProperties("sponsors")*/
+    //private Map<Long,Double> progettiInv;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Investimenti> progettiInv;
 
 
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
+    private List<NotificationMessage> messagge;
 
     public Sponsor(){ }
 
+    /**
+     * Per test
+     * @param name nome
+     */
     public Sponsor(String name){
         this.name=name;
-        progettiInv= new HashMap<>();
+        progettiInv= new HashSet<>();
 
+    }
+    public Sponsor(String name,String email,String password){
+        this.name=name;
+        this.email=email;
+        this.password=password;
+        progettiInv= new HashSet<>();
+
+    }
+
+    public Set<Investimenti> getProgettiInv() {
+        return progettiInv;
+    }
+
+    public void setProgettiInv(Set<Investimenti> progettiInv) {
+        this.progettiInv = progettiInv;
     }
 
     public Long getId() {
@@ -45,11 +72,19 @@ public class Sponsor {
         this.name = name;
     }
 
-    public Map<Long, Double> getProgettiInv() {
-        return progettiInv;
+    public String getEmail() {
+        return email;
     }
 
-    public void setProgettiInv(Map<Long, Double> progettiInv) {
-        this.progettiInv = progettiInv;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
