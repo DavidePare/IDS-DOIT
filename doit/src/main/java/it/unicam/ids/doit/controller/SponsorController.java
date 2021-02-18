@@ -37,6 +37,10 @@ public class SponsorController {
     public List<Progetto> getProgettiSponsor(@RequestParam @NotNull Long id,@RequestParam @NotNull Long token){
         try{
             if(userHandlerService.check(id,token)){
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
                 return sponsorService.getProgetti(id);
             }
             return null;

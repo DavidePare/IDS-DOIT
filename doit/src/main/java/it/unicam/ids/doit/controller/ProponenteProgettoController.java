@@ -1,9 +1,15 @@
 package it.unicam.ids.doit.controller;
 
+import ch.qos.logback.core.encoder.EchoEncoder;
 import com.sun.istack.NotNull;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.service.UserHandlerService;
+<<<<<<< Updated upstream
+=======
+import it.unicam.ids.doit.service.impl.ProgettistaServiceImpl;
+import it.unicam.ids.doit.service.impl.ProgettoServiceImpl;
+>>>>>>> Stashed changes
 import it.unicam.ids.doit.service.impl.ProponenteProgettoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +22,13 @@ public class ProponenteProgettoController {
     @Autowired
     ProponenteProgettoServiceImpl propProgettoService;
     @Autowired
+<<<<<<< Updated upstream
+=======
+    ProgettistaServiceImpl progettistaService;
+    @Autowired
+    ProgettoServiceImpl progettoService;
+    @Autowired
+>>>>>>> Stashed changes
     UserHandlerService userHandlerService;
 
     /**
@@ -90,7 +103,11 @@ public class ProponenteProgettoController {
     public List<Progettista> getcandidati(@PathVariable Long id,@RequestParam @NotNull Long token,@RequestParam @NotNull Long idProp) {
         try {
             if(userHandlerService.check(idProp,token)) {
+<<<<<<< Updated upstream
                 return propProgettoService.getCandidatiProgetto(id);
+=======
+                return progettoService.getCandidati(id);
+>>>>>>> Stashed changes
             }
             return null;
         }catch(Exception e){
@@ -196,7 +213,11 @@ public class ProponenteProgettoController {
     public Progettista getProgettista(@PathVariable Long idProgettista,@RequestParam @NotNull Long idProponente, @PathVariable Long id,@RequestParam @NotNull Long token){
         try{
             if(userHandlerService.check(idProponente,token)) {
+<<<<<<< Updated upstream
                 return userHandlerService.getProgettista(idProgettista);
+=======
+                return progettistaService.getProgettista(idProgettista);
+>>>>>>> Stashed changes
             }
             return null;
         }catch(Exception e){
@@ -233,6 +254,10 @@ public class ProponenteProgettoController {
         try {
             if(userHandlerService.check(idProponenteProgetto,token)) {
                 return propProgettoService.createProgetto(idProponenteProgetto, name, nMaxProgettisti);
+<<<<<<< Updated upstream
+=======
+                //return "success";
+>>>>>>> Stashed changes
             }
             return null;
         }catch(Exception e){

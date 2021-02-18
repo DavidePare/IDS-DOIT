@@ -3,7 +3,14 @@ package it.unicam.ids.doit.controller;
 import com.sun.istack.NotNull;
 import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.service.EspertoService;
+<<<<<<< Updated upstream
 import it.unicam.ids.doit.service.UserHandlerService;
+=======
+import it.unicam.ids.doit.service.ProgettoService;
+import it.unicam.ids.doit.service.UserHandlerService;
+import it.unicam.ids.doit.service.impl.EspertoServiceImpl;
+import it.unicam.ids.doit.service.impl.ProgettoServiceImpl;
+>>>>>>> Stashed changes
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

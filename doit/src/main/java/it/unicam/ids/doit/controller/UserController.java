@@ -23,9 +23,13 @@ public class UserController {
     @GetMapping(value="/getprogetti/")
     @ResponseBody
     public List<Progetto> getProgetto(){
+<<<<<<< Updated upstream
         //return userHandlerService.getProgettista();
         return
                 progettoService.getAllProgetti();
+=======
+        return progettoService.getAllProgetti();
+>>>>>>> Stashed changes
     }
 
     /**
@@ -39,7 +43,11 @@ public class UserController {
         return userHandlerService.getAllProgettisti();
     }
 
+<<<<<<< Updated upstream
 /*
+=======
+
+>>>>>>> Stashed changes
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/signin")
     @ResponseBody
@@ -52,7 +60,11 @@ public class UserController {
         }catch(Exception e){
             return "Dati non validi, l'email potrebbe essere già registrata!";
         }
+<<<<<<< Updated upstream
     }*/
+=======
+    }
+>>>>>>> Stashed changes
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/signin2")
@@ -61,9 +73,15 @@ public class UserController {
         try {
             if(user.getType() <0 || user.getType() >2) return "Not correct type";
             userHandlerService.signin(user.getType(),user.getName(),user.getSurname(),user.getEmail(),user.getPassword());
+<<<<<<< Updated upstream
             return "success";
         }catch(Exception e){
             return "Dati invalidi forse è già stata usata questa email !";
+=======
+            return "{ message: success }";
+        }catch(Exception e){
+            return "{ message: Dati invalidi forse è già stata usata questa email }";
+>>>>>>> Stashed changes
         }
     }
 

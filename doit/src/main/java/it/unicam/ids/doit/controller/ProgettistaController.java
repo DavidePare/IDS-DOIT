@@ -5,7 +5,13 @@ import it.unicam.ids.doit.entity.Curriculum;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.service.ProgettistaService;
+<<<<<<< Updated upstream
 import it.unicam.ids.doit.service.UserHandlerService;
+=======
+import it.unicam.ids.doit.service.ProgettoService;
+import it.unicam.ids.doit.service.UserHandlerService;
+import it.unicam.ids.doit.service.impl.ProgettistaServiceImpl;
+>>>>>>> Stashed changes
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +26,12 @@ public class ProgettistaController {
     @Autowired
     private UserHandlerService userHandlerService;
 
+<<<<<<< Updated upstream
+=======
+    @Autowired
+    private UserHandlerService userHandlerService;
+
+>>>>>>> Stashed changes
     @PostMapping(value="/addprogettista")
     public Progettista addProgettista(@RequestParam @NotNull String name, @RequestParam @NotNull String surname, @RequestParam String email, @RequestParam @NotNull Long token){
         return progettistaService.createProgettista(name,surname,email, "");
@@ -252,7 +264,11 @@ public class ProgettistaController {
     public List<Progetto> getProgetti(@PathVariable @NotNull Long id,@RequestParam @NotNull Long token){
         //TODO quando visualizza tutti i progetti se su uno è già candidato ha metodo elimina candidatura
         if(userHandlerService.check(id,token)){
+<<<<<<< Updated upstream
             return userHandlerService.getAllProgetti();
+=======
+            return progettoService.getAllProgetti();
+>>>>>>> Stashed changes
         }
         return null;
     }
@@ -269,7 +285,11 @@ public class ProgettistaController {
     @ResponseBody
     public Progetto getProgetto(@PathVariable @NotNull Long idProgetto, @PathVariable Long id,@RequestParam @NotNull Long token){
         if(userHandlerService.check(id,token)){
+<<<<<<< Updated upstream
             return userHandlerService.getProgetto(idProgetto);
+=======
+            return progettoService.getProgetto(idProgetto);
+>>>>>>> Stashed changes
         }
         return null;
     }
@@ -327,7 +347,11 @@ public class ProgettistaController {
     public Progetto getprogettocandidato(@PathVariable @NotNull Long id,@PathVariable @NotNull Long idProgetto,@RequestParam @NotNull Long token){
         try {
             if(userHandlerService.check(id,token)) {
+<<<<<<< Updated upstream
                 return userHandlerService.getProgetto(id);
+=======
+                return progettoService.getProgetto(id);
+>>>>>>> Stashed changes
             }
             return null;
         }catch(Exception e){

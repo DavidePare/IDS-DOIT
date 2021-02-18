@@ -11,9 +11,13 @@ public interface UserHandlerService {
     String logout(Long token);
     void signin(int type, String name, String surname, String email, String password);
     List<Progettista> getAllProgettisti();
+<<<<<<< Updated upstream
     Progettista getProgettista(Long idProgettista);
     boolean check(Long id, Long token);
     List<Progetto> getAllProgetti();
     Progetto getProgetto(Long id);
 
+=======
+    boolean check(Long id, Long token);
+>>>>>>> Stashed changes
 }

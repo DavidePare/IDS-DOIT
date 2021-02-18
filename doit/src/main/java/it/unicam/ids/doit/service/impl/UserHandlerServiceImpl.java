@@ -24,8 +24,11 @@ public class UserHandlerServiceImpl implements UserHandlerService {
     EspertoService espertoService;
     @Autowired
     ProponenteProgettoService proponenteProgettoService;
+<<<<<<< Updated upstream
     @Autowired
     ProgettoService progettoService;
+=======
+>>>>>>> Stashed changes
 
     /**
      * Login con restituzione del token dell'utente loggato
@@ -58,7 +61,18 @@ public class UserHandlerServiceImpl implements UserHandlerService {
             token.add(generateToken(esperto.getId()));
             token.add(esperto.getId());
         }
+<<<<<<< Updated upstream
         token.add((long) type);
+=======
+        if(type==3 && proponenteProgettoService.getAllProponentiProgetto().stream().anyMatch(t-> t.getEmail().compareTo(email)==0
+                && t.getPassword().compareTo(password)==0)){
+            ProponenteProgetto prop=proponenteProgettoService.getAllProponentiProgetto().stream().filter(t-> t.getEmail().compareTo(email)==0
+                    && t.getPassword().compareTo(password)==0).collect(Collectors.toList()).get(0);
+            token.add(generateToken(prop.getId()));
+            token.add(prop.getId());
+        }
+        token.add((long)type);
+>>>>>>> Stashed changes
         return token;
     }
 
@@ -119,6 +133,7 @@ public class UserHandlerServiceImpl implements UserHandlerService {
     public boolean check(Long id, Long token){
         return loggedUserRepository.findAll().stream().anyMatch(t-> t.getId().equals(id) && t.getToken().equals(token));
     }
+<<<<<<< Updated upstream
 
 
     @Override
@@ -135,4 +150,6 @@ public class UserHandlerServiceImpl implements UserHandlerService {
     public Progetto getProgetto(Long id){
         return progettoService.getProgetto(id);
     }
+=======
+>>>>>>> Stashed changes
 }

@@ -237,9 +237,12 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
         return lProgettisti;
 
     }
+<<<<<<< Updated upstream
 
     @Override
     public List<Progettista> getCandidatiProgetto(Long idProgetto){
         return progettoService.getCandidati(idProgetto);
     }
+=======
+>>>>>>> Stashed changes
 }

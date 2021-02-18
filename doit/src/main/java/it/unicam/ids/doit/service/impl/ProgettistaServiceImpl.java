@@ -27,7 +27,10 @@ public class ProgettistaServiceImpl implements ProgettistaService {
 
     @Autowired
     private CurriculumRepository curriculumRepository;
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     @Autowired
     private TeamService teamService;
 

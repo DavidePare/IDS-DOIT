@@ -12,8 +12,13 @@ public class DOITCommandLineRunner implements CommandLineRunner {
     private EspertoRepository espertoRepository;
     @Override
     public void run(String... args) throws Exception {
+<<<<<<< Updated upstream
        espertoRepository.save(new Esperto("Paolo","Marchetti","a@a.aa","a"));
        espertoRepository.save(new Esperto("Fabrizio","Maurizi","p@p.pp","u"));
+=======
+       espertoRepository.save(new Esperto("Paolo","Marchetti","a","a"));
+       espertoRepository.save(new Esperto("Fabrizio","Maurizi","p","u"));
+>>>>>>> Stashed changes
 
     }
 }
