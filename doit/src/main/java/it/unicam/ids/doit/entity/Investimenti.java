@@ -47,7 +47,11 @@ public class Investimenti {
         this.amount+=amount;
     }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes

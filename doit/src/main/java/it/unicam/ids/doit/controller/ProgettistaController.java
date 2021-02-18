@@ -27,6 +27,12 @@ public class ProgettistaController {
     private UserHandlerService userHandlerService;
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    @Autowired
+    private UserHandlerService userHandlerService;
+
+>>>>>>> Stashed changes
 =======
     @Autowired
     private UserHandlerService userHandlerService;
@@ -265,7 +271,11 @@ public class ProgettistaController {
         //TODO quando visualizza tutti i progetti se su uno è già candidato ha metodo elimina candidatura
         if(userHandlerService.check(id,token)){
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             return userHandlerService.getAllProgetti();
+=======
+            return progettoService.getAllProgetti();
+>>>>>>> Stashed changes
 =======
             return progettoService.getAllProgetti();
 >>>>>>> Stashed changes
@@ -286,7 +296,11 @@ public class ProgettistaController {
     public Progetto getProgetto(@PathVariable @NotNull Long idProgetto, @PathVariable Long id,@RequestParam @NotNull Long token){
         if(userHandlerService.check(id,token)){
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             return userHandlerService.getProgetto(idProgetto);
+=======
+            return progettoService.getProgetto(idProgetto);
+>>>>>>> Stashed changes
 =======
             return progettoService.getProgetto(idProgetto);
 >>>>>>> Stashed changes
@@ -348,7 +362,11 @@ public class ProgettistaController {
         try {
             if(userHandlerService.check(id,token)) {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 return userHandlerService.getProgetto(id);
+=======
+                return progettoService.getProgetto(id);
+>>>>>>> Stashed changes
 =======
                 return progettoService.getProgetto(id);
 >>>>>>> Stashed changes

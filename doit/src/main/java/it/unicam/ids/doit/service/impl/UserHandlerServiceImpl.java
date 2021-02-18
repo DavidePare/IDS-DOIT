@@ -25,8 +25,11 @@ public class UserHandlerServiceImpl implements UserHandlerService {
     @Autowired
     ProponenteProgettoService proponenteProgettoService;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     @Autowired
     ProgettoService progettoService;
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 
@@ -62,8 +65,11 @@ public class UserHandlerServiceImpl implements UserHandlerService {
             token.add(esperto.getId());
         }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         token.add((long) type);
 =======
+=======
+>>>>>>> Stashed changes
         if(type==3 && proponenteProgettoService.getAllProponentiProgetto().stream().anyMatch(t-> t.getEmail().compareTo(email)==0
                 && t.getPassword().compareTo(password)==0)){
             ProponenteProgetto prop=proponenteProgettoService.getAllProponentiProgetto().stream().filter(t-> t.getEmail().compareTo(email)==0
@@ -72,6 +78,9 @@ public class UserHandlerServiceImpl implements UserHandlerService {
             token.add(prop.getId());
         }
         token.add((long)type);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         return token;
     }
@@ -134,6 +143,7 @@ public class UserHandlerServiceImpl implements UserHandlerService {
         return loggedUserRepository.findAll().stream().anyMatch(t-> t.getId().equals(id) && t.getToken().equals(token));
     }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 
     @Override
@@ -150,6 +160,8 @@ public class UserHandlerServiceImpl implements UserHandlerService {
     public Progetto getProgetto(Long id){
         return progettoService.getProgetto(id);
     }
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 }

@@ -38,6 +38,10 @@ public class SponsorController {
         try{
             if(userHandlerService.check(id,token)){
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes

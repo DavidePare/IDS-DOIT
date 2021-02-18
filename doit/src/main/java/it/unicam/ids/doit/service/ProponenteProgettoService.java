@@ -38,8 +38,11 @@ public interface ProponenteProgettoService {
 
     List<Progettista> getInvitableProgettisti(Long id,Long idProponente);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
     List<Progettista> getCandidatiProgetto(Long idProgetto);
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 }

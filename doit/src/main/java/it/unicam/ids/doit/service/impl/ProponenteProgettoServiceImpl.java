@@ -238,11 +238,14 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
 
     }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
     @Override
     public List<Progettista> getCandidatiProgetto(Long idProgetto){
         return progettoService.getCandidati(idProgetto);
     }
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 }

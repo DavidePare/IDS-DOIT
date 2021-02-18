@@ -6,7 +6,10 @@ import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.service.UserHandlerService;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 import it.unicam.ids.doit.service.impl.ProgettistaServiceImpl;
 import it.unicam.ids.doit.service.impl.ProgettoServiceImpl;
 >>>>>>> Stashed changes
@@ -28,6 +31,9 @@ public class ProponenteProgettoController {
     @Autowired
     ProgettoServiceImpl progettoService;
     @Autowired
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     UserHandlerService userHandlerService;
 
@@ -104,7 +110,11 @@ public class ProponenteProgettoController {
         try {
             if(userHandlerService.check(idProp,token)) {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 return propProgettoService.getCandidatiProgetto(id);
+=======
+                return progettoService.getCandidati(id);
+>>>>>>> Stashed changes
 =======
                 return progettoService.getCandidati(id);
 >>>>>>> Stashed changes
@@ -214,7 +224,11 @@ public class ProponenteProgettoController {
         try{
             if(userHandlerService.check(idProponente,token)) {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 return userHandlerService.getProgettista(idProgettista);
+=======
+                return progettistaService.getProgettista(idProgettista);
+>>>>>>> Stashed changes
 =======
                 return progettistaService.getProgettista(idProgettista);
 >>>>>>> Stashed changes
@@ -255,6 +269,10 @@ public class ProponenteProgettoController {
             if(userHandlerService.check(idProponenteProgetto,token)) {
                 return propProgettoService.createProgetto(idProponenteProgetto, name, nMaxProgettisti);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+                //return "success";
+>>>>>>> Stashed changes
 =======
                 //return "success";
 >>>>>>> Stashed changes

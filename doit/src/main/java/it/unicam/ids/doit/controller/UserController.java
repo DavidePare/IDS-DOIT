@@ -24,9 +24,13 @@ public class UserController {
     @ResponseBody
     public List<Progetto> getProgetto(){
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         //return userHandlerService.getProgettista();
         return
                 progettoService.getAllProgetti();
+=======
+        return progettoService.getAllProgetti();
+>>>>>>> Stashed changes
 =======
         return progettoService.getAllProgetti();
 >>>>>>> Stashed changes
@@ -44,7 +48,11 @@ public class UserController {
     }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 /*
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes
@@ -61,8 +69,11 @@ public class UserController {
             return "Dati non validi, l'email potrebbe essere già registrata!";
         }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     }*/
 =======
+=======
+>>>>>>> Stashed changes
     }
 >>>>>>> Stashed changes
 
@@ -74,9 +85,15 @@ public class UserController {
             if(user.getType() <0 || user.getType() >2) return "Not correct type";
             userHandlerService.signin(user.getType(),user.getName(),user.getSurname(),user.getEmail(),user.getPassword());
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             return "success";
         }catch(Exception e){
             return "Dati invalidi forse è già stata usata questa email !";
+=======
+            return "{ message: success }";
+        }catch(Exception e){
+            return "{ message: Dati invalidi forse è già stata usata questa email }";
+>>>>>>> Stashed changes
 =======
             return "{ message: success }";
         }catch(Exception e){
