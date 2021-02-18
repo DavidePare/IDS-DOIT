@@ -69,7 +69,7 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value ="/{id}/addcurriculum/")
     @ResponseBody
-    public String addCurriculum(@PathVariable @NotNull Long id,@RequestParam Number phone,@RequestParam  String instruction,
+    public String addCurriculum(@PathVariable @NotNull Long id,@RequestParam Long phone,@RequestParam  String instruction,
                                 @RequestParam String formaction,@RequestParam @NotNull Long token){
         try {
             if(userHandlerService.check(id,token)){
@@ -134,7 +134,7 @@ public class ProgettistaController {
         try{
 
             if(userHandlerService.check(id,token)) {
-                progettistaService.addWorkingExperience(id, experience);
+                progettistaService.removeWorkingExperience(id, experience);
                 return "success";
             }
             return "not logged!";

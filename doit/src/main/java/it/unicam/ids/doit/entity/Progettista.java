@@ -115,7 +115,7 @@ public class Progettista implements Subscribe {
         return curriculum;
     }
 
-    public void addCurriculum(Long idProgettista,String instruction,String formation,Number phone,String email){
+    public void addCurriculum(Long idProgettista,String instruction,String formation,Long phone,String email){
         this.curriculum = new Curriculum(idProgettista,instruction,formation,phone,email);
     }
 
@@ -169,5 +169,10 @@ public class Progettista implements Subscribe {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setCurriculum(Curriculum c){
+        this.curriculum=c;
+
     }
 }

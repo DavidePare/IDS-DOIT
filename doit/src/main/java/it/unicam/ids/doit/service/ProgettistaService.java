@@ -53,7 +53,7 @@ public interface ProgettistaService {
 
     List<Progetto> getCandidature(Long idProgettista);
 
-    void createCurriculum(Long idProgettista , String instruction, String formation, Number phone,String email);
+    void createCurriculum(Long idProgettista , String instruction, String formation, Long phone,String email);
 
     Progettista createProgettista(String name, String surname,String email, String password);
 }

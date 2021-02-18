@@ -187,7 +187,7 @@ class ProgettoServiceImplTest {
         progettoService.confirmProgetto(p.getId(),e.getId());
         progettoService.addSponsor(p.getId(),sponsor.getId());
         progettoService.incrementAmount(p.getId(),100);
-        assertNotEquals(progettoService.getProgetto(p.getId()).getAmount(),100.0);
+        assertEquals(progettoService.getProgetto(p.getId()).getAmount(),100.0);
         assertFalse(progettoService.getProgetto(p.getId()).getSponsors().isEmpty());
 
     }

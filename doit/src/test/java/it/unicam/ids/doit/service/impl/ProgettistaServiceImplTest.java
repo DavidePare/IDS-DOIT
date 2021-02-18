@@ -84,7 +84,7 @@ class ProgettistaServiceImplTest {
     @Test
     void addWorkingExperience() {
         Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","ddddd","eeee");
-        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335,"Email");
+        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335L,"Email");
         c=progettistaService.getCurriculum(progettistaA.getId());
         assertTrue(c.getWorkingExperience().isEmpty());
         progettistaService.addWorkingExperience(progettistaA.getId(),"Esperienza 1");
@@ -98,7 +98,7 @@ class ProgettistaServiceImplTest {
     void removeWorkingExperience() {
 
         Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","ssss","ss");
-        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335,"Email");
+        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335L,"Email");
         c=progettistaService.getCurriculum(progettistaA.getId());
         assertTrue(c.getWorkingExperience().isEmpty());
         progettistaService.addWorkingExperience(progettistaA.getId(),"Esperienza 1");
@@ -118,7 +118,7 @@ class ProgettistaServiceImplTest {
     @Test
     void addLanguages() {
         Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","aaaaa","qq");
-        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335,"Email");
+        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335L,"Email");
         c=progettistaService.getCurriculum(progettistaA.getId());
         assertTrue(c.getLanguages().isEmpty());
         progettistaService.addLanguages(progettistaA.getId(),"Francese");
@@ -132,7 +132,7 @@ class ProgettistaServiceImplTest {
     void removeLanguages() {
 
         Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","qqqq","aaaaaa");
-        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335,"Email");
+        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335L,"Email");
         c=progettistaService.getCurriculum(progettistaA.getId());
         assertTrue(c.getLanguages().isEmpty());
         progettistaService.addLanguages(progettistaA.getId(),"Francese");

@@ -349,9 +349,11 @@ public class ProgettistaServiceImpl implements ProgettistaService {
      * @param email email
      */
     @Override
-    public void createCurriculum(Long idProgettista , String instruction, String formation, Number phone,String email){
+    public void createCurriculum(Long idProgettista , String instruction, String formation, Long phone,String email){
         Progettista p=getProgettista(idProgettista);
-        p.addCurriculum(idProgettista,instruction,formation,phone,email);
+        Curriculum c=new Curriculum(idProgettista,instruction,formation,phone,email);
+        p.setCurriculum(c);
+        curriculumRepository.save(c);
         progettistaRepository.save(p);
     }
 }

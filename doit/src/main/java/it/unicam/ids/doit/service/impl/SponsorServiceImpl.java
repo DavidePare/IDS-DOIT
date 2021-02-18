@@ -43,10 +43,10 @@ public class SponsorServiceImpl implements SponsorService {
      */
     @Override
     public void deleteSponsor(Long idSponsor){
-    /*    Sponsor sponsor = getSponsor(idSponsor);
-        if(!sponsor.getProgettiInv().isEmpty()) sponsor.getProgettiInv().
-                forEach((s,a) -> progettoService.removeSponsor(s,idSponsor));
-        sponsorRepository.delete(sponsor);*/
+       Sponsor sponsor = getSponsor(idSponsor);
+        if(!sponsor.getProgettiInv().isEmpty())
+            sponsor.getProgettiInv().forEach(t-> progettoService.removeSponsor(t.getIdProgetto() ,idSponsor));
+        sponsorRepository.delete(sponsor);
     }
 
     /**
@@ -80,7 +80,7 @@ public class SponsorServiceImpl implements SponsorService {
         if(sponsor.getProgettiInv().stream().anyMatch(t-> t.getIdProgetto().equals(idProgetto))){
             sponsor.getProgettiInv().stream().filter(t-> t.getIdProgetto().equals(idProgetto)).
                     forEach(t-> progettoService.decrementAmount(idProgetto,t.getAmount()));
-            sponsor.getProgettiInv().removeIf(p-> p.getId().equals(idProgetto));
+            sponsor.getProgettiInv().removeIf(p-> p.getIdProgetto().equals(idProgetto));
             sponsorRepository.save(sponsor);
         }
     }
@@ -113,9 +113,10 @@ public class SponsorServiceImpl implements SponsorService {
     public void decrementAmountProgetto(Long idProgetto, Long idSponsor, double amount){
         Sponsor sponsor = getSponsor(idSponsor);
         if(sponsor.getProgettiInv().stream().anyMatch(t-> t.getIdProgetto().equals(idProgetto))){
-            if(sponsor.getProgettiInv().stream().filter(t-> t.getIdProgetto().equals(idProgetto)).collect(Collectors.toList()).get(0).getAmount()<amount){
+            if(sponsor.getProgettiInv().stream().filter(t-> t.getIdProgetto().equals(idProgetto)).collect(Collectors.toList()).get(0).getAmount()>=amount){
                 sponsor.getProgettiInv().stream().filter(t-> t.getIdProgetto().equals(idProgetto)).collect(Collectors.toList()).get(0).decrementAmount(amount);
                 progettoService.decrementAmount(idProgetto,amount);
+                sponsorRepository.save(sponsor);
             }
         }
     }
