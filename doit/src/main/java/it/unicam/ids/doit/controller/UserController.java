@@ -8,14 +8,13 @@ import it.unicam.ids.doit.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class UserController {
     @Autowired
     private UserHandlerService userHandlerService;
-    @Autowired
-    private ProgettoService progettoService;
     /**
      * Visualizzazione di tutti i progetti
      * @return tutti i progetti
@@ -24,8 +23,7 @@ public class UserController {
     @ResponseBody
     public List<Progetto> getProgetto(){
         //return userHandlerService.getProgettista();
-        return
-                progettoService.getAllProgetti();
+        return userHandlerService.getAllProgetti();
     }
 
     /**
@@ -57,13 +55,20 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/signin2")
     @ResponseBody
-    public String signin(@RequestBody @NotNull User user) {
+    public List<Long> signin(@RequestBody @NotNull User user) {
+        List<Long> app=new ArrayList<>();
         try {
-            if(user.getType() <0 || user.getType() >2) return "Not correct type";
+            if(user.getType() <0 || user.getType() >2) {
+                app.add(0L);
+                return app;
+            }
             userHandlerService.signin(user.getType(),user.getName(),user.getSurname(),user.getEmail(),user.getPassword());
-            return "success";
+            app.add(1L);
+            return app;
+
         }catch(Exception e){
-            return "Dati invalidi forse è già stata usata questa email !";
+            app.add(0L);
+            return app;
         }
     }
 
@@ -108,5 +113,17 @@ public class UserController {
             return "Dati non validi, l'email potrebbe essere già registrata!";
         }
     }*/
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value="/getprogettista/{id}")
+    @ResponseBody
+    public Progettista getProgettista(@PathVariable Long id){
+        return userHandlerService.getProgettista(id);
+    }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value="/getprogetto/{id}")
+    @ResponseBody
+    public Progetto getProgetto(@PathVariable Long id){
+        return userHandlerService.getProgetto(id);
+    }
 }

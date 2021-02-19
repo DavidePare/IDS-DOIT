@@ -22,6 +22,10 @@ public class Progetto {
                 cascade= {CascadeType.ALL})
     private IState state;
 
+    private String nState;
+
+
+
     private double amount;
 
     private String name;
@@ -56,6 +60,8 @@ public class Progetto {
         this.state = new Waiting();
         this.candidati = new ArrayList<>();
         this.team = new Team(getId());
+        this.team.setProgettoID(getId());
+        this.nState = state.toString();
         this.sponsors= new ArrayList<>();
         this.progettistiInvitati = new ArrayList<>();
         this.espertoId = (long)0;
@@ -132,5 +138,17 @@ public class Progetto {
     }
     public void setProgettistiInvitati(List<Progettista> progettistiInvitati) {
         this.progettistiInvitati = progettistiInvitati;
+    }
+
+    public String getnState() {
+        return state.toString();
+    }
+
+    public void setnState(String nState) {
+        this.nState = state.toString();
+    }
+
+    public void setProponenteProgettoID(Long proponenteProgettoID) {
+        this.proponenteProgettoID = proponenteProgettoID;
     }
 }

@@ -70,10 +70,10 @@ public class ProgettistaController {
     @PostMapping(value ="/{id}/addcurriculum/")
     @ResponseBody
     public String addCurriculum(@PathVariable @NotNull Long id,@RequestParam Long phone,@RequestParam  String instruction,
-                                @RequestParam String formaction,@RequestParam @NotNull Long token){
+                                @RequestParam String formaction,@RequestParam String email,@RequestParam @NotNull Long token){
         try {
             if(userHandlerService.check(id,token)){
-                progettistaService.createCurriculum(id, instruction, formaction, phone, "email");
+                progettistaService.createCurriculum(id, instruction, formaction, phone, email);
                 return "success";
             }
             return "not logged";

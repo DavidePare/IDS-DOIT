@@ -56,12 +56,12 @@ public class SponsorController {
     @ResponseBody
     public Double getAmount(@PathVariable @NotNull Long id, @RequestParam @NotNull Long idSponsor,@RequestParam @NotNull Long token){
         try{
-            if(userHandlerService.check(id,token)) {
+            if(userHandlerService.check(idSponsor,token)) {
                 return sponsorService.getSponsor(idSponsor).getProgettiInv().stream().filter(t -> t.getIdProgetto().equals(id)).collect(Collectors.toList()).get(0).getAmount();
             }
-            return Double.MIN_VALUE;
+            return (double)0;
         }catch(Exception e){
-            return Double.MIN_VALUE;
+            return (double)0;
         }
     }
 
@@ -77,7 +77,7 @@ public class SponsorController {
     @ResponseBody
     public String decrementAmountProgetto(@PathVariable Long id,@RequestParam @NotNull Long idSponsor, @RequestParam Double amount,@RequestParam @NotNull Long token){
         try {
-            if(userHandlerService.check(id,token)) {
+            if(userHandlerService.check(idSponsor,token) && amount>0) {
                 sponsorService.decrementAmountProgetto(id, idSponsor, amount);
                 return "Decrementato";
             }
@@ -99,7 +99,7 @@ public class SponsorController {
     @ResponseBody
     public String incrementAmountProgetto(@PathVariable Long id,@RequestParam @NotNull Long idSponsor, @RequestParam Double amount,@RequestParam @NotNull Long token){
         try {
-            if(userHandlerService.check(id,token)) {
+            if(userHandlerService.check(idSponsor,token) && amount > 0) {
                 sponsorService.addAmountProgetto(id, idSponsor, amount);
                 return "Incrementato";
             }
