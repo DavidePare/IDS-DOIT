@@ -231,7 +231,7 @@ public class ProponenteProgettoController {
     // @ResponseStatus(HttpStatus.OK)
     public Progetto createProgetto(@NotNull @RequestParam Long idProponenteProgetto, @NotNull @RequestParam String name , @RequestParam int nMaxProgettisti,@RequestParam @NotNull Long token){
         try {
-            if(userHandlerService.check(idProponenteProgetto,token)) {
+            if(userHandlerService.check(idProponenteProgetto,token) && nMaxProgettisti>0) {
                 return propProgettoService.createProgetto(idProponenteProgetto, name, nMaxProgettisti);
             }
             return null;

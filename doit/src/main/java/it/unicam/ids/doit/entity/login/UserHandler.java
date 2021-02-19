@@ -1,4 +1,4 @@
-package it.unicam.ids.doit.entity;
+package it.unicam.ids.doit.entity.login;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

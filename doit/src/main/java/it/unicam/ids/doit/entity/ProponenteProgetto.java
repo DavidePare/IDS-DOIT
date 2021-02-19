@@ -1,6 +1,7 @@
 package it.unicam.ids.doit.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.unicam.ids.doit.entity.Notifiche.NotificationMessage;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,8 +20,6 @@ public class ProponenteProgetto extends Progettista{
     @JsonIgnoreProperties({"candidati","progettistiInvitati","sponsor"})
     private List<Progetto> progettiGestiti;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
-    private List<NotificationMessage> messaggeBacheca;
 
 
     public ProponenteProgetto(){

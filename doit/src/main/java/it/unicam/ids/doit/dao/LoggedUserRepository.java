@@ -1,7 +1,7 @@
 package it.unicam.ids.doit.dao;
 
 
-import it.unicam.ids.doit.entity.UserHandler;
+import it.unicam.ids.doit.entity.login.UserHandler;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

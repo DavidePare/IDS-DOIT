@@ -1,11 +1,15 @@
-package it.unicam.ids.doit.entity;
+package it.unicam.ids.doit.entity.Stato;
 
+
+import it.unicam.ids.doit.entity.Progettista;
+import it.unicam.ids.doit.entity.Progetto;
+import it.unicam.ids.doit.entity.Stato.IState;
 
 import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class AbstractState implements IState{
+public abstract class AbstractState implements IState {
     @Id @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
@@ -23,7 +27,7 @@ public abstract class AbstractState implements IState{
     public void decrementAmount(Progetto progetto, double amount){ }
 
     @Override
-    public void addCandidato(Progetto progetto,Progettista progettista){ }
+    public void addCandidato(Progetto progetto, Progettista progettista){ }
 
     @Override
     public void removeCandidato(Progetto progetto,Progettista progettista){ }

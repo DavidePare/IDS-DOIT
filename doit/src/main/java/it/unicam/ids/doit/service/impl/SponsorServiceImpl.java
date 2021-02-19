@@ -1,9 +1,9 @@
 package it.unicam.ids.doit.service.impl;
 
 import it.unicam.ids.doit.dao.SponsorRepository;
-import it.unicam.ids.doit.entity.Investimenti;
+import it.unicam.ids.doit.entity.Sponsor.Investimenti;
 import it.unicam.ids.doit.entity.Progetto;
-import it.unicam.ids.doit.entity.Sponsor;
+import it.unicam.ids.doit.entity.Sponsor.Sponsor;
 import it.unicam.ids.doit.service.ProgettoService;
 import it.unicam.ids.doit.service.SponsorService;
 import org.springframework.beans.factory.annotation.Autowired;

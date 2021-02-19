@@ -1,7 +1,10 @@
 package it.unicam.ids.doit.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.unicam.ids.doit.entity.Sponsor.Sponsor;
+import it.unicam.ids.doit.entity.Stato.AbstractState;
+import it.unicam.ids.doit.entity.Stato.IState;
+import it.unicam.ids.doit.entity.Stato.Waiting;
 
 import javax.persistence.*;
 import java.util.ArrayList;

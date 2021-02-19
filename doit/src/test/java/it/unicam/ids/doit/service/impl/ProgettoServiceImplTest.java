@@ -1,14 +1,17 @@
 package it.unicam.ids.doit.service.impl;
 
 import it.unicam.ids.doit.entity.*;
-import it.unicam.ids.doit.service.SponsorService;
+import it.unicam.ids.doit.entity.Curriculum.Curriculum;
+import it.unicam.ids.doit.entity.Sponsor.Sponsor;
+import it.unicam.ids.doit.entity.Stato.Approved;
+import it.unicam.ids.doit.entity.Stato.Blocked;
+import it.unicam.ids.doit.entity.Stato.Waiting;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -93,7 +96,7 @@ class ProgettoServiceImplTest {
         assertTrue(p.getState() instanceof Waiting);
         progettoService.confirmProgetto(p.getId(),1L);
         assertFalse(progettoService.getProgetto(p.getId()).getState() instanceof Waiting);
-        assertTrue(progettoService.getProgetto(p.getId()).getState() instanceof Approved );
+        assertTrue(progettoService.getProgetto(p.getId()).getState() instanceof Approved);
     }
 
     @Test
@@ -103,7 +106,7 @@ class ProgettoServiceImplTest {
         assertTrue(p.getState() instanceof Waiting);
         progettoService.declineProgetto(p.getId(),e.getId());
         assertFalse(progettoService.getProgetto(p.getId()).getState() instanceof Waiting);
-        assertTrue(progettoService.getProgetto(p.getId()).getState() instanceof Blocked );
+        assertTrue(progettoService.getProgetto(p.getId()).getState() instanceof Blocked);
     }
 
     @Test

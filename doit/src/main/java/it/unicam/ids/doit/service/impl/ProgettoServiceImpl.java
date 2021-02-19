@@ -1,11 +1,10 @@
 package it.unicam.ids.doit.service.impl;
 
 import it.unicam.ids.doit.dao.ProgettoRepository;
-import it.unicam.ids.doit.dao.TeamRepository;
-import it.unicam.ids.doit.entity.Approved;
+import it.unicam.ids.doit.entity.Stato.Approved;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
-import it.unicam.ids.doit.entity.Waiting;
+import it.unicam.ids.doit.entity.Stato.Waiting;
 import it.unicam.ids.doit.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,7 +79,6 @@ public class ProgettoServiceImpl implements ProgettoService {
         progetto.setEspertoId(idEsperto);
         progetto.getTeam().setProgettoID(progetto.getId());
         progetto.setProgettistiInvitati(new ArrayList<>());
-        //state.confirm();
         progettoRepository.save(progetto);
     }
 
@@ -113,7 +111,6 @@ public class ProgettoServiceImpl implements ProgettoService {
         Progetto progetto = getProgetto(idProgetto);
         Progettista progettista=progettistaService.getProgettista(idProgettista);
         progetto.getState().removeCandidato(progetto, progettistaService.getProgettista(idProgettista));
-        //state.removeCandidato(p);
         progettistaService.removeprogettoCandidato(progetto.getId(),progettista.getId());
         progettoRepository.save(progetto);
 
@@ -125,7 +122,6 @@ public class ProgettoServiceImpl implements ProgettoService {
         Progettista progettista=progettistaService.getProgettista(idProgettista);
         if(progetto.getProgettistiInvitati().stream().noneMatch(t -> t.getId().equals(progettista.getId()))) {
             progetto.getState().addInvitoProgettista(progetto,progettista );
-            //state.addCandidato(progettista);
             progettoRepository.save(progetto);
         }
     }
@@ -134,7 +130,6 @@ public class ProgettoServiceImpl implements ProgettoService {
     public void removeProgettistaInvitato(Long idProgetto, Long idProgettista){
         Progetto progetto = getProgetto(idProgetto);
         progetto.getState().removeInvitoProgettista(progetto, progettistaService.getProgettista(idProgettista));
-        //state.addCandidato(progettista);
         progettoRepository.save(progetto);
     }
 
@@ -143,7 +138,6 @@ public class ProgettoServiceImpl implements ProgettoService {
         Progetto progetto = getProgetto(idProgetto);
         try {
             progetto.getSponsors().add(sponsorService.getSponsor(idSponsor));
-                //sponsors.add(s.getID());
             progettoRepository.save(progetto);
         }catch (Exception ignored){
 
@@ -153,8 +147,7 @@ public class ProgettoServiceImpl implements ProgettoService {
     @Override
     public void removeSponsor(Long idProgetto, Long idSponsor){
         Progetto progetto = getProgetto(idProgetto);
-        progetto.getSponsors().remove(idSponsor);
-        //sponsors.remove(s.getID());
+        progetto.getSponsors().removeIf(t-> t.getId().equals(idSponsor));
         progettoRepository.save(progetto);
     }
 
@@ -183,7 +176,6 @@ public class ProgettoServiceImpl implements ProgettoService {
     public void incrementAmount(Long idProgetto, double amount){
         Progetto progetto = getProgetto(idProgetto);
         progetto.getState().incrementAmount(progetto, amount);
-        //state.incrementAmount(a);
         progettoRepository.save(progetto);
     }
 
@@ -191,7 +183,7 @@ public class ProgettoServiceImpl implements ProgettoService {
     public void decrementAmount(Long idProgetto, double amount){
         Progetto progetto = getProgetto(idProgetto);
         progetto.getState().decrementAmount(progetto, amount); //TODO manca da controllare se chi fa l'operazione ha immesso denaro
-        //state.decrementAmount(a);
+
         progettoRepository.save(progetto);
     }
 

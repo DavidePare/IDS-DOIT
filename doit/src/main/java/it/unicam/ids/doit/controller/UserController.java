@@ -3,7 +3,7 @@ package it.unicam.ids.doit.controller;
 import com.sun.istack.NotNull;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
-import it.unicam.ids.doit.entity.User;
+import it.unicam.ids.doit.entity.login.User;
 import it.unicam.ids.doit.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -125,5 +125,16 @@ public class UserController {
     @ResponseBody
     public Progetto getProgetto(@PathVariable Long id){
         return userHandlerService.getProgetto(id);
+    }
+
+    /**
+     * Visualizzazione di tutti i progetti approvati
+     * @return tutti i progetti approvati , cioè in stato di approved
+     */
+    @GetMapping(value="/getprogettiapprovati/")
+    @ResponseBody
+    public List<Progetto> getProgettiApprovati(){
+        //return userHandlerService.getProgettista();
+        return userHandlerService.getApprovedProgetti();
     }
 }

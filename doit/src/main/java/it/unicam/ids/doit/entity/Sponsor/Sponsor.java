@@ -1,6 +1,6 @@
-package it.unicam.ids.doit.entity;
+package it.unicam.ids.doit.entity.Sponsor;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.unicam.ids.doit.entity.Notifiche.NotificationMessage;
 
 import javax.persistence.*;
 import java.util.*;

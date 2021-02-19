@@ -2,6 +2,8 @@ package it.unicam.ids.doit.service.impl;
 
 import it.unicam.ids.doit.dao.*;
 import it.unicam.ids.doit.entity.*;
+import it.unicam.ids.doit.entity.Sponsor.Sponsor;
+import it.unicam.ids.doit.entity.login.UserHandler;
 import it.unicam.ids.doit.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -110,6 +112,14 @@ public class UserHandlerServiceImpl implements UserHandlerService {
         }
     }
 
+    /**
+     * Registrazione
+     * @param type come si registra
+     * @param name nome
+     * @param surname cognome
+     * @param email chiave primaria
+     * @param password passw
+     */
     @Override
     public void signin(int type,String name,String surname,String email,String password){
         if (type == 0) proponenteProgettoService.createProponenteProgetto(name, surname, email, password);
@@ -117,30 +127,61 @@ public class UserHandlerServiceImpl implements UserHandlerService {
         if (type == 2) sponsorService.createSponsor(name, email, password);
     }
 
-
+    /**
+     * metodo per ottenere tutti i progettisti
+     * @return all progettisti
+     */
     @Override
     public List<Progettista> getAllProgettisti() {
         return progettistaService.getAllProgettisti();
     }
 
+    /**
+     * controllo che l'utente sia loggato col token corretto
+     * @param id utente loggato
+     * @param token codice di sicurezza
+     * @return vero o falso se loggato o no
+     */
     @Override
     public boolean check(Long id, Long token){
         return loggedUserRepository.findAll().stream().anyMatch(t-> t.getId().equals(id) && t.getToken().equals(token));
     }
 
-
+    /**
+     * Metodo per ottenere un singolo progettista
+     * @param idProgettista progettista
+     * @return singolo progettista
+     */
     @Override
     public Progettista getProgettista(Long idProgettista){
         return progettistaService.getProgettista(idProgettista);
     }
 
+    /**
+     * metodo per ottenere tutti i progetti
+     * @return tutti i progetti
+     */
     @Override
     public List<Progetto> getAllProgetti(){
         return progettoService.getAllProgetti();
     }
 
+    /**
+     * Metodo per ottenere un progetto singolo
+     * @param id prgoetto
+     * @return progetto
+     */
     @Override
     public Progetto getProgetto(Long id){
         return progettoService.getProgetto(id);
+    }
+
+    /**
+     * metodo per ottenere tutti i progetti approvati
+     * @return progetti approvati
+     */
+    @Override
+    public List<Progetto> getApprovedProgetti(){
+        return progettoService.getAllProgetti().stream().filter(t-> t.getnState().compareTo("Approved") ==0).collect(Collectors.toList());
     }
 }

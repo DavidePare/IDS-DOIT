@@ -1,13 +1,11 @@
-package it.unicam.ids.doit.entity;
+package it.unicam.ids.doit.entity.Stato;
 
-import it.unicam.ids.doit.service.ProgettoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import it.unicam.ids.doit.entity.Progetto;
 
 import javax.persistence.Entity;
-import javax.persistence.Transient;
 
 @Entity
-public class Blocked extends AbstractState{
+public class Blocked extends AbstractState {
 
 
 

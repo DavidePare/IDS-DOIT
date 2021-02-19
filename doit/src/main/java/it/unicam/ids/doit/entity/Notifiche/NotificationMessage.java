@@ -1,4 +1,4 @@
-package it.unicam.ids.doit.entity;
+package it.unicam.ids.doit.entity.Notifiche;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

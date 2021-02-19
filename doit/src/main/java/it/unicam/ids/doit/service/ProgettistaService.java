@@ -1,6 +1,6 @@
 package it.unicam.ids.doit.service;
 
-import it.unicam.ids.doit.entity.Curriculum;
+import it.unicam.ids.doit.entity.Curriculum.Curriculum;
 import it.unicam.ids.doit.entity.Progettista;
 
 import it.unicam.ids.doit.entity.Progetto;

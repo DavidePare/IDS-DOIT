@@ -15,5 +15,6 @@ public interface UserHandlerService {
     boolean check(Long id, Long token);
     List<Progetto> getAllProgetti();
     Progetto getProgetto(Long id);
+    List<Progetto> getApprovedProgetti();
 
 }

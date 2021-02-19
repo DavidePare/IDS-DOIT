@@ -1,4 +1,4 @@
-package it.unicam.ids.doit.entity;
+package it.unicam.ids.doit.entity.login;
 
 
 public class User {

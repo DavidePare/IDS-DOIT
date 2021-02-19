@@ -93,6 +93,11 @@ public class EspertoServiceImpl implements EspertoService {
         return espertoRepository.findAll();
     }
 
+    /**
+     * Metodo per confermare un progetto
+     * @param idProgetto progetto confermato
+     * @param idEsperto esperto che conferma il progetto
+     */
     @Override
     public void confirmProgetto(Long idProgetto, Long idEsperto){
         progettoService.confirmProgetto(idProgetto, idEsperto);
@@ -100,6 +105,11 @@ public class EspertoServiceImpl implements EspertoService {
         espertoRepository.save(getEsperto(idEsperto));
     }
 
+    /**
+     * Metodo per rifiutare un progetto quindi per metterlo in stato di blocked
+     * @param idProgetto progetto valutato
+     * @param idEsperto esperto che valuta
+     */
     @Override
     public void declineProgetto(Long idProgetto, Long idEsperto){
         progettoService.declineProgetto(idProgetto, idEsperto);
@@ -107,11 +117,20 @@ public class EspertoServiceImpl implements EspertoService {
         espertoRepository.save(getEsperto(idEsperto));
     }
 
+    /**
+     * Metodo per ottenere tutti i progetti da valutare
+     * @return tutti i progetti in stato di waiting
+     */
     @Override
     public List<Progetto> getAllProgettiValutare(){
         return progettoService.getAllProgettiValutare();
     }
 
+    /**
+     * Metodo con il quale un esperto ottiene un singolo progetto
+     * @param id progetto
+     * @return progetto
+     */
     @Override
     public Progetto getProgetto(Long id){
         return progettoService.getProgetto(id);

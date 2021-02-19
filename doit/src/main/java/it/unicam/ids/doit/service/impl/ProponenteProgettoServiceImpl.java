@@ -227,6 +227,12 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
         return null; //TODO ritornare eccezione
     }
 
+    /**
+     * Metodo per ottenere tutti i progettisti che si possono invitare a quel progetto
+     * @param id progetto
+     * @param idProponente creatore progetto
+     * @return tutti i progettisti che si possono invitare su quel progetto
+     */
     @Override
     public List<Progettista> getInvitableProgettisti(Long id,Long idProponente){
         List<Progettista> lProgettisti= progettistaService.getAllProgettisti();
@@ -238,6 +244,11 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
 
     }
 
+    /**
+     * metoo per ottenere tutti i progettisti candidati ad un progetto
+     * @param idProgetto progetto
+     * @return candidati
+     */
     @Override
     public List<Progettista> getCandidatiProgetto(Long idProgetto){
         return progettoService.getCandidati(idProgetto);

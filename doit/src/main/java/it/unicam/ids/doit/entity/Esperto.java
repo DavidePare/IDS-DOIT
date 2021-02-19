@@ -1,6 +1,7 @@
 package it.unicam.ids.doit.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.unicam.ids.doit.entity.Notifiche.NotificationMessage;
+import it.unicam.ids.doit.entity.Notifiche.Subscribe;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name="Esperto_Table")
-public class Esperto implements Subscribe{
+public class Esperto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,9 +27,6 @@ public class Esperto implements Subscribe{
     //@OneToMany(mappedBy ="ID_Progetto")
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Progetto> progettiEsperto;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<NotificationMessage> messaggeBacheca;
 
 
 
@@ -53,7 +51,6 @@ public class Esperto implements Subscribe{
         this.email= email;
         this.password=password;
         this.progettiEsperto = new ArrayList<>();
-        this.messaggeBacheca= null;
     }
 
     public String getEmail() {
@@ -101,17 +98,6 @@ public class Esperto implements Subscribe{
     }
 
 
-    @Override
-    public void notify(String message, String name, Long id) {
-        messaggeBacheca.add(new NotificationMessage(message,name,id));
-    }
 
-    @Override
-    public List<NotificationMessage> getMessaggeBacheca() {
-        return messaggeBacheca;
-    }
 
-    public void setMessaggeBacheca(List<NotificationMessage> messaggeBacheca) {
-        this.messaggeBacheca.addAll(messaggeBacheca);
-    }
 }
