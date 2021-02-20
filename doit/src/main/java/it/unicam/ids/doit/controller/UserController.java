@@ -134,7 +134,6 @@ public class UserController {
     @GetMapping(value="/getprogettiapprovati/")
     @ResponseBody
     public List<Progetto> getProgettiApprovati(){
-        //return userHandlerService.getProgettista();
         return userHandlerService.getApprovedProgetti();
     }
 }
