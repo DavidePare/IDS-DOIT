@@ -180,7 +180,7 @@ class ProgettoServiceImplTest {
 
     }
 
-    @Test //TODO MODIFY SPONSOR
+    @Test
     void addSponsor () {
         p=progettoService.createProgetto(proponenteProgettoA.getId(),"IoT",10);
         Sponsor sponsor= sponsorService.createSponsor("mario","dd","");
@@ -197,7 +197,6 @@ class ProgettoServiceImplTest {
 
     @Test
     void removeSponsor () {
-        //TODO
     }
 
     @Test
@@ -231,7 +230,6 @@ class ProgettoServiceImplTest {
 
     @Test
     void decrementAmount () {
-//TODO migliorare
         Progetto p=progettoService.createProgetto(proponenteProgettoA.getId(),"ciccio",10);
         progettoService.confirmProgetto(p.getId(),e.getId());
     //    progettoService.decrementAmount(p.getId(),100.0);

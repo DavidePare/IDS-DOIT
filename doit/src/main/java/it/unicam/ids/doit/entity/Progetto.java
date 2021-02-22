@@ -5,10 +5,11 @@ import it.unicam.ids.doit.entity.Sponsor.Sponsor;
 import it.unicam.ids.doit.entity.Stato.AbstractState;
 import it.unicam.ids.doit.entity.Stato.IState;
 import it.unicam.ids.doit.entity.Stato.Waiting;
+import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -40,7 +41,7 @@ public class Progetto {
 
     private Long espertoId;
 
-    private Date scadenza;
+    private LocalDate scadenza;
 
     private Long proponenteProgettoID;
 
@@ -71,7 +72,7 @@ public class Progetto {
         this.amount=0;
         this.proponenteProgettoID=proponenteProgettoID;
         this.nMaxProgettisti=nMaxProgettisti;
-        this.scadenza= new Date();
+        this.scadenza= LocalDate.now().plusYears(3);
     }
     public Long getId() {
         return id;
@@ -112,10 +113,10 @@ public class Progetto {
     public void setEspertoId(Long espertoId) {
         this.espertoId = espertoId;
     }
-    public Date getScadenza() {
+    public LocalDate getScadenza() {
         return scadenza;
     }
-    public void setScadenza(Date scadenza) {
+    public void setScadenza(LocalDate scadenza) {
         this.scadenza = scadenza;
     }
     public Long getProponenteProgettoID() {

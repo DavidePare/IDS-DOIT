@@ -257,6 +257,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     public void removeTeam(Long idProgettista, Long idTeam){
         Progettista progettista = getProgettista(idProgettista);
         progettista.getTeamsProgettista().removeIf(t-> t.getId().equals(idTeam));
+        teamService.removeProgettista(idTeam,idProgettista,teamService.getTeam(idTeam).getProgettoID());
         progettistaRepository.save(progettista);
     }
 
@@ -279,8 +280,11 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     public void removeprogettoCandidato(Long idProgetto, Long idProgettista){
         //Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
-        progettista.getProgettiCandidati().removeIf(p -> p.getId().equals(idProgetto));
-        progettistaRepository.save(progettista);
+        if(progettista.getProgettiCandidati().stream().anyMatch(p -> p.getId().equals(idProgetto))) {
+            progettista.getProgettiCandidati().removeIf(p -> p.getId().equals(idProgetto));
+            progettoService.removeCandidato(idProgetto, idProgettista);
+            progettistaRepository.save(progettista);
+        }
     }
 
 
@@ -294,18 +298,27 @@ public class ProgettistaServiceImpl implements ProgettistaService {
     public boolean sendCandidatura(Long idProgetto, Long idProgettista){
         //Progetto progetto = progettoService.getProgetto(idProgetto);
         Progettista progettista = getProgettista(idProgettista);
-        if(progettista.getProgettiCandidati().contains(progettoService.getProgetto(idProgetto))){ //TODO Test
+
+        Progetto p=progettoService.getProgetto(idProgetto);
+        if(progettista.getProgettiCandidati().stream().anyMatch(t-> t.getId().equals(idProgettista)) ||
+            p.getTeam().getProgettistiTeam().stream().anyMatch(t->t.getId().equals(idProgettista)) ||
+            p.getProponenteProgettoID().equals(idProgettista)){
             return false;
         }
-        Progetto p=progettoService.getProgetto(idProgetto);
-        if( progettoService.addCandidato(p.getId(), progettista.getId())) {
-            progettista.getProgettiCandidati().add(p);
-            Progettista pr=progettistaRepository.getOne(p.getId());
-            pr.notify("Il progettista"+progettista.getName()+" con id "+ progettista.getId() +" Ha inviato una candidatura al progeto"+ p.getId(),"Candidatura",p.getId());
-            progettistaRepository.save(pr);
-            progettistaRepository.save(progettista);
+
+        if(p.getCandidati().stream().noneMatch(t-> t.getId().equals(idProgettista))) {
+            if(p.getProgettistiInvitati().stream().anyMatch(t-> t.getId().equals(idProgettista))){
+                acceptInvito(idProgetto, idProgettista);
+                progettoService.removeProgettistaInvitato(idProgetto,idProgettista);
+                return true;
+            }
+            else if (progettoService.addCandidato(p.getId(), progettista.getId())) {
+                progettista.getProgettiCandidati().add(p);
+                progettistaRepository.save(progettista);
+                return true;
+            }
         }
-        return true;
+        return false;
     }
 
 

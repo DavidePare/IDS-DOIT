@@ -8,6 +8,7 @@ import it.unicam.ids.doit.entity.Esperto;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.ProponenteProgetto;
 import it.unicam.ids.doit.entity.Sponsor.Sponsor;
+import it.unicam.ids.doit.service.ProponenteProgettoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -22,13 +23,20 @@ public class DOITCommandLineRunner implements CommandLineRunner {
     private ProponenteProgettoRepository proponenteProgettoRepository;
     @Autowired
     private SponsorRepository sponsorRepository;
+    @Autowired
+    private ProponenteProgettoService ppService;
 
     @Override
     public void run(String... args) throws Exception {
        espertoRepository.save(new Esperto("Paolo","Marchetti","aa@a.aa","a"));
        espertoRepository.save(new Esperto("Fabrizio","Maurizi","bb@b.bb","u"));
-       progettistaRepository.save(new Progettista("Mario","Decimo","QQ@q.qq","q"));
+       progettistaRepository.save(new Progettista("Mario","Decimo","qq@q.qq","q"));
        proponenteProgettoRepository.save(new ProponenteProgetto("Luca","Franco","cc@c.cc","a"));
        sponsorRepository.save(new Sponsor("DOIT","ss@ss.ss","s"));
+       ProponenteProgetto p=ppService.createProponenteProgetto("Nome","aa","dd@dd.dd","cc");
+       ppService.createProgetto(p.getId(),"prog",5);
+       ppService.createProgetto(p.getId(),"DOIT",5);
+       ppService.createProgetto(p.getId(),"C3",5);
+       ppService.createProgetto(p.getId(),"Altro",5);
     }
 }

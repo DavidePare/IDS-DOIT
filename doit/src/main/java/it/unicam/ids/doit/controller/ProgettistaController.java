@@ -46,7 +46,7 @@ public class ProgettistaController {
     @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping (value="/{id}/remove")
     @ResponseBody
-    public String removeProgettista(@PathVariable @NotNull Long id,@RequestParam @NotNull Long token){ //TODO ci vorrà una verifica dell utenet!
+    public String removeProgettista(@PathVariable @NotNull Long id,@RequestParam @NotNull Long token){
         try{
             if(userHandlerService.check(id,token)) {
                 progettistaService.deleteProgettista(id);
@@ -250,7 +250,6 @@ public class ProgettistaController {
     @GetMapping (value="/{id}/getprogetti/")
     @ResponseBody
     public List<Progetto> getProgetti(@PathVariable @NotNull Long id,@RequestParam @NotNull Long token){
-        //TODO quando visualizza tutti i progetti se su uno è già candidato ha metodo elimina candidatura
         if(userHandlerService.check(id,token)){
             return userHandlerService.getAllProgetti();
         }

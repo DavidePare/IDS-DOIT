@@ -182,6 +182,6 @@ public class UserHandlerServiceImpl implements UserHandlerService {
      */
     @Override
     public List<Progetto> getApprovedProgetti(){
-        return progettoService.getAllProgetti().stream().filter(t-> t.getnState().compareTo("Approved") ==0).collect(Collectors.toList());
+        return progettoService.getAllProgetti().stream().filter(t-> t.getnState().compareTo("Accepted") ==0).collect(Collectors.toList());
     }
 }

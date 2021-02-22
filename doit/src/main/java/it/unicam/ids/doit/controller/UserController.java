@@ -19,6 +19,7 @@ public class UserController {
      * Visualizzazione di tutti i progetti
      * @return tutti i progetti
      */
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/getprogetti/")
     @ResponseBody
     public List<Progetto> getProgetto(){
@@ -131,6 +132,7 @@ public class UserController {
      * Visualizzazione di tutti i progetti approvati
      * @return tutti i progetti approvati , cioè in stato di approved
      */
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/getprogettiapprovati/")
     @ResponseBody
     public List<Progetto> getProgettiApprovati(){

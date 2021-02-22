@@ -99,7 +99,6 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
      */
     @Override
     public void removeProgettoGestito(Long idPropProgetto, Long idProgetto) {
-        //TODO manca la rimozione del progetto da tutte le diverse liste, viene richiamato forse da progetto???
         ProponenteProgetto prop = getProponenteProgetto(idPropProgetto);
         Progetto p = progettoService.getProgetto(idProgetto);
         if(prop.getProgettiGestiti().stream().anyMatch(t-> t.getId().equals(idProgetto))){
@@ -133,7 +132,7 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
         ProponenteProgetto prop = getProponenteProgetto(idPropProgetto);
         Progetto p = progettoService.getProgetto(idProgetto);
         if(prop.getProgettiGestiti().stream().anyMatch(t-> t.getId().equals(idProgetto)) //filter(t-> t.getProponenteProgettoID().equals(idProgetto)).count()==1
-                && p.getCandidati().stream().anyMatch(t-> t.getId().equals(idProgettista))){ //TODO migliorabile
+                && p.getCandidati().stream().anyMatch(t-> t.getId().equals(idProgettista))){
             //progetto.getTeam().addProgettista(progettista);
             teamService.addProgettista(progettoService.getProgetto(p.getId()).getTeam().getId(),idProgettista);
             progettistaService.addTeam(idProgettista,progettoService.getProgetto(p.getId()).getTeam().getId());
@@ -174,8 +173,14 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
         Progettista progettista= progettistaService.getProgettista(idProgettista);
         if(prop.getProgettiGestiti().stream().anyMatch(t-> t.getId().equals(idProgetto))
             && progettista.getInviti().stream().noneMatch(t->t.getId().equals(idProgetto))){
-            progettistaService.addInvito(idProgetto,idProgettista);
-            progettoService.addProgettistaInvitato(idProgetto,idProgettista);
+            if(progettistaService.getCandidature(idProgettista).stream().anyMatch(t->t.getId().equals(idProgetto))){
+                acceptCandidatura(idPropProgetto,idProgetto,idProgettista);
+                progettistaService.removeprogettoCandidato(idProgetto,idProgettista);
+            }
+            else{
+                progettistaService.addInvito(idProgetto,idProgettista);
+                progettoService.addProgettistaInvitato(idProgetto,idProgettista);
+            }
         }
     }
 
@@ -189,7 +194,7 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
         ProponenteProgetto prop= propProgRepository.findById(idPropProgetto).orElseThrow(NullPointerException::new);
         List<Progetto> listaProgetti=new ArrayList<>();
         if(prop != null) prop.getProgettiGestiti().forEach(p -> listaProgetti.add(progettoService.getProgetto(p.getId())));
-        return listaProgetti; //TODO verifica
+        return listaProgetti;
     }
 
     /**
@@ -224,7 +229,7 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
             return new ArrayList<>(p.getTeam().getProgettistiTeam());
 
         }
-        return null; //TODO ritornare eccezione
+        return null;
     }
 
     /**

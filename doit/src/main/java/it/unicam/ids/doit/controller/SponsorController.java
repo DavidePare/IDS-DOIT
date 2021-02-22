@@ -20,7 +20,6 @@ public class SponsorController {
 
     @Autowired
     private UserHandlerService userHandlerService;
-    //TODO  assente metodo di ricerca di nuovi progetti per lo sponsor
     /*@PostMapping(value="/addsponsor")
     public Sponsor addSponsor(@RequestParam @NotNull String name){
         return sponsorService.createSponsor(name);

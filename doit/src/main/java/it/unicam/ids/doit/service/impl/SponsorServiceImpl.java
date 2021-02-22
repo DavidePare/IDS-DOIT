@@ -100,6 +100,7 @@ public class SponsorServiceImpl implements SponsorService {
             sponsor.getProgettiInv().stream().filter(t-> t.getIdProgetto().equals(idProgetto)).collect(Collectors.toList()).get(0).addAmount(amount);
         }
         progettoService.incrementAmount(idProgetto,amount);
+        progettoService.addSponsor(idProgetto, idSponsor);
         sponsorRepository.save(sponsor);
     }
 

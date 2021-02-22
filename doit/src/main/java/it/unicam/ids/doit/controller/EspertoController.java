@@ -75,7 +75,7 @@ public class EspertoController {
     public String declineProgetto(@PathVariable Long idProgetto, @RequestParam @NotNull Long idEsperto,@RequestParam @NotNull Long token){
         try{
             if(userHandlerService.check(idEsperto,token)) {
-                espertoService.declineProgetto(idProgetto, idEsperto); //TODO se mettiamo confirm e decline dentro al service dell'esperto?
+                espertoService.declineProgetto(idProgetto, idEsperto);
                 return "success";
             }
             return "not logged";

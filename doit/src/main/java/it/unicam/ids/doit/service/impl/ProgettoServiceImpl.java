@@ -182,7 +182,7 @@ public class ProgettoServiceImpl implements ProgettoService {
     @Override
     public void decrementAmount(Long idProgetto, double amount){
         Progetto progetto = getProgetto(idProgetto);
-        progetto.getState().decrementAmount(progetto, amount); //TODO manca da controllare se chi fa l'operazione ha immesso denaro
+        progetto.getState().decrementAmount(progetto, amount);
 
         progettoRepository.save(progetto);
     }
