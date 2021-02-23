@@ -1,0 +1,28 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <span class="spacer">
+        <a routerLink="/login" routerLinkActive="active" mat-icon-button>
+          <mat-icon aria-label="Side nav toggle icon">login</mat-icon>
+        </a>
+        <a routerLink="/user" routerLinkActive="active" mat-icon-button>
+          <mat-icon aria-label="Side nav toggle icon">User</mat-icon>
+        </a>
+        <a routerLink="/sponsor" routerLinkActive="active" mat-icon-button>
+          <mat-icon aria-label="Side nav toggle icon">Sponsor</mat-icon>
+        </a>
+        <a routerLink="/progettista" routerLinkActive="active" mat-icon-button>
+          <mat-icon aria-label="Side nav toggle icon">Progettista</mat-icon>
+        </a>
+        <a routerLink="/esperto" routerLinkActive="active" mat-icon-button>
+          <mat-icon aria-label="Side nav toggle icon">Esperto</mat-icon>
+        </a>
+        <a routerLink="/proponenteprogetto" routerLinkActive="active" mat-icon-button>
+          <mat-icon aria-label="Side nav toggle icon">PProgetto</mat-icon>
+        </a>
+      </span>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
