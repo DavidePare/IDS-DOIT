@@ -53,8 +53,9 @@ class ProgettistaServiceImplTest {
     @Test
     void deleteProgettista() {
 
-        assertEquals(progettistaService.getAllProgettisti().size(),2);
+       // assertEquals(progettistaService.getAllProgettisti().size(),2);
         Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","ddddddda","dddd");
+        assertEquals(progettistaService.getMessage(progettistaA.getId()).size(),1);
         progettistaService.deleteProgettista(progettistaA.getId());
         assertThrows(NoSuchElementException.class, ()-> progettistaService.getProgettista(progettistaA.getId()));
 
@@ -356,6 +357,13 @@ class ProgettistaServiceImplTest {
 
         progettistaService.sendCandidatura(p.getId(),progettistaA.getId());
         assertEquals(progettistaService.getProgettista(progettistaA.getId()).getProgettiCandidati().size(),1);
+
+    }
+
+    @Test
+    void getMessage(){
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","a_a","");
+        assertEquals(progettistaService.getMessage(progettistaA.getId()).size(),1);
 
     }
 }

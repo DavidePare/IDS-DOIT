@@ -6,6 +6,7 @@ import it.unicam.ids.doit.entity.*;
 import it.unicam.ids.doit.entity.Curriculum.Curriculum;
 import it.unicam.ids.doit.entity.Curriculum.LanguagesCurriculum;
 import it.unicam.ids.doit.entity.Curriculum.WorkingExperienceCurriculum;
+import it.unicam.ids.doit.entity.Notifiche.NotificationMessage;
 import it.unicam.ids.doit.service.ProgettistaService;
 import it.unicam.ids.doit.service.ProgettoService;
 import it.unicam.ids.doit.service.TeamService;
@@ -44,6 +45,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
         Progettista p=new Progettista(name,surname,email,password);
         p.notify("Benvenuto!"+ p.getName()+ " Ti sei registrato in data" + LocalDate.now(),"Welcome",p.getId());
         progettistaRepository.save(p);
+        List<Progettista> t=progettistaRepository.findAll();
         return p;
     }
 
@@ -385,5 +387,11 @@ public class ProgettistaServiceImpl implements ProgettistaService {
         p.setCurriculum(c);
         curriculumRepository.save(c);
         progettistaRepository.save(p);
+    }
+
+
+    @Override
+    public Set<NotificationMessage> getMessage(Long idProgettista){
+        return getProgettista(idProgettista).getMessaggeBacheca();
     }
 }

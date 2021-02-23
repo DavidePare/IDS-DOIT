@@ -34,6 +34,7 @@ public class ProponenteProgettoServiceImpl implements ProponenteProgettoService 
     @Override
     public ProponenteProgetto createProponenteProgetto(String name, String surname){
         ProponenteProgetto prop =new ProponenteProgetto(name,surname);
+        prop.notify("Benvenuto !","Welcome", prop.getId());
         propProgRepository.save(prop);
         return prop;
     }

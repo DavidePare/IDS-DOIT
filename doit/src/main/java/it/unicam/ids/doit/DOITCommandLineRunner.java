@@ -8,6 +8,7 @@ import it.unicam.ids.doit.entity.Esperto;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.ProponenteProgetto;
 import it.unicam.ids.doit.entity.Sponsor.Sponsor;
+import it.unicam.ids.doit.service.ProgettistaService;
 import it.unicam.ids.doit.service.ProponenteProgettoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,6 +26,8 @@ public class DOITCommandLineRunner implements CommandLineRunner {
     private SponsorRepository sponsorRepository;
     @Autowired
     private ProponenteProgettoService ppService;
+    @Autowired
+    private ProgettistaService progettistaService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -38,5 +41,7 @@ public class DOITCommandLineRunner implements CommandLineRunner {
        ppService.createProgetto(p.getId(),"DOIT",5);
        ppService.createProgetto(p.getId(),"C3",5);
        ppService.createProgetto(p.getId(),"Altro",5);
+       progettistaService.createProgettista("a","b","ccc@ccccc.cc","a");
+
     }
 }

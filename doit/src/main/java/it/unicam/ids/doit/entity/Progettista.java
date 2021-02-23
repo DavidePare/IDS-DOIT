@@ -16,7 +16,7 @@ import java.util.Set;
 @Entity
 @Table(name="Progettista_Table")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Progettista implements Subscribe {
+public class Progettista implements Subscribe{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,11 +1,13 @@
 package it.unicam.ids.doit.service;
 
 import it.unicam.ids.doit.entity.Curriculum.Curriculum;
+import it.unicam.ids.doit.entity.Notifiche.NotificationMessage;
 import it.unicam.ids.doit.entity.Progettista;
 
 import it.unicam.ids.doit.entity.Progetto;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ProgettistaService {
 
@@ -56,4 +58,6 @@ public interface ProgettistaService {
     void createCurriculum(Long idProgettista , String instruction, String formation, Long phone,String email);
 
     Progettista createProgettista(String name, String surname,String email, String password);
+
+    Set<NotificationMessage> getMessage(Long idProgettista);
 }
