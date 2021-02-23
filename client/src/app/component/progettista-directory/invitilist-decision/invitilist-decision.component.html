@@ -1,0 +1,14 @@
+<section>
+<h3>Hai selezionato il l'invito al progetto con l'id = {{progettoId}}</h3>
+
+    <div>
+        <ion-button shape="round" (click)="gotoBack()">Back</ion-button>
+    </div>
+    <div>
+        <ion-button shape="round" routerLink="/progettista" routerLinkActive="active" (click)="acceptInvite()">Accetta</ion-button>
+    </div>
+    <div>
+        <ion-button shape="round" routerLink="/progettista" routerLinkActive="active" (click)="refuseInvite()">Rifiuta</ion-button>
+    </div>
+
+</section>

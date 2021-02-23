@@ -1,0 +1,23 @@
+<section>
+    <div class="container-fluid">
+        <h2>Aggiungi Esperienza lavorativa</h2>
+        <div>
+            <form [formGroup]="weForm" (ngSubmit)="onSubmit()">
+
+            <div class="form-group">
+                <ion-input [class.is-invalid]="langReq.invalid && langReq.touched" type="text" formControlName="we" class="form-control"></ion-input>
+                <div *ngIf="langReq.invalid && langReq.touched">
+                    <small class="text-danger" *ngIf="langReq.errors?.required">L'esperienza è richiesta</small>
+                </div>
+            </div>
+                
+            <div>
+                <ion-button [disabled]='!weForm.valid' class="btn btn-primary" type="submit">Aggiungi</ion-button>
+            </div>
+            <div>
+                <ion-button class="btn btn-primary"   routerLink="/progettista/curriculum" routerLinkActive="active">Back</ion-button>
+            </div>
+            </form>
+        </div>
+    </div>
+</section>

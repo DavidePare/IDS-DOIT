@@ -1,0 +1,13 @@
+<section>
+  
+    <ion-list>
+      <ion-item *ngFor="let notifica of notifiche">
+        <ion-label>{{notifica.message}}  </ion-label>
+        
+      </ion-item>
+    </ion-list>
+    
+    <div>
+      <ion-button shape="round" routerLink="/progettista" routerLinkActive="active">Back</ion-button>
+    </div>
+  </section>

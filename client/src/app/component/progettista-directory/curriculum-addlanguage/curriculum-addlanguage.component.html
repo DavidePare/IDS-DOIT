@@ -1,0 +1,24 @@
+<section>
+<div class="container-fluid">
+    <h2>Aggiungi Lingua</h2>
+    <div>
+        <form [formGroup]="languageForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+            <ion-input placeholder="Inserire lingua" [class.is-invalid]="langReq.invalid && langReq.touched" type="text" formControlName="language" class="form-control">
+            </ion-input>
+            <div *ngIf="langReq.invalid && langReq.touched">
+                <small class="text-danger" *ngIf="langReq.errors?.required">La lingua è richiesta</small>
+            </div>
+        </div>
+            
+        <div>
+            <ion-button shape="round" [disabled]='!languageForm.valid'  type="submit">Aggiungi</ion-button>
+        </div>
+        <div>
+            <ion-button shape="round"   routerLink="/progettista/curriculum" routerLinkActive="active">Back</ion-button>
+        </div>
+        </form>
+    </div>
+</div>
+</section>

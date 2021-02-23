@@ -1,0 +1,43 @@
+<section>
+    <div>
+        <p>ID: {{curriculum?.id}}</p>
+    </div>
+    <div>
+        <p>progettista ID: {{curriculum?.progettistaID}}</p>
+    </div>
+    <div>
+        <p>Istruzione: {{curriculum?.instruction}}</p>
+    </div>
+    <div>
+        <p>Formazione: {{curriculum?.formation}}</p>
+    </div>
+    <div>
+        <p>Esperienze lavorative:</p>
+        <li *ngFor="let we of curriculum?.workingExperience">
+            <span class="badge">{{we.workingExperience}}</span>
+        </li>
+        <!-- <p>Esperienze lavorative: {{curriculum?.workingExperience}}</p> -->
+    </div>
+    <div>
+        <ion-button routerLink="/progettista/curriculum/addwe" routerLinkActive="active">Aggiungi Esperienza lavorativa</ion-button>
+    </div>
+    <div>
+        <p>Lingue:</p>
+        <li *ngFor="let lingua of curriculum?.languages">
+            <span class="badge">{{lingua.language}}</span>
+        </li>
+    </div>
+    <div>
+        <ion-button routerLink="/progettista/curriculum/addlanguage" routerLinkActive="active">Aggiungi Lingua</ion-button>
+    </div>
+    <div>
+        <p>Phone: {{curriculum?.phone}}</p>
+    </div>
+    <div>
+        <p>Email: {{curriculum?.email}}</p>
+    </div>
+
+    <div>
+        <ion-button shape="round" routerLink="/progettista" routerLinkActive="active">Back</ion-button>
+    </div>
+</section>

@@ -1,0 +1,51 @@
+<section>
+<div class="container-fluid">
+    <h2>Add Curriculum</h2>
+    <div>
+        <form [formGroup]="curriculumForm" (ngSubmit)="onSubmit()">
+
+        <div class="from-group">
+            <label>Istruzione</label>
+            <ion-input [class.is-invalid]="istrReq.invalid && 
+                istrReq.touched" formControlName="istruzione" type="text" class="form-control">
+            <div *ngIf="istrReq.invalid && istrReq.touched">
+                <small *ngIf="istrReq.errors?.required" class="text-danger">L'istruzione è richiesta</small>
+            </div></ion-input>
+        </div>
+
+        <div class="from-group">
+            <label>Formazione</label>
+            <ion-input [class.is-invalid]="formReq.invalid && 
+                formReq.touched" formControlName="formazione" type="text" class="form-control">
+            <div *ngIf="formReq.invalid && formReq.touched">
+                <small *ngIf="formReq.errors?.required" class="text-danger">La formazione è richiesta</small>
+            </div></ion-input>
+        </div>
+
+        <div class="from-group">
+            <label>Phone</label>
+            <ion-input [class.is-invalid]="phoneReq.invalid && 
+                phoneReq.touched" formControlName="phone" type="number" class="form-control" min="0" maxlength="10">
+            <div *ngIf="phoneReq.invalid && phoneReq.touched">
+                <small *ngIf="phoneReq.errors?.required" class="text-danger">Il phone è richiesto</small>
+            </div></ion-input>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <ion-input [class.is-invalid]="emailReq.invalid && emailReq.touched" type="text" formControlName="email" class="form-control">
+            <div *ngIf="emailReq.invalid && emailReq.touched">
+                <small class="text-danger" *ngIf="emailReq.errors?.required">L'Email è richiesta</small>
+                <small *ngIf="emailReq.errors?.pattern" class="text-danger">Inserire un indirizzo valido</small>
+            </div></ion-input>
+        </div>
+        <div>
+            <ion-button shape="round" [disabled]='!curriculumForm.valid' type="submit">Aggiungi</ion-button>
+        </div>
+        <div>
+            <ion-button shape="round" class="btn btn-primary"   routerLink="/progettista" routerLinkActive="active">Back</ion-button>
+        </div>
+        </form>
+    </div>
+</div>
+</section>
