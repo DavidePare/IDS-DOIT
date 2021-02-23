@@ -2,6 +2,7 @@ package it.unicam.ids.doit.controller;
 
 import com.sun.istack.NotNull;
 import it.unicam.ids.doit.entity.Curriculum.Curriculum;
+import it.unicam.ids.doit.entity.Notifiche.NotificationMessage;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.service.ProgettistaService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping ("/api/progettista/")
@@ -424,6 +426,17 @@ public class ProgettistaController {
             return "Rimozione avvenuta con successo";
         } catch (Exception e) {
             return "Errore";
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value="/{id}/getnotifiche/")
+    @ResponseBody
+    public Set<NotificationMessage> getNotification(@PathVariable @NotNull Long id, @RequestParam @NotNull Long token){
+        try {
+            return progettistaService.getMessage(id);
+        } catch (Exception e) {
+            return null;
         }
     }
 

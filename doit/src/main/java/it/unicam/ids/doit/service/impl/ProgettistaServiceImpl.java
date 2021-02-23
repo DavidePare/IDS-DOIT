@@ -10,6 +10,7 @@ import it.unicam.ids.doit.entity.Notifiche.NotificationMessage;
 import it.unicam.ids.doit.service.ProgettistaService;
 import it.unicam.ids.doit.service.ProgettoService;
 import it.unicam.ids.doit.service.TeamService;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -386,6 +387,7 @@ public class ProgettistaServiceImpl implements ProgettistaService {
         Curriculum c=new Curriculum(idProgettista,instruction,formation,phone,email);
         p.setCurriculum(c);
         curriculumRepository.save(c);
+        p.notify("Hai aggiunto il tuo curriculum in data "+ LocalDate.now(), "Curriculum",p.getId());
         progettistaRepository.save(p);
     }
 
