@@ -2,7 +2,7 @@ package it.unicam.ids.doit.service.impl;
 
 import it.unicam.ids.doit.dao.*;
 import it.unicam.ids.doit.entity.*;
-import it.unicam.ids.doit.entity.SponsorD.Sponsor;
+import it.unicam.ids.doit.entity.Sponsor.Sponsor;
 import it.unicam.ids.doit.entity.login.UserHandler;
 import it.unicam.ids.doit.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
