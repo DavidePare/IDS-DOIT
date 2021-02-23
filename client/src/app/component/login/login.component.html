@@ -1,0 +1,78 @@
+<div class="container-fluid">
+    <h1>Log In DOIT</h1>
+    <div>
+        <form [formGroup]="authenticationForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+            <h2 style="margin-left:10px">Email</h2>
+            
+         <!-- <ion-input placeholder="email" [class.is-invalid]="emailReq.invalid && emailReq.touched" type="text" formControlName="email" class="form-control"></ion-input> -->
+          <ion-input placeholder="email" [class.is-invalid]="emailReq.invalid && emailReq.touched" type="text" formControlName="email" class="form-control">
+          
+
+            <div *ngIf="emailReq.invalid && emailReq.touched">
+                <small class="text-danger" *ngIf="emailReq.errors?.required">L'Email è richiesta</small>
+                <small *ngIf="emailReq.errors?.pattern" class="text-danger">Inserire un indirizzo valido</small>
+            </div> 
+          </ion-input>
+        </div>
+            
+        <div class="from-group">
+            <h2 style="margin-left:10px"> Password</h2>
+            <ion-input placeholder="password" formControlName="password" type="password" class="form-control"></ion-input>
+        </div>
+        <div>
+            <ion-list>
+                <ion-radio-group formControlName="type">
+                  <ion-list-header>
+                    <h2>Tipo</h2>
+                  </ion-list-header>
+                  <ion-item>
+                    <ion-label>Progettista</ion-label>
+                    <ion-radio value="0"></ion-radio>
+                  </ion-item>
+              
+                  <ion-item>
+                    <ion-label>Sponsor</ion-label>
+                    <ion-radio value="1"></ion-radio>
+                  </ion-item>
+              
+                  <ion-item>
+                    <ion-label>Esperto</ion-label>
+                    <ion-radio value="2"></ion-radio>
+                  </ion-item>
+              
+                  <ion-item>
+                    <ion-label>Proponente</ion-label>
+                    <ion-radio value="3"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-list>
+            <!-- <input formControlName="type" type="radio" id="progettista" value="0" default>
+            <label for="progettista" >Progettista</label>
+            <input formControlName="type" type="radio" id="sponsor" value="1">
+            <label for="Sponsor" >Sponsor</label>
+            <input formControlName="type" type="radio" id="esperto" value="2">
+            <label for="esperto" >Esperto</label>
+            <input formControlName="type" type="radio" id="propprogetto" value="3">
+            <label for="propprogetto" >PropProgetto</label>  -->
+        </div>
+        <div>
+            
+            <ion-button  [disabled]='!authenticationForm.valid'  type="submit">Login</ion-button>
+           
+            <ion-button  (click)="logOut()"  type="button">logOut</ion-button>
+            <ion-button    routerLink="/signin" routerLinkActive="active">New User</ion-button>
+        </div>
+            <!-- <button [disabled]='!authenticationForm.valid' class="btn btn-primary" type="submit">Log In</button>
+        </div>
+        <div>
+            <button class="btn btn-primary" (click)="logOut()" type="button">Log Out</button>
+        </div>
+        <div>
+            <button class="btn btn-primary"   routerLink="/signin" routerLinkActive="active">New User</button>
+        </div> -->
+        </form>
+    </div>
+    <div>{{this.errorString}}</div>
+</div>
