@@ -1,0 +1,34 @@
+<section>
+    <div class="container-fluid">
+        <h2>Nuovo Progetto</h2>
+        <div>
+            <form [formGroup]="createProgettoForm" (ngSubmit)="onSubmit()">
+
+            <div class="form-group">
+                <label>Name</label>
+                <ion-input [class.is-invalid]="NameReq.invalid && NameReq.touched" type="text" formControlName="name" class="form-control">
+                <div *ngIf="NameReq.invalid && NameReq.touched">
+                    <small class="text-danger" *ngIf="NameReq.errors?.required">Il Nome è richiesto</small>
+                </div></ion-input>
+            </div>
+                
+            <div class="from-group">
+                <label>Numero Max Progettisti</label>
+                <ion-input [class.is-invalid]="nMaxPReq.invalid && nMaxPReq.touched" formControlName="nmaxprogettisti" type="number" class="form-control" min="1">
+                <div *ngIf="nMaxPReq.invalid && nMaxPReq.touched">
+                    <small class="text-danger" *ngIf="nMaxPReq.errors?.required">Il Numero è richiesto</small>
+                </div></ion-input>
+            </div>
+            
+            <div>
+                <ion-button shape="round" [disabled]='!createProgettoForm.valid' class="btn btn-primary" type="submit">Crea Progetto</ion-button>
+          
+                <ion-button shape="round" routerLink="/proponenteprogetto" routerLinkActive="active">Back</ion-button>
+            </div>
+            </form>
+            <div>
+                {{errorMsg}}
+            </div>
+        </div>
+    </div>
+</section>

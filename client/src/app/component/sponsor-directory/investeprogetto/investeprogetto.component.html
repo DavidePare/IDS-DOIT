@@ -1,0 +1,26 @@
+ <section>
+    <h3>Hai selezionato il progetto con l'id = {{progettoId}}</h3>
+
+    <h4>Investimento corrente: {{investimento}}</h4>
+    <h4>{{errorMsg}}</h4>
+
+    <form [formGroup]="investeForm">
+
+        <div class="form-group">
+            <ion-input placeholder="0" [class.is-invalid]="invReq.invalid && invReq.touched" type="number" formControlName="investe" class="form-control" min="0">
+            <div *ngIf="invReq.invalid && invReq.touched">
+                <small class="text-danger" *ngIf="invReq.errors?.required">La cifra è richiesta</small>
+            </div></ion-input>
+        </div>
+            
+        <div>
+            <ion-button shape="round" [disabled]='!investeForm.valid' (click)="incrementa()">Incrementa amount</ion-button>
+        
+            <ion-button shape="round" [disabled]='!investeForm.valid' (click)="decrementa()" >Decrementa amount</ion-button>
+        </div>
+    </form>
+    <div id="container">
+        <ion-button shape="round" routerLink="/sponsor/allprogetti" routerLinkActive="active">Back</ion-button>
+    </div>
+
+</section>

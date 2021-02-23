@@ -1,0 +1,77 @@
+
+
+<ion-card >
+    <ion-card-header>
+      <ion-card-subtitle>Hai selezionato il progettista</ion-card-subtitle>
+      <ion-card-title>{{progettista?.id}}</ion-card-title>
+    </ion-card-header>
+  <!--  <ion-card-content>ID: {{progetto?.id}}</ion-card-content> -->
+    <ion-card-content>Nome:{{progettista?.name}}</ion-card-content>
+    <ion-card-content>cognome: {{progettista?.surname}}</ion-card-content>
+    <ion-card-content>
+        <ion-button fill="outline" slot="end" (click)="onSelect()">Curriculum</ion-button>
+    </ion-card-content>
+    <ion-card-content> 
+        <p>progetti candidato:</p>
+        <li *ngFor="let candidato of progettista?.progettiCandidati">
+            <span class="badge">{{candidato.name}}</span>
+        </li> 
+    </ion-card-content>
+    <ion-card-content>
+        
+        <p>progetti:</p>
+        <li *ngFor="let progetto of progettista?.progettiProgettista">
+            <span class="badge">{{progetto.name}}</span>
+        </li> 
+    </ion-card-content>
+    <ion-card-content>
+        
+        <p>inviti:</p>
+        <li *ngFor="let invito of progettista?.inviti">
+            <span class="badge">{{invito.name}}</span>
+        </li> 
+    </ion-card-content>
+    <ion-card-content>
+        <p>teams:</p>
+        <li *ngFor="let team of progettista?.teamsProgettista">
+            <span class="badge">{{team.id}}</span>
+        </li>
+    </ion-card-content>
+  </ion-card>
+<ion-button expand="block" (click)="gotoUserProgettisti()">Back</ion-button>
+
+<!-- 
+    <h3>Hai selezionato il progettista con l'id = {{progettistaId}}</h3>
+<p>ID: {{progettista?.id}}</p>
+<p>nome: {{progettista?.name}}</p>
+<p>cognome: {{progettista?.surname}}</p>
+<div>
+    <p>progetti candidato:</p>
+    <li *ngFor="let candidato of progettista?.progettiCandidati">
+        <span class="badge">{{candidato.name}}</span>
+    </li> 
+</div>
+<div>
+    <button (click)="onSelect()" type="button">Curriculum</button>
+</div>
+<div>
+   <p>progetti:</p>
+<li *ngFor="let progetto of progettista?.progettiProgettista">
+    <span class="badge">{{progetto.name}}</span>
+</li> 
+</div>
+<div>
+   <p>inviti:</p>
+<li *ngFor="let invito of progettista?.inviti">
+    <span class="badge">{{invito.name}}</span>
+</li> 
+</div>
+<div>
+    <p>teams:</p>
+<li *ngFor="let team of progettista?.teamsProgettista">
+    <span class="badge">{{team.id}}</span>
+</li>
+</div>
+<div>
+    <button (click)="gotoUserProgettisti()">Back</button>
+</div> -->

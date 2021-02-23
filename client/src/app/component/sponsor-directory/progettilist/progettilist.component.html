@@ -1,0 +1,19 @@
+<section>
+  
+  <ion-list>
+    <ion-item *ngFor="let progetto of progetti">
+      <ion-label>{{progetto.id}}  </ion-label>{{progetto.name}}
+      
+    </ion-item>
+  </ion-list>
+  <!-- <div>
+      <ul class="items">
+          <li *ngFor="let progetto of progetti">
+            <span class="badge">{{progetto.id}}</span> {{progetto.name}}
+          </li>
+        </ul>
+  </div> -->
+  <div>
+    <ion-button shape="round" routerLink="/sponsor" routerLinkActive="active">Back</ion-button>
+  </div>
+</section>

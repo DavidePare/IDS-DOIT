@@ -1,0 +1,104 @@
+
+  <ion-card >
+      <ion-card-header>
+        <ion-card-subtitle>Hai selezionato il progetto</ion-card-subtitle>
+        <ion-card-title>{{progettoId}}</ion-card-title>
+      </ion-card-header>
+    <!--  <ion-card-content>ID: {{progetto?.id}}</ion-card-content> -->
+      <ion-card-content>stato: {{progetto?.nState}}</ion-card-content>
+      <ion-card-content>n Max Progettisti: {{progetto?.nMaxProgettisti}}</ion-card-content>
+      <ion-card-content>amount: {{progetto?.amount}}</ion-card-content>
+      <ion-card-content>team: {{progetto?.team.id}}</ion-card-content>
+      <ion-card-content>esperto: {{progetto?.espertoId}}</ion-card-content>
+      <ion-card-content>scadenza: {{progetto?.scadenza}}</ion-card-content>
+      <ion-card-content>proponente progetto: {{progetto?.proponenteProgettoID}}</ion-card-content>
+      <ion-card-content>
+          <p>progettisti invitati:</p>
+          <li *ngFor="let invitato of progetto?.progettistiInvitati">
+              <span class="badge">{{invitato.name}}</span>
+          </li> 
+      </ion-card-content>
+      <ion-card-content>
+          <p>progettisti candidati:</p>
+          <li *ngFor="let candidato of progetto?.candidati">
+              <span class="badge">{{candidato.name}}</span>
+          </li> 
+      </ion-card-content>
+      <ion-card-content>
+          <p>sponsors:</p>
+          <li *ngFor="let sponsor of progetto?.sponsors">
+              <span class="badge">{{sponsor.name}}</span>
+          </li> 
+      </ion-card-content>
+    </ion-card>
+  <ion-button expand="block" (click)="gotoUserProgetti()">Back</ion-button>
+
+ <!-- 
+  <ion-card>
+    <ion-item>
+      <ion-icon name="pin" slot="start"></ion-icon>
+      <ion-label>ion-item in a card, icon left, button right</ion-label>
+      <ion-button fill="outline" slot="end">View</ion-button>
+    </ion-item>
+  
+    <ion-card-content>
+      This is content, without any paragraph or header tags,
+      within an ion-card-content element.
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-card>
+    <ion-item href="#" class="ion-activated">
+      <ion-icon name="wifi" slot="start"></ion-icon>
+      <ion-label>Card Link Item 1 activated</ion-label>
+    </ion-item>
+  
+    <ion-item href="#">
+      <ion-icon name="wine" slot="start"></ion-icon>
+      <ion-label>Card Link Item 2</ion-label>
+    </ion-item>
+  
+    <ion-item class="ion-activated">
+      <ion-icon name="warning" slot="start"></ion-icon>
+      <ion-label>Card Button Item 1 activated</ion-label>
+    </ion-item>
+  
+    <ion-item>
+      <ion-icon name="walk" slot="start"></ion-icon>
+      <ion-label>Card Button Item 2</ion-label>
+    </ion-item>
+  </ion-card> -->
+<!--<h3>Hai selezionato il progetto con l'id = {{progettoId}}</h3>
+
+
+<p>ID: {{progetto?.id}}</p>
+<p>stato: {{progetto?.nState}}</p>
+<p>n Max Progettisti: {{progetto?.nMaxProgettisti}}</p>
+<p>amount: {{progetto?.amount}}</p>
+<p>team: {{progetto?.team.id}}</p>
+<p>esperto: {{progetto?.espertoId}}</p>
+<p>scadenza: {{progetto?.scadenza}}</p>
+<p>proponente progetto: {{progetto?.proponenteProgettoID}}</p>
+<div>
+    <p>progettisti invitati:</p>
+    <li *ngFor="let invitato of progetto?.progettistiInvitati">
+        <span class="badge">{{invitato.name}}</span>
+    </li> 
+</div>
+<div>
+    <p>progettisti candidati:</p>
+    <li *ngFor="let candidato of progetto?.candidati">
+        <span class="badge">{{candidato.name}}</span>
+    </li> 
+</div>
+<div>
+    <p>sponsors:</p>
+    <li *ngFor="let sponsor of progetto?.sponsors">
+        <span class="badge">{{sponsor.name}}</span>
+    </li> 
+</div>
+
+<div>
+    <button (click)="gotoUserProgetti()">Back</button>
+</div>
+-->

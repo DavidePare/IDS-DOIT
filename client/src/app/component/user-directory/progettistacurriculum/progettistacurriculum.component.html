@@ -1,0 +1,68 @@
+
+
+<ion-card >
+    <ion-card-header>
+      <!-- <ion-card-subtitle>Curriculum con ID {{progettista?.curriculum?.id}}</ion-card-subtitle> -->
+      <ion-card-title>ID Progettista:{{progettista?.id}}</ion-card-title>
+    </ion-card-header>
+  <!--  <ion-card-content>ID: {{progetto?.id}}</ion-card-content> -->
+    <ion-card-content>Nome:{{progettista?.name}}</ion-card-content>
+    <ion-card-content>Cognome: {{progettista?.surname}}</ion-card-content>
+    
+    <ion-card-content>Istruzione: {{progettista?.curriculum?.instruction}}</ion-card-content>
+    <ion-card-content>Formazione: {{progettista?.curriculum?.formation}}</ion-card-content>
+    <ion-card-content> 
+        <p>Esperienze lavorative:</p>
+        <li *ngFor="let we of progettista?.curriculum?.workingExperience">
+            <span class="badge">{{we.workingExperience}}</span>
+        </li>
+    </ion-card-content>
+    <ion-card-content>
+        
+        <p>Lingue:</p>
+        <li *ngFor="let lingua of progettista?.curriculum?.languages">
+            <span class="badge">{{lingua.language}}</span>
+        </li>
+    </ion-card-content>
+    
+    <ion-card-content>Phone: {{progettista?.curriculum?.phone}}</ion-card-content>
+    <ion-card-content>Email: {{progettista?.curriculum?.email}}</ion-card-content>
+  </ion-card>
+<ion-button expand="block" (click)="back()">Back</ion-button>
+
+<!-- 
+
+<div>
+    <p>ID: {{progettista?.curriculum?.id}}</p>
+</div>
+<div>
+    <p>progettista ID: {{progettista?.curriculum?.progettistaID}}</p>
+</div>
+<div>
+    <p>Istruzione: {{progettista?.curriculum?.instruction}}</p>
+</div>
+<div>
+    <p>Formazione: {{progettista?.curriculum?.formation}}</p>
+</div>
+<div>
+    <p>Esperienze lavorative:</p>
+    <li *ngFor="let we of progettista?.curriculum?.workingExperience">
+        <span class="badge">{{we.workingExperience}}</span>
+    </li>
+</div>
+<div>
+    <p>Lingue:</p>
+    <li *ngFor="let lingua of progettista?.curriculum?.languages">
+        <span class="badge">{{lingua.language}}</span>
+    </li>
+</div>
+<div>
+    <p>Phone: {{progettista?.curriculum?.phone}}</p>
+</div>
+<div>
+    <p>Email: {{progettista?.curriculum?.email}}</p>
+</div>
+
+<div>
+    <button (click)="back()" type="button">Back</button>
+</div> -->

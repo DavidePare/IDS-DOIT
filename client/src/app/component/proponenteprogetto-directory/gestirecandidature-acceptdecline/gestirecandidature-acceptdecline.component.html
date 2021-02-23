@@ -1,0 +1,13 @@
+<section>
+    <h3>Hai selezionato il progettista con l'id = {{candidatoId}}</h3>
+
+    <div>
+        <ion-button shape="round" (click)="gotoBack()">Back</ion-button>
+    </div>
+    <div>
+        <ion-button shape="round" routerLink="/proponenteprogetto" routerLinkActive="active" (click)="accept()">Accetta</ion-button>
+    </div>
+    <div>
+        <ion-button shape="round" routerLink="/proponenteprogetto" routerLinkActive="active" (click)="decline()">Declina</ion-button>
+    </div>
+</section>

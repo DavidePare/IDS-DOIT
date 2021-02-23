@@ -1,0 +1,18 @@
+<section>
+  <div>
+    
+    <ion-list>
+      <ion-item  (click)="onSelect(progettista)" [class.selected]="isSelected(progettista)" *ngFor="let progettista of progettisti">
+        <ion-label>{{progettista.id}}  </ion-label>{{progettista.name}}
+      </ion-item>
+    </ion-list>
+      <!-- <ul class="items">
+          <li (click)="onSelect(progettista)" [class.selected]="isSelected(progettista)" *ngFor="let progettista of progettisti">
+            <span class="badge">{{progettista.id}}</span> {{progettista.name}}
+          </li>
+      </ul> -->
+  </div>
+  <div>
+    <ion-button shape="round" routerLink="/proponenteprogetto/removeprogettista" routerLinkActive="active">Back</ion-button>
+  </div>
+</section>
