@@ -1,4 +1,4 @@
-package it.unicam.ids.doit.entity.Curriculum;
+package it.unicam.ids.doit.entity.CurriculumD;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,7 +1,7 @@
 package it.unicam.ids.doit.service.impl;
 
 import it.unicam.ids.doit.entity.*;
-import it.unicam.ids.doit.entity.Curriculum.Curriculum;
+import it.unicam.ids.doit.entity.CurriculumD.Curriculum;
 import it.unicam.ids.doit.service.TeamService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

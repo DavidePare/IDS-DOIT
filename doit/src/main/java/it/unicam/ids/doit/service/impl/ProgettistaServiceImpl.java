@@ -3,14 +3,13 @@ package it.unicam.ids.doit.service.impl;
 import it.unicam.ids.doit.dao.CurriculumRepository;
 import it.unicam.ids.doit.dao.ProgettistaRepository;
 import it.unicam.ids.doit.entity.*;
-import it.unicam.ids.doit.entity.Curriculum.Curriculum;
-import it.unicam.ids.doit.entity.Curriculum.LanguagesCurriculum;
-import it.unicam.ids.doit.entity.Curriculum.WorkingExperienceCurriculum;
+import it.unicam.ids.doit.entity.CurriculumD.Curriculum;
+import it.unicam.ids.doit.entity.CurriculumD.LanguagesCurriculum;
+import it.unicam.ids.doit.entity.CurriculumD.WorkingExperienceCurriculum;
 import it.unicam.ids.doit.entity.Notifiche.NotificationMessage;
 import it.unicam.ids.doit.service.ProgettistaService;
 import it.unicam.ids.doit.service.ProgettoService;
 import it.unicam.ids.doit.service.TeamService;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

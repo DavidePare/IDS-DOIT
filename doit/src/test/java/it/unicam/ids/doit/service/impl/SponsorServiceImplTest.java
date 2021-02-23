@@ -2,7 +2,7 @@ package it.unicam.ids.doit.service.impl;
 
 import it.unicam.ids.doit.entity.Esperto;
 import it.unicam.ids.doit.entity.Progetto;
-import it.unicam.ids.doit.entity.Sponsor.Sponsor;
+import it.unicam.ids.doit.entity.SponsorD.Sponsor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

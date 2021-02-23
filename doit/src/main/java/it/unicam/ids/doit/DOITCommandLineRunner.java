@@ -7,7 +7,7 @@ import it.unicam.ids.doit.dao.SponsorRepository;
 import it.unicam.ids.doit.entity.Esperto;
 import it.unicam.ids.doit.entity.Progettista;
 import it.unicam.ids.doit.entity.ProponenteProgetto;
-import it.unicam.ids.doit.entity.Sponsor.Sponsor;
+import it.unicam.ids.doit.entity.SponsorD.Sponsor;
 import it.unicam.ids.doit.service.ProgettistaService;
 import it.unicam.ids.doit.service.ProponenteProgettoService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package it.unicam.ids.doit.entity.Sponsor;
+package it.unicam.ids.doit.entity.SponsorD;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

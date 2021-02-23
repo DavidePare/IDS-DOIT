@@ -1,4 +1,4 @@
-package it.unicam.ids.doit.entity.Sponsor;
+package it.unicam.ids.doit.entity.SponsorD;
 
 import it.unicam.ids.doit.entity.Notifiche.NotificationMessage;
 

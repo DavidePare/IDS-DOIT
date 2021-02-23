@@ -1,7 +1,7 @@
 package it.unicam.ids.doit.service;
 
 import it.unicam.ids.doit.entity.Progetto;
-import it.unicam.ids.doit.entity.Sponsor.Sponsor;
+import it.unicam.ids.doit.entity.SponsorD.Sponsor;
 
 import java.util.List;
 

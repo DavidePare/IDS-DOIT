@@ -1,4 +1,4 @@
-package it.unicam.ids.doit.entity.Curriculum;
+package it.unicam.ids.doit.entity.CurriculumD;
 
 import javax.persistence.*;
 import java.util.HashSet;

@@ -1,8 +1,8 @@
 package it.unicam.ids.doit.service.impl;
 
 import it.unicam.ids.doit.entity.*;
-import it.unicam.ids.doit.entity.Curriculum.Curriculum;
-import it.unicam.ids.doit.entity.Sponsor.Sponsor;
+import it.unicam.ids.doit.entity.CurriculumD.Curriculum;
+import it.unicam.ids.doit.entity.SponsorD.Sponsor;
 import it.unicam.ids.doit.entity.Stato.Approved;
 import it.unicam.ids.doit.entity.Stato.Blocked;
 import it.unicam.ids.doit.entity.Stato.Waiting;

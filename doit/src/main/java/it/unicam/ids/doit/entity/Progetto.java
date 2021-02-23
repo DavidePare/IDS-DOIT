@@ -1,11 +1,10 @@
 package it.unicam.ids.doit.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.unicam.ids.doit.entity.Sponsor.Sponsor;
+import it.unicam.ids.doit.entity.SponsorD.Sponsor;
 import it.unicam.ids.doit.entity.Stato.AbstractState;
 import it.unicam.ids.doit.entity.Stato.IState;
 import it.unicam.ids.doit.entity.Stato.Waiting;
-import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.time.LocalDate;

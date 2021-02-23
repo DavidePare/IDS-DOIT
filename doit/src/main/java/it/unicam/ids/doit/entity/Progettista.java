@@ -1,7 +1,7 @@
 package it.unicam.ids.doit.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.unicam.ids.doit.entity.Curriculum.Curriculum;
+import it.unicam.ids.doit.entity.CurriculumD.Curriculum;
 import it.unicam.ids.doit.entity.Notifiche.NotificationMessage;
 import it.unicam.ids.doit.entity.Notifiche.Subscribe;
 
