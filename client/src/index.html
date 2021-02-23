@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DoitProject</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    section {
+      border-radius: 1em;
+      padding: 1em;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-right: -50%;
+      transform: translate(-50%, -50%)
+    }
+    #container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style> 
+</head>
+<body class="mat-typography">
+<script>
+    function signInHelp(x){
+        if(x == 1){
+          document.getElementById(100).style.visibility = "hidden";
+        }
+        if(x==0){
+          document.getElementById(100).style.visibility = "visible";
+        }
+        if(x==2){
+          document.getElementById(100).style.visibility = "visible";
+        }
+      }
+      function changeLayout(){
+        document.getElementById(300).style.display = "none";
+        document.getElementById(100).style.display = "none";
+        document.getElementById(200).style.visibility = "visible";
+      }
+      
+</script>
+<!--<script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@4.7.4/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@4.7.4/dist/ionicons/ionicons.js"></script>
+-->
+
+<app-root></app-root>
+</body>
+</html>
