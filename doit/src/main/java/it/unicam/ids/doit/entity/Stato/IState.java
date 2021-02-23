@@ -1,4 +1,7 @@
-package it.unicam.ids.doit.entity;
+package it.unicam.ids.doit.entity.Stato;
+
+import it.unicam.ids.doit.entity.Progettista;
+import it.unicam.ids.doit.entity.Progetto;
 
 public interface IState {
 
@@ -10,7 +13,7 @@ public interface IState {
 
     void decrementAmount(Progetto progetto, double amount);
 
-    void addCandidato(Progetto progetto,Progettista progettista);
+    void addCandidato(Progetto progetto, Progettista progettista);
 
     void removeCandidato(Progetto progetto,Progettista progettista);
 

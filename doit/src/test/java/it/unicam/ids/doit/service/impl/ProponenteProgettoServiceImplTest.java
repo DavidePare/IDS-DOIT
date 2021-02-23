@@ -1,6 +1,7 @@
 package it.unicam.ids.doit.service.impl;
 
 import it.unicam.ids.doit.entity.*;
+import it.unicam.ids.doit.entity.Curriculum.Curriculum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +33,15 @@ class ProponenteProgettoServiceImplTest {
     ProponenteProgettoServiceImpl proponenteProgettoService;
     @BeforeEach
     void init() {
-        progettistaA=progettistaService.createProgettista("Paolo","Bronio");
-        progettistaB= progettistaService.createProgettista("Mario","Rossi");
-        e=espertoService.createEsperto("Mario","Michelini");
+        progettistaA=progettistaService.createProgettista("Paolo","Bronio","a","a");
+        progettistaB= progettistaService.createProgettista("Mario","Rossi","b","b");
+        e=espertoService.createEsperto("Mario","Michelini","d","d");
     }
     @Test
     void createProponenteProgetto() {
         assertTrue(proponenteProgettoService.getAllProponentiProgetto().isEmpty());
-        proponenteProgettoService.createProponenteProgetto("Luca","Malva");
-        proponenteProgettoService.createProponenteProgetto("Mario","Biondi");
+        proponenteProgettoService.createProponenteProgetto("Luca","Malva","qqqqqq","");
+        proponenteProgettoService.createProponenteProgetto("Mario","Biondi","1qqq","");
         assertEquals(proponenteProgettoService.getAllProponentiProgetto().size(),2);
 
     }
@@ -48,8 +49,8 @@ class ProponenteProgettoServiceImplTest {
     @Test
     void deleteProponenteProgetto() {
 
-        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva");
-        ProponenteProgetto proponenteB=proponenteProgettoService.createProponenteProgetto("Mario","Biondi");
+        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva","qww","");
+        ProponenteProgetto proponenteB=proponenteProgettoService.createProponenteProgetto("Mario","Biondi","wwwww","");
 
         assertEquals(proponenteProgettoService.getAllProponentiProgetto().size(),2);
         Progetto p=proponenteProgettoService.createProgetto(proponenteA.getId(),"IoT",5);
@@ -77,7 +78,7 @@ class ProponenteProgettoServiceImplTest {
 
     @Test
     void getProponenteProgetto() {
-        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva");
+        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva","wwww","");
         assertEquals(proponenteProgettoService.getProponenteProgetto(proponenteA.getId()).getId(),proponenteA.getId());
 
     }
@@ -85,14 +86,14 @@ class ProponenteProgettoServiceImplTest {
     @Test
     void getAllProponentiProgetto() {
         assertTrue(proponenteProgettoService.getAllProponentiProgetto().isEmpty());
-        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva");
-        ProponenteProgetto proponenteB=proponenteProgettoService.createProponenteProgetto("Massimo","Boldi");
+        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva","qqqqqq","");
+        ProponenteProgetto proponenteB=proponenteProgettoService.createProponenteProgetto("Massimo","Boldi","qqqqqqqqq","");
         assertEquals(proponenteProgettoService.getAllProponentiProgetto().size(), 2);
     }
 
     @Test
     void addProgettoGestito() {
-        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Massimo","Sordi");
+        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Massimo","Sordi","sssqqq","");
         p= progettoService.createProgetto(proponenteA.getId(),"ioT",5);
         proponenteProgettoService.addProgettoGestito(proponenteA.getId(),p.getId());
         assertEquals(proponenteProgettoService.getProgettiGestiti(proponenteA.getId()).size(), 1);
@@ -103,7 +104,7 @@ class ProponenteProgettoServiceImplTest {
 
     @Test
     void removeProgettoGestito() {
-        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Massimo","Sordi");
+        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Massimo","Sordi","qqqq","q");
         p= proponenteProgettoService.createProgetto(proponenteA.getId(),"ioT",5);
         Progetto p2= proponenteProgettoService.createProgetto(proponenteA.getId(),"ioT",5);
         assertEquals(proponenteProgettoService.getProgettiGestiti(proponenteA.getId()).size(), 2);
@@ -113,14 +114,14 @@ class ProponenteProgettoServiceImplTest {
 
     @Test
     void createProgetto() {
-        ProponenteProgetto prop=proponenteProgettoService.createProponenteProgetto("Luca","Malva");
+        ProponenteProgetto prop=proponenteProgettoService.createProponenteProgetto("Luca","Malva","qqqq","");
         proponenteProgettoService.createProgetto(prop.getId(),"Iot",5);
         assertEquals(proponenteProgettoService.getProgettiGestiti(prop.getId()).size(),1);
     }
 
     @Test
     void acceptCandidatura() {
-        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva");
+        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva","ddd","");
         Progetto p=proponenteProgettoService.createProgetto(proponenteA.getId(),"IoT",5);
 
         progettistaService.sendCandidatura(p.getId(),progettistaA.getId());
@@ -138,7 +139,7 @@ class ProponenteProgettoServiceImplTest {
 
     @Test
     void declineCandidatura() {
-        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva");
+        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva","ddddddd","");
         Progetto p=proponenteProgettoService.createProgetto(proponenteA.getId(),"IoT",5);
         progettistaService.sendCandidatura(p.getId(),progettistaA.getId());
         proponenteProgettoService.acceptCandidatura(proponenteA.getId(),p.getId(),progettistaA.getId());
@@ -156,7 +157,7 @@ class ProponenteProgettoServiceImplTest {
 
     @Test
     void inviteProgettista() {
-        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva");
+        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva","sssssss","");
         p=proponenteProgettoService.createProgetto(proponenteA.getId(),"IoT",5);
         progettoService.confirmProgetto(p.getId(),proponenteA.getId());
         proponenteProgettoService.inviteProgettista(proponenteA.getId(),p.getId(),progettistaA.getId());
@@ -171,7 +172,7 @@ class ProponenteProgettoServiceImplTest {
 
     @Test
     void getProgettiGestiti() {
-        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva");
+        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva","umbero","");
         assertEquals(proponenteProgettoService.getProponenteProgetto(proponenteA.getId()).getProgettiGestiti().size(),0);
         proponenteProgettoService.createProgetto(proponenteA.getId(),"IoT",5);
         proponenteProgettoService.createProgetto(proponenteA.getId(),"IoT",5);
@@ -182,7 +183,7 @@ class ProponenteProgettoServiceImplTest {
 
     @Test
     void removeProgettistaFromProgetto() {
-        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva");
+        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva","ddddd","");
         p=proponenteProgettoService.createProgetto(proponenteA.getId(),"IoT",5);
         progettoService.confirmProgetto(p.getId(),e.getId());
         proponenteProgettoService.inviteProgettista(proponenteA.getId(),p.getId(),progettistaA.getId());
@@ -198,7 +199,7 @@ class ProponenteProgettoServiceImplTest {
 
     @Test
     void getComponentOfTeam() {
-        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva");
+        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva","ddd","");
         p=proponenteProgettoService.createProgetto(proponenteA.getId(),"IoT",5);
         progettoService.confirmProgetto(p.getId(),proponenteA.getId());
         proponenteProgettoService.inviteProgettista(proponenteA.getId(),p.getId(),progettistaA.getId());
@@ -210,6 +211,22 @@ class ProponenteProgettoServiceImplTest {
         assertEquals(proponenteProgettoService.getComponentOfTeam(p.getId(),proponenteA.getId()).size(),1);
         proponenteProgettoService.acceptCandidatura(proponenteA.getId(),p.getId(),progettistaB.getId());
         assertEquals(proponenteProgettoService.getComponentOfTeam(p.getId(),proponenteA.getId()).size(),2);
+
+    }
+
+
+    @Test
+    void getInvitableProgettisti(){
+        ProponenteProgetto proponenteA=proponenteProgettoService.createProponenteProgetto("Luca","Malva","c","c");
+        p=proponenteProgettoService.createProgetto(proponenteA.getId(),"IoT",5);
+        progettoService.confirmProgetto(p.getId(),proponenteA.getId());
+        assertEquals(proponenteProgettoService.getInvitableProgettisti(p.getId(),proponenteA.getId()).size(),2); //3
+        progettistaService.sendCandidatura(p.getId(),progettistaA.getId());
+
+        assertEquals(proponenteProgettoService.getInvitableProgettisti(p.getId(),proponenteA.getId()).size(),1);
+        proponenteProgettoService.acceptCandidatura(proponenteA.getId(),p.getId(),progettistaA.getId());
+        assertEquals(proponenteProgettoService.getInvitableProgettisti(p.getId(),proponenteA.getId()).size(),1);
+
 
     }
 }

@@ -1,9 +1,7 @@
-package it.unicam.ids.doit.entity;
+package it.unicam.ids.doit.entity.Curriculum;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,12 +17,12 @@ public class Curriculum {
     Set<WorkingExperienceCurriculum> workingExperience;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     Set<LanguagesCurriculum> languages;
-    Number phone;
+    Long phone;
     String email;
 
     public Curriculum(){ }
 
-    public Curriculum(Long idProgettista,String instruction,String formation,Number phone,String email){
+    public Curriculum(Long idProgettista,String instruction,String formation,Long phone,String email){
         this.progettistaID = idProgettista;
         this.instruction = instruction;
         this.formation = formation;
@@ -33,13 +31,13 @@ public class Curriculum {
         this.workingExperience=new HashSet<>();
         this.languages = new HashSet<>();
     }
-    public long getId() {
+    public Long getId() {
         return id;
     }
     public Long getProgettistaID() {
         return progettistaID;
     }
-    public void setProgettistaID(long progettistaID) {
+    public void setProgettistaID(Long progettistaID) {
         this.progettistaID = progettistaID;
     }
     public String getInstruction() {
@@ -66,10 +64,10 @@ public class Curriculum {
     public void setLanguages(Set<LanguagesCurriculum> languages) {
         this.languages = languages;
     }
-    public Number getPhone() {
+    public Long getPhone() {
         return phone;
     }
-    public void setPhone(Number phone) {
+    public void setPhone(Long phone) {
         this.phone = phone;
     }
     public String getEmail() {

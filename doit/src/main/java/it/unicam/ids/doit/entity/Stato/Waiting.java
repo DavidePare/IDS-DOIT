@@ -1,11 +1,12 @@
-package it.unicam.ids.doit.entity;
+package it.unicam.ids.doit.entity.Stato;
 
-import it.unicam.ids.doit.service.ProgettoService;
-import it.unicam.ids.doit.service.impl.ProgettoServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import it.unicam.ids.doit.entity.Progetto;
+import it.unicam.ids.doit.entity.Stato.AbstractState;
+import it.unicam.ids.doit.entity.Stato.Approved;
+import it.unicam.ids.doit.entity.Stato.Blocked;
+import it.unicam.ids.doit.entity.Stato.IState;
 
 import javax.persistence.Entity;
-import javax.persistence.Transient;
 
 @Entity
 public class Waiting extends AbstractState {

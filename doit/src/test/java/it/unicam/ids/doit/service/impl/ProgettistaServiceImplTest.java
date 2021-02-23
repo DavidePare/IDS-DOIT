@@ -1,6 +1,7 @@
 package it.unicam.ids.doit.service.impl;
 
 import it.unicam.ids.doit.entity.*;
+import it.unicam.ids.doit.entity.Curriculum.Curriculum;
 import it.unicam.ids.doit.service.TeamService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,26 +35,27 @@ class ProgettistaServiceImplTest {
 
     @BeforeEach
     void createProject() {
-        proponenteProgettoA=proponenteProgettoService.createProponenteProgetto("mario","rossi");
-        proponenteProgettoB=proponenteProgettoService.createProponenteProgetto("paolo","morlacco");
+        proponenteProgettoA=proponenteProgettoService.createProponenteProgetto("mario","rossi","ddd","ddd");
+        proponenteProgettoB=proponenteProgettoService.createProponenteProgetto("paolo","morlacco","ddd,","ddd");
 
         p= proponenteProgettoService.createProgetto(proponenteProgettoA.getId(),"IoT",3);
-        e=espertoService.createEsperto("Mario","Michelini");
+        e=espertoService.createEsperto("Mario","Michelini","Giampiero","b");
     }
 
     @Test
     void createProgettista() {
         assertEquals(progettistaService.getAllProgettisti().size(),2);
-        progettistaService.createProgettista("Nome","Cognome");
-        progettistaService.createProgettista("Nome2","Cognome2");
+        progettistaService.createProgettista("Nome","Cognome","cccccc","c");
+        progettistaService.createProgettista("Nome2","Cognome2","ddddddddd","d");
         assertEquals(progettistaService.getAllProgettisti().size(),4);
     }
 
     @Test
     void deleteProgettista() {
 
-        assertEquals(progettistaService.getAllProgettisti().size(),2);
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+       // assertEquals(progettistaService.getAllProgettisti().size(),2);
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","ddddddda","dddd");
+        assertEquals(progettistaService.getMessage(progettistaA.getId()).size(),1);
         progettistaService.deleteProgettista(progettistaA.getId());
         assertThrows(NoSuchElementException.class, ()-> progettistaService.getProgettista(progettistaA.getId()));
 
@@ -63,8 +65,8 @@ class ProgettistaServiceImplTest {
     @Test
     void getProgettista() {
 
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
-        Progettista progettistaB=progettistaService.createProgettista("Nome2","Cognome2");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","Nome@","d");
+        Progettista progettistaB=progettistaService.createProgettista("Nome2","Cognome2","ddddd","q");
         assertEquals(progettistaService.getAllProgettisti().size(),4);
         assertTrue(progettistaService.getProgettista(progettistaA.getId()) != null);
 
@@ -76,15 +78,15 @@ class ProgettistaServiceImplTest {
     @Test
     void getAllProgettisti() {
         assertEquals(progettistaService.getAllProgettisti().size(),2);
-        progettistaService.createProgettista("Nome","Cognome");
-        progettistaService.createProgettista("Nome2","Cognome2");
+        progettistaService.createProgettista("Nome","Cognome","qooo","ddd");
+        progettistaService.createProgettista("Nome2","Cognome2","ssss","sss");
         assertEquals(progettistaService.getAllProgettisti().size(),4);
     }
 
     @Test
     void addWorkingExperience() {
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
-        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335,"Email");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","ddddd","eeee");
+        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335L,"Email");
         c=progettistaService.getCurriculum(progettistaA.getId());
         assertTrue(c.getWorkingExperience().isEmpty());
         progettistaService.addWorkingExperience(progettistaA.getId(),"Esperienza 1");
@@ -97,8 +99,8 @@ class ProgettistaServiceImplTest {
     @Test
     void removeWorkingExperience() {
 
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
-        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335,"Email");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","ssss","ss");
+        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335L,"Email");
         c=progettistaService.getCurriculum(progettistaA.getId());
         assertTrue(c.getWorkingExperience().isEmpty());
         progettistaService.addWorkingExperience(progettistaA.getId(),"Esperienza 1");
@@ -117,8 +119,8 @@ class ProgettistaServiceImplTest {
 
     @Test
     void addLanguages() {
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
-        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335,"Email");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","aaaaa","qq");
+        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335L,"Email");
         c=progettistaService.getCurriculum(progettistaA.getId());
         assertTrue(c.getLanguages().isEmpty());
         progettistaService.addLanguages(progettistaA.getId(),"Francese");
@@ -131,8 +133,8 @@ class ProgettistaServiceImplTest {
     @Test
     void removeLanguages() {
 
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
-        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335,"Email");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","qqqq","aaaaaa");
+        progettistaService.createCurriculum(progettistaA.getId(),"Scuola","Formato",331223335L,"Email");
         c=progettistaService.getCurriculum(progettistaA.getId());
         assertTrue(c.getLanguages().isEmpty());
         progettistaService.addLanguages(progettistaA.getId(),"Francese");
@@ -151,7 +153,7 @@ class ProgettistaServiceImplTest {
     @Test
     void addProgetto() {
 
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","aaaaa","qqqqqq");
         assertTrue(progettistaService.getProgettista(progettistaA.getId()).getProgettiProgettista().isEmpty());
         progettistaService.addProgetto(p.getId(),progettistaA.getId());
         progettistaService.addProgetto(p.getId(),progettistaA.getId());
@@ -161,7 +163,7 @@ class ProgettistaServiceImplTest {
     @Test
     void removeProgetto() {
 
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","aaa","aa");
         assertTrue(progettistaService.getProgettista(progettistaA.getId()).getProgettiProgettista().isEmpty());
         progettistaService.addProgetto(p.getId(),progettistaA.getId());
         progettistaService.addProgetto(p.getId(),progettistaA.getId());
@@ -177,7 +179,7 @@ class ProgettistaServiceImplTest {
 
     @Test
     void addInvito() {
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","aaaaa","aaa");
         assertTrue(progettistaService.getProgettista(progettistaA.getId()).getProgettiProgettista().isEmpty());
         progettistaService.addInvito(p.getId(),progettistaA.getId());
         progettistaService.addInvito(p.getId(),progettistaA.getId());
@@ -187,7 +189,7 @@ class ProgettistaServiceImplTest {
     @Test
     void acceptInvito() {
 
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","aaaaa","aaaa");
         assertTrue(progettistaService.getProgettista(progettistaA.getId()).getProgettiProgettista().isEmpty());
         progettistaService.addInvito(p.getId(),progettistaA.getId());
         progettistaService.addInvito(p.getId(),progettistaA.getId());
@@ -205,7 +207,7 @@ class ProgettistaServiceImplTest {
 
     @Test
     void refuseInvito() {
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","aaaaaa","aaaaa");
         assertTrue(progettistaService.getProgettista(progettistaA.getId()).getProgettiProgettista().isEmpty());
         progettistaService.addInvito(p.getId(),progettistaA.getId());
         progettistaService.addInvito(p.getId(),progettistaA.getId());
@@ -225,7 +227,7 @@ class ProgettistaServiceImplTest {
 
     @Test
     void addTeam() {
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","aaaaaaa","aaaaaa");
 
         assertTrue(progettistaService.getProgettista(progettistaA.getId()).getProgettiProgettista().isEmpty());
         pr= proponenteProgettoService.createProgetto(proponenteProgettoA.getId(),"Progetto",5);
@@ -243,7 +245,7 @@ class ProgettistaServiceImplTest {
     @Test
     void removeTeam() {
 
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","aaaaaa","aaaaa");
 
         assertTrue(progettistaService.getProgettista(progettistaA.getId()).getProgettiProgettista().isEmpty());
         pr= proponenteProgettoService.createProgetto(proponenteProgettoA.getId(),"Progetto",5);
@@ -261,7 +263,7 @@ class ProgettistaServiceImplTest {
 
     @Test
     void addprogettoCandidato() {
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","aa","");
         espertoService.confirmProgetto(p.getId(),e.getId());
         progettistaService.addprogettoCandidato(p.getId(),progettistaA.getId());
         progettistaService.addprogettoCandidato(p.getId(),progettistaA.getId());
@@ -271,7 +273,7 @@ class ProgettistaServiceImplTest {
     @Test
     void removeprogettoCandidato() {
 
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","aaaaa","");
         espertoService.confirmProgetto(p.getId(),e.getId());
         progettistaService.addprogettoCandidato(p.getId(),progettistaA.getId());
         pr=proponenteProgettoService.createProgetto(proponenteProgettoA.getId(),"Progetto2",5);
@@ -290,9 +292,9 @@ class ProgettistaServiceImplTest {
 
     @Test
     void sendCandidatura() {
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","aaaaaaaaaa","");
 
-        Progettista progettistaB=progettistaService.createProgettista("Nome","Cognome");
+        Progettista progettistaB=progettistaService.createProgettista("Nome","Cognome","aaaaaa","");
         assertTrue(progettistaService.getProgettista(progettistaA.getId()).getProgettiCandidati().isEmpty());
         progettistaService.sendCandidatura(p.getId(),progettistaA.getId());
         assertEquals(progettistaService.getProgettista(progettistaA.getId()).getProgettiCandidati().size(),0);
@@ -317,7 +319,7 @@ class ProgettistaServiceImplTest {
 
     @Test
     void getInviti() {
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","aaaaa","");
         assertTrue(progettistaService.getInviti(progettistaA.getId()).isEmpty());
         proponenteProgettoService.inviteProgettista(proponenteProgettoA.getId(),p.getId(),progettistaA.getId());
         progettistaA=progettistaService.getProgettista(progettistaA.getId());
@@ -331,7 +333,7 @@ class ProgettistaServiceImplTest {
 
     @Test
     void getProgettiAttivi() {
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","aaaaaaa","");
         progettoService.confirmProgetto(p.getId(),e.getId()); // è uguale mettere espertoservice
         assertTrue(progettistaService.getProgettista(progettistaA.getId()).getProgettiProgettista().isEmpty());
         progettistaService.sendCandidatura(p.getId(),progettistaA.getId());
@@ -344,7 +346,7 @@ class ProgettistaServiceImplTest {
 
     @Test
     void getCandidature() {
-        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome");
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","a_a","");
         assertTrue(progettistaService.getProgettista(progettistaA.getId()).getProgettiCandidati().isEmpty());
 
         progettistaService.sendCandidatura(p.getId(),progettistaA.getId());
@@ -355,6 +357,13 @@ class ProgettistaServiceImplTest {
 
         progettistaService.sendCandidatura(p.getId(),progettistaA.getId());
         assertEquals(progettistaService.getProgettista(progettistaA.getId()).getProgettiCandidati().size(),1);
+
+    }
+
+    @Test
+    void getMessage(){
+        Progettista progettistaA=progettistaService.createProgettista("Nome","Cognome","a_a","");
+        assertEquals(progettistaService.getMessage(progettistaA.getId()).size(),1);
 
     }
 }

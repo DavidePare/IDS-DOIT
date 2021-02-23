@@ -1,14 +1,9 @@
-package it.unicam.ids.doit.entity;
+package it.unicam.ids.doit.entity.Stato;
 
-import it.unicam.ids.doit.dao.ProgettoRepository;
-import it.unicam.ids.doit.service.ProgettistaService;
-import it.unicam.ids.doit.service.ProgettoService;
-import it.unicam.ids.doit.service.impl.ProgettoServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import it.unicam.ids.doit.entity.Progettista;
+import it.unicam.ids.doit.entity.Progetto;
 
 import javax.persistence.Entity;
-import javax.persistence.Transient;
-import java.util.List;
 
 @Entity
 public class Approved extends AbstractState {
@@ -55,7 +50,7 @@ public class Approved extends AbstractState {
      * @param progettista
      */
     @Override
-    public void addCandidato(Progetto progetto,Progettista progettista){
+    public void addCandidato(Progetto progetto, Progettista progettista){
        // Progetto progetto = progettoService.getProgetto(idProgetto);
        // Progettista progettista = progettistaService.getProgettista(idProgettista);
         progetto.getCandidati().add(progettista);

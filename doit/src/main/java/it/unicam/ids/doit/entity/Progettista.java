@@ -1,15 +1,17 @@
 package it.unicam.ids.doit.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.unicam.ids.doit.entity.Curriculum.Curriculum;
+import it.unicam.ids.doit.entity.Notifiche.NotificationMessage;
+import it.unicam.ids.doit.entity.Notifiche.Subscribe;
 
 import javax.persistence.*;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.lang.Long;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 @Entity
 @Table(name="Progettista_Table")
@@ -24,6 +26,11 @@ public class Progettista implements Subscribe{
     private String name;
 
     private String surname;
+
+    @Column(nullable= false, unique=true)
+    private String email;
+
+    private String password;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"candidati","progettistiInvitati","sponsor"})
@@ -49,7 +56,7 @@ public class Progettista implements Subscribe{
 
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private List<NotificationMessage> messaggeBacheca;
+    private Set<NotificationMessage> messaggeBacheca;
 
 
     public Progettista(){ }
@@ -61,7 +68,20 @@ public class Progettista implements Subscribe{
         this.progettiProgettista = new ArrayList<>();
         this.teamsProgettista = new ArrayList<>();
         this.inviti= new ArrayList<>();
-        this. messaggeBacheca= new ArrayList<>();
+        this. messaggeBacheca= new HashSet<>();
+        progettiCandidati= new ArrayList<>();
+    }
+
+    public Progettista(String name, String surname,String email, String password){
+        this.name=name;
+        this.surname=surname;
+        this.email=email;
+        this.password=password;
+        this.curriculum=null;
+        this.progettiProgettista = new ArrayList<>();
+        this.teamsProgettista = new ArrayList<>();
+        this.inviti= new ArrayList<>();
+        this. messaggeBacheca= new HashSet<>();
         progettiCandidati= new ArrayList<>();
     }
 
@@ -97,7 +117,7 @@ public class Progettista implements Subscribe{
         return curriculum;
     }
 
-    public void addCurriculum(Long idProgettista,String instruction,String formation,Number phone,String email){
+    public void addCurriculum(Long idProgettista,String instruction,String formation,Long phone,String email){
         this.curriculum = new Curriculum(idProgettista,instruction,formation,phone,email);
     }
 
@@ -129,11 +149,32 @@ public class Progettista implements Subscribe{
         messaggeBacheca.add(new NotificationMessage(message,name,id));
     }
 
-    public List<NotificationMessage> getMessaggeBacheca() {
+    public Set<NotificationMessage>  getMessaggeBacheca() {
         return messaggeBacheca;
     }
 
-    public void setMessaggeBacheca(List<NotificationMessage> messaggeBacheca) {
+    public void setMessaggeBacheca(Set<NotificationMessage> messaggeBacheca) {
         this.messaggeBacheca.addAll(messaggeBacheca);
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setCurriculum(Curriculum c){
+        this.curriculum=c;
+
     }
 }

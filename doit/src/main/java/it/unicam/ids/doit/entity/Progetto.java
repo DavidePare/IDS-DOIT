@@ -1,13 +1,15 @@
 package it.unicam.ids.doit.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.unicam.ids.doit.entity.Sponsor.Sponsor;
+import it.unicam.ids.doit.entity.Stato.AbstractState;
+import it.unicam.ids.doit.entity.Stato.IState;
+import it.unicam.ids.doit.entity.Stato.Waiting;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name="Progetto_Table")
@@ -19,10 +21,13 @@ public class Progetto {
 
     private int nMaxProgettisti;
 
-    //Era messo
     @OneToOne(targetEntity = AbstractState.class,
                 cascade= {CascadeType.ALL})
     private IState state;
+
+    private String nState;
+
+
 
     private double amount;
 
@@ -35,13 +40,11 @@ public class Progetto {
 
     private Long espertoId;
 
-    private Date scadenza;
+    private LocalDate scadenza;
 
     private Long proponenteProgettoID;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
-    //@JoinTable(name ="Progettista",
-    //        joinColumns=@JoinColumn(name="ID_Progettista"))
     @JsonIgnoreProperties({"progettiCandidati","progettiProgettista","inviti",})
     private List<Progettista> progettistiInvitati;
 
@@ -50,7 +53,6 @@ public class Progetto {
     @JsonIgnoreProperties({"progettiCandidati","progettiProgettista","inviti"})
     private List<Progettista> candidati;
 
-    //@Transient
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
     private List<Sponsor> sponsors;
 
@@ -61,13 +63,15 @@ public class Progetto {
         this.state = new Waiting();
         this.candidati = new ArrayList<>();
         this.team = new Team(getId());
+        this.team.setProgettoID(getId());
+        this.nState = state.toString();
         this.sponsors= new ArrayList<>();
         this.progettistiInvitati = new ArrayList<>();
         this.espertoId = (long)0;
         this.amount=0;
         this.proponenteProgettoID=proponenteProgettoID;
         this.nMaxProgettisti=nMaxProgettisti;
-        this.scadenza= new Date();
+        this.scadenza= LocalDate.now().plusYears(3);
     }
     public Long getId() {
         return id;
@@ -108,10 +112,10 @@ public class Progetto {
     public void setEspertoId(Long espertoId) {
         this.espertoId = espertoId;
     }
-    public Date getScadenza() {
+    public LocalDate getScadenza() {
         return scadenza;
     }
-    public void setScadenza(Date scadenza) {
+    public void setScadenza(LocalDate scadenza) {
         this.scadenza = scadenza;
     }
     public Long getProponenteProgettoID() {
@@ -137,5 +141,17 @@ public class Progetto {
     }
     public void setProgettistiInvitati(List<Progettista> progettistiInvitati) {
         this.progettistiInvitati = progettistiInvitati;
+    }
+
+    public String getnState() {
+        return state.toString();
+    }
+
+    public void setnState(String nState) {
+        this.nState = state.toString();
+    }
+
+    public void setProponenteProgettoID(Long proponenteProgettoID) {
+        this.proponenteProgettoID = proponenteProgettoID;
     }
 }

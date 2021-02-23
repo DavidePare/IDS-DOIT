@@ -37,7 +37,6 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public Team createTeam(Long idProgetto){
         Team team = new Team(idProgetto);
-        //TODO e l id del proponente progetto? anche lui deve appartenere a questo progetto
         teamRepository.save(team);
         return team;
     }

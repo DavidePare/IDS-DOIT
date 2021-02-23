@@ -3,6 +3,7 @@ package it.unicam.ids.doit.service.impl;
 import it.unicam.ids.doit.dao.EspertoRepository;
 import it.unicam.ids.doit.entity.Esperto;
 import it.unicam.ids.doit.entity.Progettista;
+import it.unicam.ids.doit.entity.Progetto;
 import it.unicam.ids.doit.entity.ProponenteProgetto;
 import it.unicam.ids.doit.service.EspertoService;
 import it.unicam.ids.doit.service.ProgettoService;
@@ -54,8 +55,8 @@ public class EspertoServiceImpl implements EspertoService {
      * @return esperto creato
      */
     @Override
-    public Esperto createEsperto(String name, String surname){
-        Esperto esperto = new Esperto(name,surname);
+    public Esperto createEsperto(String name, String surname, String email , String password){
+        Esperto esperto = new Esperto(name,surname,email,password);
         espertoRepository.save(esperto);
         return esperto;
     }
@@ -92,6 +93,11 @@ public class EspertoServiceImpl implements EspertoService {
         return espertoRepository.findAll();
     }
 
+    /**
+     * Metodo per confermare un progetto
+     * @param idProgetto progetto confermato
+     * @param idEsperto esperto che conferma il progetto
+     */
     @Override
     public void confirmProgetto(Long idProgetto, Long idEsperto){
         progettoService.confirmProgetto(idProgetto, idEsperto);
@@ -99,10 +105,34 @@ public class EspertoServiceImpl implements EspertoService {
         espertoRepository.save(getEsperto(idEsperto));
     }
 
+    /**
+     * Metodo per rifiutare un progetto quindi per metterlo in stato di blocked
+     * @param idProgetto progetto valutato
+     * @param idEsperto esperto che valuta
+     */
     @Override
     public void declineProgetto(Long idProgetto, Long idEsperto){
         progettoService.declineProgetto(idProgetto, idEsperto);
         addProgetto(idEsperto,idProgetto);
         espertoRepository.save(getEsperto(idEsperto));
+    }
+
+    /**
+     * Metodo per ottenere tutti i progetti da valutare
+     * @return tutti i progetti in stato di waiting
+     */
+    @Override
+    public List<Progetto> getAllProgettiValutare(){
+        return progettoService.getAllProgettiValutare();
+    }
+
+    /**
+     * Metodo con il quale un esperto ottiene un singolo progetto
+     * @param id progetto
+     * @return progetto
+     */
+    @Override
+    public Progetto getProgetto(Long id){
+        return progettoService.getProgetto(id);
     }
 }
